@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  password String
+  rightId  Int
+
+  products Product[]
+  right    Right     @relation(fields: [rightId], references: [id])
+  cabinets Cabinet[]
+
+  @@index([id])
+  @@map("users")
+}
+
+model Right {
+  id             Int     @id @default(autoincrement())
+  name           String
+  placeActions   Boolean
+  cabinetActions Boolean
+  productActions Boolean
+  userActions    Boolean
+  rightActions   Boolean
+  typeActions    Boolean
+
+  user User[]
+
+  @@index([id])
+  @@map("rights")
+}
+
+model Place {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  cabinets Cabinet[]
+
+  @@index([id])
+  @@map("places")
+}
+
+model Cabinet {
+  id            Int    @id @default(autoincrement())
+  name          String
+  placeId       Int
+  responsibleId Int
+
+  place    Place     @relation(fields: [placeId], references: [id])
+  users    User      @relation(fields: [responsibleId], references: [id])
+  products Product[]
+
+  @@index([id])
+  @@map("cabinets")
+}
+
+model Product {
+  id               Int     @id @default(autoincrement())
+  name             String
+  description      String
+  inventoryNumber  String
+  inventoryNumber2 String
+  inventoryNumber3 String
+  serialNumber     String
+  onUtil           Boolean @default(false)
+  cabinetId        Int
+  typeId           Int
+  count            Int
+  userAdded        Int
+
+  user    User    @relation(fields: [userAdded], references: [id])
+  type    Type    @relation(fields: [typeId], references: [id])
+  cabinet Cabinet @relation(fields: [cabinetId], references: [id])
+
+  @@index([id])
+  @@map("products")
+}
+
+model Type {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  products Product[]
+
+  @@index([id])
+  @@map("types")
+}
