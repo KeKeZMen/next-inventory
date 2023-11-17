@@ -23,6 +23,7 @@ export default async function CabinetPage({
 
   if (!session) return redirect("/login");
   if (!session.user) return redirect("/login");
+  if (session.isAdmin) return redirect("/")
 
   let orderBy = {};
   if (searchParams.key == "inventoryNumber") {

@@ -86,14 +86,14 @@ export async function GET() {
   if (!session?.user)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
-  const right = await db.right.findFirst({
-    where: {
-      id: session.user.rightId,
-    },
-  });
+  // const right = await db.right.findFirst({
+  //   where: {
+  //     id: session.user.rightId,
+  //   },
+  // });
 
-  if (!right?.productActions && !right?.typeActions)
-    return Response.json({ message: "Недостаточно прав" }, { status: 401 });
+  // if (!right?.productActions || !right?.typeActions)
+  //   return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
   const types = await db.type.findMany();
 
