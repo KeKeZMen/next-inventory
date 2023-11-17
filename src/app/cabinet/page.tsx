@@ -72,7 +72,7 @@ export default async function CabinetPage({
   return (
     <>
       <Header isNoAdmin user={session.user} />
-      <main>
+      <main className="pt-[88px] md:p-6">
         <ProductsTable
           title={`Позиции ${cabinets
             .map((cabinet) => cabinet.name)
@@ -81,7 +81,7 @@ export default async function CabinetPage({
           withoutEdit
         >
           {products.map((product) => (
-            <ProductRow product={product} key={product.id} withoutEdit/>
+            <ProductRow product={product} key={product.id} withoutEdit />
           ))}
         </ProductsTable>
       </main>

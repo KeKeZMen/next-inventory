@@ -6,6 +6,7 @@ import { LogoutButton } from "@/features/auth/LogoutButton";
 import { SearchInput } from "@/features/search/SearchInput";
 import { useWindowSize } from "@/shared/lib/hooks/useWindowSize";
 import { BurgerButton } from "@/shared/ui/Burger";
+import clsx from "clsx";
 import { User } from "next-auth";
 import { FC, useContext } from "react";
 
@@ -20,17 +21,20 @@ export const Header: FC<PropsType> = ({ user, isNoAdmin }) => {
 
   return (
     <header className="p-6 shadow-md bg-primary fixed w-full z-10 sm:static sm:min-h-[88px]">
-      <div className="flex justify-between items-center text-white">
-        <div className="flex justify-between items-center w-full md:w-[40%]">
-          {!isNoAdmin && (
-            <>
-              <BurgerButton onClick={handleMenu} />
-              <SearchInput />
-            </>
-          )}
-        </div>
+      <div
+        className={clsx(
+          "flex items-center text-white",
+          isNoAdmin ? "justify-end" : "justify-between"
+        )}
+      >
+        {!isNoAdmin && (
+          <div className="flex justify-between items-center w-full md:w-[40%]">
+            <BurgerButton onClick={handleMenu} />
+            <SearchInput />
+          </div>
+        )}
 
-        {width && width >= 640 && (
+        {(isNoAdmin || (width && width >= 640)) && (
           <UserProfile logoutButton={<LogoutButton />} user={user} />
         )}
       </div>

@@ -58,7 +58,7 @@ export const ProductsTable: FC<PropsType> = ({
             {tableHeadCells
               .filter((cell) => (withoutEdit ? cell !== "Ред." : cell))
               .map((cell, index) => (
-                <th key={index} className="top-0 sticky p-4 bg-white z-10">
+                <th key={index} className="top-0 sticky p-4 bg-white">
                   {cell}
                 </th>
               ))}

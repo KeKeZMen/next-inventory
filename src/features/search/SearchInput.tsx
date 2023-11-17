@@ -62,12 +62,16 @@ export const SearchInput = () => {
       )}
 
       {isOpenedDialog && searchedProducts && (
-        <div className="absolute bg-white rounded-md px-5 top-10 w-full z-10 shadow-md max-h-[200px] overflow-y-auto">
+        <div className="absolute bg-white rounded-md px-5 top-10 w-full z-50 shadow-md max-h-[200px] overflow-y-auto">
           {searchedProducts.length < 1 ? (
             <p className="my-5 text-black">Нет совпадений</p>
           ) : (
             searchedProducts.map((product, index) => (
-              <SearchedProducts searchedProduct={product} key={index} />
+              <SearchedProducts
+                searchedProduct={product}
+                key={index}
+                onClick={handleClean}
+              />
             ))
           )}
         </div>

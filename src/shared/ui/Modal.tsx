@@ -5,9 +5,10 @@ import { ReactNode, FC, useCallback, useEffect } from "react";
 type PropsType = {
   onClose: (val: boolean) => void;
   children: ReactNode;
+  minHeight?: string;
 };
 
-export const Modal: FC<PropsType> = ({ children, onClose }) => {
+export const Modal: FC<PropsType> = ({ children, onClose, minHeight }) => {
   const handleEscapeModal = useCallback((e: KeyboardEvent) => {
     if (e.key === "Escape") onClose(false);
   }, []);
@@ -28,6 +29,7 @@ export const Modal: FC<PropsType> = ({ children, onClose }) => {
       <div
         onClick={(e) => e.stopPropagation()}
         className="bg-white rounded-lg p-5 md:p-10 max-h-[500px] overflow-y-auto md:max-h-screen"
+        style={{ minHeight }}
       >
         {children}
       </div>
