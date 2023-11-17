@@ -13,6 +13,7 @@ export const ThemeSwitcher = () => {
   }, []);
 
   if (!mounted) return null;
+  setTheme("light");
 
   const handleChangeTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
