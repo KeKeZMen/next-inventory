@@ -4,6 +4,7 @@ const next = require("next");
 
 const dev = process.env.NODE_ENV !== "production";
 const port = 5174;
+const hostname = "inv.energypk.ru"
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 app.prepare().then(() => {

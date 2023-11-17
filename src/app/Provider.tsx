@@ -31,7 +31,7 @@ export const Providers = ({ children }: { children: ReactNode }) => {
 
   return (
     <SessionProvider>
-      <ThemeProvider attribute="class">
+      <ThemeProvider attribute="class" defaultTheme="light">
         <Toaster />
         <MenuContext.Provider value={{ isOpenedMenu, handleMenu }}>
           {children}
