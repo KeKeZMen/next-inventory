@@ -16,7 +16,7 @@ export const ProductRow: FC<PropsType> = ({
   withoutEdit,
 }) => {
   return (
-    <tr>
+    <tr className="h-[43px]">
       <td
         className={clsx(
           product.onUtil && "bg-on-delete",

@@ -26,7 +26,7 @@ export const PlaceTypes = async ({ placeId }: PropsType) => {
   });
 
   return (
-    <DataTable title="Статистика" width="25%">
+    <DataTable title="Статистика">
       {types.map((type) => (
         <TypeRow
           type={type}

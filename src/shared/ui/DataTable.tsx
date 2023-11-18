@@ -7,7 +7,7 @@ type PropsType = {
   margin?: string;
   addAction?: JSX.Element;
   maxHeight?: boolean;
-  width?: string
+  cabinetPage?: boolean
 };
 
 export const DataTable: FC<PropsType> = ({
@@ -16,17 +16,17 @@ export const DataTable: FC<PropsType> = ({
   addAction,
   margin,
   maxHeight,
-  width
+  cabinetPage
 }) => {
   return (
     <div
       className={clsx(
         "p-3 flex items-start bg-white shadow-md rounded-md flex-col",
-        !maxHeight && "md:h-[200px]"
+        !maxHeight && "md:h-[200px]",
+        cabinetPage && "md:w-[24%]"
       )}
       style={{
         margin,
-        width
       }}
     >
       <div className="flex justify-between items-center mb-[10px] w-full">

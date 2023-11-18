@@ -2,8 +2,6 @@ import { ProductRow } from "@/entities/product/ui/ProductRow";
 import { AddProductButton } from "@/features/product/AddProductButton";
 import { DeleteProductButton } from "@/features/product/DeleteProductButton";
 import { EditProductButton } from "@/features/product/EditProductButton";
-import { SortSelect } from "@/features/sort/SortSelect";
-import { TypeSelect } from "@/features/type/TypeSelect";
 import { db } from "@/shared";
 import { ProductsTable } from "@/shared/ui/ProductsTable";
 import { ProductsSelects } from "@/widgets/ProductsSelects";
@@ -64,6 +62,7 @@ export default async function TypePage({
       title="Позиции"
       addButton={<AddProductButton />}
       selects={<ProductsSelects sortSelect typeSelect />}
+      fullHeight
     >
       {products.map((product) => (
         <ProductRow

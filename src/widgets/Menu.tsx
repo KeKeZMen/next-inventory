@@ -36,7 +36,7 @@ export const Menu: FC<PropsType> = ({ places, user }) => {
       >
         <div className="w-full flex justify-around items-center p-5 h-[88px] shadow-md">
           <h1 className="uppercase font-bold text-2xl">Inventory</h1>
-          {width && width <= 640 && <ThemeSwitcher />}
+          {/* {width && width <= 640 && <ThemeSwitcher />} */}
         </div>
         <ul className="px-1 flex flex-col items-center mt-2 w-full overflow-auto">
           <NavLink
