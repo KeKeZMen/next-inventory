@@ -92,19 +92,18 @@ export async function GET(req: Request) {
   if (!session?.user)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
-  const rights = await db.right.findFirst({
-    where: {
-      id: session.user.rightId,
-    },
-  });
-
-  if (!rights?.userActions || !rights.cabinetActions)
-    return Response.json({ message: "Недостаточно прав" }, { status: 401 });
-
   const users = await db.user.findMany({
     where: {
       NOT: {
         id: 1,
+        AND: [
+          { right: { cabinetActions: true } },
+          { right: { placeActions: true } },
+          { right: { rightActions: true } },
+          { right: { productActions: true } },
+          { right: { typeActions: true } },
+          { right: { userActions: true } },
+        ]
       },
     },
     select: {

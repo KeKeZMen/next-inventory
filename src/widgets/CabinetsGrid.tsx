@@ -18,7 +18,7 @@ export const CabinetsGrid = async ({ placeId }: PropsType) => {
   });
 
   return (
-    <div className="p-4 shadow-md md:h-[200px]">
+    <div className="p-4 shadow-md md:h-[200px] md:w-[75%]">
       <div className="flex justify-between items-center mb-3">
         <h3>Кабинеты: {cabinets.length}</h3>
         <AddCabinetButton />

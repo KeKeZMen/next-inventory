@@ -29,7 +29,7 @@ export const ProductsTable: FC<PropsType> = ({
   withoutEdit,
 }) => {
   return (
-    <div className="px-5 pb-5 bg-white shadow-md rounded-md flex flex-col min-w-[300px] overflow-x-auto">
+    <div className="px-5 pb-5 bg-white shadow-md rounded-md flex flex-col overflow-x-auto">
       <div className="flex justify-between items-center my-4 w-full">
         <h4 className="uppercase">{title}</h4>
 
@@ -47,7 +47,7 @@ export const ProductsTable: FC<PropsType> = ({
 
       <table
         className={clsx(
-          "overflow-y-auto h-[45vh] rounded-md border-collapse grid",
+          "overflow-y-auto h-[403px] rounded-md border-collapse grid",
           withoutEdit
             ? "grid-cols-[minmax(74px,_1fr)_repeat(2,_minmax(299px,_4fr))_repeat(4,_minmax(149px,_2fr))_minmax(100px,_1.5fr)]"
             : "grid-cols-[minmax(74px,_1fr)_repeat(2,_minmax(299px,_4fr))_repeat(4,_minmax(149px,_2fr))_minmax(100px,_1.5fr)_minmax(74px,_1fr)]"

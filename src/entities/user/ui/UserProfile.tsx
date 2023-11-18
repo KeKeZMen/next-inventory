@@ -1,21 +1,23 @@
 "use client";
 
-import { FC, useContext } from "react";
+import { useContext } from "react";
 import { Avatar, useWindowSize } from "@/shared";
 import { User } from "next-auth";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { MenuContext } from "@/app/Provider";
+import { useSession } from "next-auth/react";
 
 type PropsType = {
   user: User;
   logoutButton: JSX.Element;
 };
 
-export const UserProfile: FC<PropsType> = ({ user, logoutButton }) => {
+export const UserProfile = ({ user, logoutButton }: PropsType) => {
   const session = useSession();
   const { width } = useWindowSize();
   const { handleMenu } = useContext(MenuContext);
+
+  if (!session) return <>Loading...</>;
 
   return (
     <div className="flex items-center justify-between gap-4">

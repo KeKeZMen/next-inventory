@@ -7,6 +7,7 @@ type PropsType = {
   margin?: string;
   addAction?: JSX.Element;
   maxHeight?: boolean;
+  width?: string
 };
 
 export const DataTable: FC<PropsType> = ({
@@ -15,6 +16,7 @@ export const DataTable: FC<PropsType> = ({
   addAction,
   margin,
   maxHeight,
+  width
 }) => {
   return (
     <div
@@ -24,6 +26,7 @@ export const DataTable: FC<PropsType> = ({
       )}
       style={{
         margin,
+        width
       }}
     >
       <div className="flex justify-between items-center mb-[10px] w-full">

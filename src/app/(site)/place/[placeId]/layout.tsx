@@ -11,7 +11,7 @@ export default async function PlaceLayout({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex flex-col gap-2 md:grid md:grid-cols-[2fr,_1fr]">
+      <div className="flex flex-col gap-2 md:flex-row">
         <CabinetsGrid placeId={parseInt(params.placeId)} />
         <PlaceTypes placeId={parseInt(params.placeId)} />
       </div>
