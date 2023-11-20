@@ -23,7 +23,7 @@ export default async function CabinetPage({
 
   if (!session) return redirect("/login");
   if (!session.user) return redirect("/login");
-  if (session.isAdmin) return redirect("/")
+  if (session.isAdmin) return redirect("/");
 
   let orderBy = {};
   if (searchParams.key == "inventoryNumber") {
@@ -36,55 +36,50 @@ export default async function CabinetPage({
     };
   }
 
-  const cabinets = await db.cabinet.findMany({
+  const productsWithCabinets = await db.cabinet.findMany({
     where: {
       responsibleId: session.user.id,
     },
-  });
-
-  const products = await db.product.findMany({
-    where: {
-      cabinetId: {
-        in: cabinets.map((cabinet) => cabinet.id),
-      },
-    },
     select: {
-      cabinet: {
-        select: {
-          id: true,
-          placeId: true,
-        },
-      },
-      count: true,
-      description: true,
       id: true,
-      inventoryNumber: true,
-      inventoryNumber2: true,
-      inventoryNumber3: true,
+      placeId: true,
       name: true,
-      onUtil: true,
-      serialNumber: true,
-      typeId: true,
-      userAdded: true,
+      products: {
+        select: {
+          count: true,
+          description: true,
+          id: true,
+          inventoryNumber: true,
+          inventoryNumber2: true,
+          inventoryNumber3: true,
+          name: true,
+          onUtil: true,
+          serialNumber: true,
+          typeId: true,
+          userAdded: true,
+          cabinet: {
+            select: {
+              placeId: true,
+              id: true,
+            },
+          },
+        },
+        orderBy,
+      },
     },
-    orderBy,
   });
 
   return (
     <>
       <Header isNoAdmin user={session.user} />
       <main className="pt-[88px] md:p-6">
-        <ProductsTable
-          title={`Позиции ${cabinets
-            .map((cabinet) => cabinet.name)
-            .join(", ")} ${cabinets.length > 1 ? "кабинетов" : "кабинета"}`}
-          selects={<ProductsSelects sortSelect />}
-          withoutEdit
-        >
-          {products.map((product) => (
-            <ProductRow product={product} key={product.id} withoutEdit />
-          ))}
-        </ProductsTable>
+        {productsWithCabinets.map((cabinet) => (
+          <ProductsTable title={`Позиции ${cabinet.name} кабинета`} withoutEdit>
+            {cabinet.products.map((product) => (
+              <ProductRow product={product} key={product.id} withoutEdit />
+            ))}
+          </ProductsTable>
+        ))}
       </main>
     </>
   );
