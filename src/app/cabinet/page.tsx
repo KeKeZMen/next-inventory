@@ -74,7 +74,7 @@ export default async function CabinetPage({
       <Header isNoAdmin user={session.user} />
       <main className="pt-[88px] md:p-6">
         {productsWithCabinets.map((cabinet) => (
-          <ProductsTable title={`Позиции ${cabinet.name} кабинета`} withoutEdit>
+          <ProductsTable title={`Позиции ${cabinet.name} кабинета`} withoutEdit margin="0 0 15px 0">
             {cabinet.products.map((product) => (
               <ProductRow product={product} key={product.id} withoutEdit />
             ))}
