@@ -27,7 +27,7 @@ const AdminPage = async () => {
 
       {right?.typeActions && <TypesTable />}
       {right?.placeActions && <PlacesTable />}
-      {/* <UploadInput /> */}
+      <UploadInput />
     </div>
   );
 };
