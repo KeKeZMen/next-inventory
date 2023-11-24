@@ -99,12 +99,15 @@ export async function GET(
 
   worksheet.addRow("");
 
-  const footerRow = worksheet.addRow([
-    `Ответственный за кабинет ${cabinetData.name}: ${cabinetData.users.name} / ______________________`,
-  ]);
-  footerRow.alignment = {
-    horizontal: "center",
-  };
+  if(cabinetData.users?.name) {
+    const footerRow = worksheet.addRow([
+      `Ответственный за кабинет ${cabinetData.name}: ${cabinetData.users.name} / ______________________`,
+    ]);
+    footerRow.alignment = {
+      horizontal: "center",
+    };
+  }
+
   worksheet.mergeCells(
     `A${cabinetData.products.length + 5}`,
     `E${cabinetData.products.length + 5}`

@@ -113,7 +113,7 @@ export const CabinetForm: FC<PropsType> = ({
           }))}
           selected={selectedResponsible}
           onChange={handleSelectUsers}
-          placeholder="Ответственный*"
+          placeholder="Ответственный"
           fullwidth
         />
       )}

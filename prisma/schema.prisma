@@ -51,10 +51,10 @@ model Cabinet {
   id            Int    @id @default(autoincrement())
   name          String
   placeId       Int
-  responsibleId Int
+  responsibleId Int?
 
   place    Place     @relation(fields: [placeId], references: [id])
-  users    User      @relation(fields: [responsibleId], references: [id])
+  users    User?      @relation(fields: [responsibleId], references: [id])
   products Product[]
 
   @@index([id])

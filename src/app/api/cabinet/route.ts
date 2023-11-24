@@ -43,27 +43,12 @@ export async function POST(req: Request) {
 
   if (!right?.cabinetActions)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
-
-  // const adminUsers = await db.user.findMany({
-  //   where: {
-  //     right: { placeActions: true },
-  //   },
-  // });
-
-  const cabinet = await db.cabinet.create({
+  
+  await db.cabinet.create({
     data: {
-      ...body,
+      ...body
     },
   });
-
-  // await db.userCabinet.createMany({
-  //   data: [
-  //     ...adminUsers.map((user) => ({
-  //       cabinetId: cabinet.id,
-  //       userId: user.id,
-  //     })),
-  //   ],
-  // });
 
   return Response.json({ message: "Кабинет создан!" });
 }
@@ -91,7 +76,7 @@ export async function PATCH(req: Request) {
     data: {
       name: body.name,
       placeId: body.placeId,
-      responsibleId: body.responsibleId,
+      responsibleId: body.responsibleId ? body.responsibleId : null
     },
   });
 
