@@ -15,6 +15,9 @@ export const CabinetsGrid = async ({ placeId }: PropsType) => {
     where: {
       placeId,
     },
+    orderBy: {
+      name: "asc"
+    }
   });
 
   return (

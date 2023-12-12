@@ -9,5 +9,5 @@ export interface ICabinet {
   id: number;
   name: string;
   placeId: number;
-  responsibleId: number;
+  responsibleId: number | null;
 }

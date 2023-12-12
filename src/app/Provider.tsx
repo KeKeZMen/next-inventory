@@ -31,12 +31,12 @@ export const Providers = ({ children }: { children: ReactNode }) => {
 
   return (
     <SessionProvider>
-      <ThemeProvider attribute="class" defaultTheme="light">
+      {/* <ThemeProvider attribute="class" defaultTheme="light"> */}
         <Toaster />
         <MenuContext.Provider value={{ isOpenedMenu, handleMenu }}>
           {children}
         </MenuContext.Provider>
-      </ThemeProvider>
+      {/* </ThemeProvider> */}
     </SessionProvider>
   );
 };
