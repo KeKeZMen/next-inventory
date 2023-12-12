@@ -142,8 +142,7 @@ export const ProductForm: FC<PropsType> = ({
         disabled={isLoading}
         errors={errors}
         id="description"
-        placeholder="Описание*"
-        required
+        placeholder="Описание"
         fullWidth
         register={register}
       />
@@ -163,8 +162,7 @@ export const ProductForm: FC<PropsType> = ({
         disabled={isLoading}
         errors={errors}
         id="inventoryNumber2"
-        placeholder="Инвентарный номер 2*"
-        required
+        placeholder="Инвентарный номер 2"
         fullWidth
         register={register}
       />
@@ -173,8 +171,7 @@ export const ProductForm: FC<PropsType> = ({
         disabled={isLoading}
         errors={errors}
         id="inventoryNumber3"
-        placeholder="Инвентарный номер 3*"
-        required
+        placeholder="Инвентарный номер 3"
         fullWidth
         register={register}
       />

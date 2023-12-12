@@ -101,7 +101,7 @@ export async function GET(
 
   if(cabinetData.users?.name) {
     const footerRow = worksheet.addRow([
-      `Ответственный за кабинет ${cabinetData.name}: ${cabinetData.users.name} / ______________________`,
+      `Ответственный за ${cabinetData.name} кабинет: ${cabinetData.users.name} / ______________________`,
     ]);
     footerRow.alignment = {
       horizontal: "center",
