@@ -1,20 +1,9 @@
 import { NextResponse } from "next/server";
-import { join } from "path";
+import { dirname, join } from "path";
 import { writeFile, unlink } from "fs/promises";
 import ExcelJs from "exceljs";
 import { db } from "@/shared";
-
-type ProductData = Array<string>;
-
-type CabinetData = {
-  name: string;
-  products: Array<ProductData>;
-};
-
-type PlaceData = {
-  name: string;
-  cabinets: Array<CabinetData>;
-};
+import { fileURLToPath } from "url";
 
 export async function POST(req: Request) {
   const body = await req.formData();
@@ -27,7 +16,10 @@ export async function POST(req: Request) {
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
-  const path = join("/", "tmp", file.name);
+  const __filename = fileURLToPath(import.meta.url)
+  const __dirname = dirname(__filename)  
+
+  const path = join(__dirname, file.name);
   await writeFile(path, buffer);
 
   let workBook = new ExcelJs.Workbook();
@@ -117,12 +109,12 @@ export async function POST(req: Request) {
       cabinet = await db.cabinet.create({
         data: {
           name: productsData[i].cabinet,
-          placeId: place?.id
+          placeId: place.id
         }
       }) 
     }
 
-    const product = await db.product.create({
+    await db.product.create({
       data: {
         count: Number(productsData[i].product.count),
         description: productsData[i].product.desk,
@@ -137,48 +129,6 @@ export async function POST(req: Request) {
       },
     });
   }
-
-  // for (let i = 2; i <= workSheet.rowCount; i++) {
-  //   const values = workSheet.getRow(i).values as Array<string>
-
-  //   const place = await db.place.findFirst({
-  //     where: {
-  //       name: values[1]
-  //     }
-  //   })
-
-  //   const cabinet = await db.cabinet.findFirst({
-  //     where: {
-  //       AND: [
-  //         { placeId: place?.id },
-  //         { name: String(values[2]) }
-  //       ]
-  //     }
-  //   })
-
-  //   const type = await db.type.findFirst({
-  //     where: {
-  //       name: values[3]
-  //     }
-  //   })
-
-  //   if(!type || !cabinet) return NextResponse.json({ message: "Указанного типа или кабинета не существует!" })
-
-  //   const product = await db.product.create({
-  //     data: {
-  //       name: String(values[4]),
-  //       description: String(values[5]),
-  //       inventoryNumber: String(values[6]),
-  //       inventoryNumber2: String(values[7]),
-  //       inventoryNumber3: String(values[8]),
-  //       serialNumber: String(values[9]),
-  //       count: Number(values[10]),
-  //       typeId: type.id,
-  //       cabinetId: cabinet.id,
-  //       userAdded: 1,
-  //     }
-  //   })
-  // }
 
   await unlink(path);
 
