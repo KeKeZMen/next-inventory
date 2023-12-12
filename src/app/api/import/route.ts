@@ -121,7 +121,7 @@ export async function POST(req: Request) {
         inventoryNumber: productsData[i].product.inv1,
         inventoryNumber2: productsData[i].product.inv2,
         inventoryNumber3: productsData[i].product.inv3,
-        name: productsData[i].product.ser,
+        name: productsData[i].product.name,
         cabinetId: cabinet.id,
         userAdded: 1,
         serialNumber: productsData[i].product.ser,
