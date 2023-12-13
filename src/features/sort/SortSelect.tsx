@@ -64,14 +64,14 @@ export const SortSelect = () => {
   return (
     <Select
       padding="3px"
-      margin="0 10px 0 0 "
+      margin="0 10px 0 0"
       selected={selectedOrderBy}
       options={sortOptions.map((sortOption) => ({
         label: sortOption.label,
         value: sortOption.value,
       }))}
       onChange={handleSelectOrder}
-      minWidth="300px"
+      // minWidth="300px"
     />
   );
 };

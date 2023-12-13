@@ -31,8 +31,8 @@ export const ProductsSelects: FC<PropsType> = ({ sortSelect, typeSelect }) => {
 
         {isOpenedModal &&
           createPortal(
-            <Modal onClose={handleModal} minHeight="230px">
-              <div className="flex flex-col items-center gap-5">
+            <Modal onClose={handleModal}>
+              <div className="flex flex-col gap-5">
                 {typeSelect && <TypeSelect />}
                 {sortSelect && <SortSelect />}
               </div>
