@@ -8,14 +8,14 @@ export async function GET() {
   if (!session?.user)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
-  const right = await db.right.findFirst({
-    where: {
-      id: session.user.rightId,
-    },
-  });
+  // const right = await db.right.findFirst({
+  //   where: {
+  //     id: session.user.rightId,
+  //   },
+  // });
 
-  if (!right?.rightActions)
-    return Response.json({ message: "Недостаточно прав" }, { status: 401 });
+  // if (!right?.rightActions)
+  //   return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
   const rights = await db.right.findMany({
     where: {

@@ -46,8 +46,8 @@ export const ProductsTable: FC<PropsType> = ({
         <h4 className="uppercase">{title}</h4>
 
         <div className="flex justify-between items-center">
-          <div>
-            <div className="h-6 w-6 rounded-md bg-[#ffd8d8] mr-3 hidden md:inline" />
+          <div className="flex">
+            <div className="h-6 w-6 rounded-md bg-[#ffd8d8] mr-3 hidden md:block" />
             <p className="mr-3 hidden md:inline">
               Позиции, помеченные на удаление
             </p>

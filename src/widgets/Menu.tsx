@@ -23,7 +23,7 @@ export const Menu: FC<PropsType> = ({ places, user }) => {
 
   return (
     <>
-      {width && width <= 640 && (
+      {width && width <= 1400 && (
         <div
           className="w-full h-[100vh] bg-black/20 fixed z-20"
           onClick={handleMenu}
@@ -31,7 +31,7 @@ export const Menu: FC<PropsType> = ({ places, user }) => {
       )}
 
       <aside
-        className="fixed overflow-auto m-0 w-[286px] text-white h-full bg-primary flex items-center flex-col md:static z-30"
+        className="fixed overflow-auto m-0 w-[286px] text-white h-full bg-primary flex items-center flex-col 2xl:static z-30"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="w-full flex justify-around items-center p-5 h-[88px] shadow-md">
@@ -43,7 +43,7 @@ export const Menu: FC<PropsType> = ({ places, user }) => {
             href={"/"}
             margin="0 0 10px 0"
             onClick={() => {
-              width && width <= 640 && handleMenu();
+              width && width <= 1400 && handleMenu();
             }}
           >
             Статистика
@@ -53,7 +53,7 @@ export const Menu: FC<PropsType> = ({ places, user }) => {
               href={`/place/${place.id}`}
               key={place.id}
               onClick={() => {
-                width && width <= 640 && handleMenu();
+                width && width <= 1400 && handleMenu();
               }}
             >
               {place.name}

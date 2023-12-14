@@ -80,7 +80,7 @@ export const Select: FC<PropsType> = ({
         />
       </div>
       {isOpen && (
-        <ul className="mt-[1px] fixed w-[300px] list-none bg-white max-h-[150px] overflow-y-auto shadow-md z-50 rounded-md">
+        <ul className="mt-[1px] fixed w-[250px] list-none bg-white max-h-[150px] overflow-y-auto shadow-md z-50 rounded-md">
           {options.map((option) =>
             !chekboxed ? (
               <li

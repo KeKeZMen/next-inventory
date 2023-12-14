@@ -4,8 +4,26 @@ import { writeFile, unlink } from "fs/promises";
 import ExcelJs from "exceljs";
 import { db } from "@/shared";
 import { fileURLToPath } from "url";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function POST(req: Request) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user)
+    return NextResponse.json(
+      { message: "Вы не авторизованы!" },
+      { status: 401 }
+    );
+    
+  const right = await db.right.findFirst({
+    where: {
+      id: session.user.rightId,
+    },
+  });
+
+  if (right?.id !== 1)
+    return NextResponse.json({ message: "Нет доступа" }, { status: 401 });
+
   const body = await req.formData();
   const file: File | null = body.get("file") as unknown as File;
 
@@ -16,8 +34,8 @@ export async function POST(req: Request) {
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
-  const __filename = fileURLToPath(import.meta.url)
-  const __dirname = dirname(__filename)  
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
 
   const path = join(__dirname, file.name);
   await writeFile(path, buffer);
@@ -33,38 +51,42 @@ export async function POST(req: Request) {
     workSheet.getColumn(colNumber).key = cell.text;
   });
 
-  const rows = []
+  const rows = [];
 
-  let headers = workSheet.getRow(1).values as Array<string>
-  headers = headers.filter(el => el)
-  
+  let headers = workSheet.getRow(1).values as Array<string>;
+  headers = headers.filter((el) => el);
+
   for (let i = 2; i < workSheet.rowCount; i++) {
-    const row = new Map()
+    const row = new Map();
 
-    let values = workSheet.getRow(i).values as Array<string>
-    values = values.filter(el => el)
-    
-    for (let j = 0; j < workSheet.columnCount; j++) {  
-      row.set(headers[j], String(values[j]))
+    let values = workSheet.getRow(i).values as Array<string>;
+    values = values.filter((el) => el);
+
+    for (let j = 0; j < workSheet.columnCount; j++) {
+      row.set(headers[j], String(values[j]));
     }
-    
-    rows.push(row)
+
+    rows.push(row);
   }
 
   await db.$transaction([
     db.place.createMany({
       data: [
-        ...Array.from(new Set(rows.map((row) => row.get("Площадка")))).map((place) => ({ name: place })),
+        ...Array.from(new Set(rows.map((row) => row.get("Площадка")))).map(
+          (place) => ({ name: place })
+        ),
       ],
     }),
     db.type.createMany({
       data: [
-        ...Array.from(new Set(rows.map((row) => row.get("Тип")))).map((type) => ({ name: type })),
+        ...Array.from(new Set(rows.map((row) => row.get("Тип")))).map(
+          (type) => ({ name: type })
+        ),
       ],
     }),
   ]);
 
-  const productsData = rows.map(row => ({
+  const productsData = rows.map((row) => ({
     place: row.get("Площадка"),
     cabinet: row.get("Кабинет"),
     product: {
@@ -75,43 +97,44 @@ export async function POST(req: Request) {
       inv2: row.get("Инвентарный № 2"),
       inv3: row.get("Инвентарный № 3"),
       ser: row.get("Серийный №"),
-      count: row.get("Количество")
-    }
-  }))
+      count: row.get("Количество"),
+    },
+  }));
 
   for (let i = 0; i < productsData.length; i++) {
     const place = await db.place.findFirst({
       where: {
-        name: productsData[i].place
-      }
-    })
+        name: productsData[i].place,
+      },
+    });
 
-    if(!place) return NextResponse.json({ message: "Не все площадки созданы!" })
+    if (!place)
+      return NextResponse.json({ message: "Не все площадки созданы!" });
 
     const type = await db.type.findFirst({
       where: {
-        name: productsData[i].product.type
-      }
-    })
+        name: productsData[i].product.type,
+      },
+    });
 
-    if(!type) return NextResponse.json({ message: "Не все типы созданы!" })
+    if (!type) return NextResponse.json({ message: "Не все типы созданы!" });
 
     let cabinet = await db.cabinet.findFirst({
       where: {
         AND: [
           { name: productsData[i].cabinet },
-          { place: { name: productsData[i].place } }
-        ]
-      }
-    })
+          { place: { name: productsData[i].place } },
+        ],
+      },
+    });
 
-    if(!cabinet) {
+    if (!cabinet) {
       cabinet = await db.cabinet.create({
         data: {
           name: productsData[i].cabinet,
-          placeId: place.id
-        }
-      }) 
+          placeId: place.id,
+        },
+      });
     }
 
     await db.product.create({
@@ -125,7 +148,7 @@ export async function POST(req: Request) {
         cabinetId: cabinet.id,
         userAdded: 1,
         serialNumber: productsData[i].product.ser,
-        typeId: type.id
+        typeId: type.id,
       },
     });
   }
