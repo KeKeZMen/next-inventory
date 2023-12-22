@@ -47,16 +47,12 @@ export async function POST(req: Request) {
   if (!workSheet)
     return NextResponse.json({ message: "Неверный формат таблицы!" });
 
-  workSheet.getRow(1).eachCell((cell, colNumber) => {
-    workSheet.getColumn(colNumber).key = cell.text;
-  });
-
   const rows = [];
 
   let headers = workSheet.getRow(1).values as Array<string>;
   headers = headers.filter((el) => el);
 
-  for (let i = 2; i < workSheet.rowCount; i++) {
+  for (let i = 2; i <= workSheet.rowCount; i++) {
     const row = new Map();
 
     let values = workSheet.getRow(i).values as Array<string>;

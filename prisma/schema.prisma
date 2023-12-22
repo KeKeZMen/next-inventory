@@ -54,7 +54,7 @@ model Cabinet {
   responsibleId Int?
 
   place    Place     @relation(fields: [placeId], references: [id])
-  users    User?      @relation(fields: [responsibleId], references: [id])
+  users    User?     @relation(fields: [responsibleId], references: [id])
   products Product[]
 
   @@index([id])

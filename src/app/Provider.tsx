@@ -3,7 +3,7 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
-import { ThemeProvider } from "next-themes";
+// import { ThemeProvider } from "next-themes";
 import { useWindowSize } from "@/shared";
 
 export const MenuContext = createContext({
@@ -32,10 +32,10 @@ export const Providers = ({ children }: { children: ReactNode }) => {
   return (
     <SessionProvider>
       {/* <ThemeProvider attribute="class" defaultTheme="light"> */}
-        <Toaster />
-        <MenuContext.Provider value={{ isOpenedMenu, handleMenu }}>
-          {children}
-        </MenuContext.Provider>
+      <Toaster />
+      <MenuContext.Provider value={{ isOpenedMenu, handleMenu }}>
+        {children}
+      </MenuContext.Provider>
       {/* </ThemeProvider> */}
     </SessionProvider>
   );
