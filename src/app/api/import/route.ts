@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       { message: "Вы не авторизованы!" },
       { status: 401 }
     );
-    
+
   const right = await db.right.findFirst({
     where: {
       id: session.user.rightId,
@@ -68,34 +68,42 @@ export async function POST(req: Request) {
   await db.$transaction([
     db.place.createMany({
       data: [
-        ...Array.from(new Set(rows.map((row) => row.get("Площадка")))).map(
-          (place) => ({ name: place })
-        ),
+        ...Array.from(
+          new Set(
+            rows.map((row) =>
+              (row.get("Площадка") as string).trim().toLowerCase()
+            )
+          )
+        ).map((place) => ({ name: place })),
       ],
     }),
     db.type.createMany({
       data: [
-        ...Array.from(new Set(rows.map((row) => row.get("Тип")))).map(
-          (type) => ({ name: type })
-        ),
+        ...Array.from(
+          new Set(
+            rows.map((row) => (row.get("Тип") as string).trim().toLowerCase())
+          )
+        ).map((type) => ({ name: type })),
       ],
     }),
   ]);
 
-  const productsData = rows.map((row) => ({
-    place: row.get("Площадка"),
-    cabinet: row.get("Кабинет"),
-    product: {
-      name: row.get("Название"),
-      type: row.get("Тип"),
-      desk: row.get("Описание"),
-      inv1: row.get("Инвентарный № 1"),
-      inv2: row.get("Инвентарный № 2"),
-      inv3: row.get("Инвентарный № 3"),
-      ser: row.get("Серийный №"),
-      count: row.get("Количество"),
-    },
-  }));
+  const productsData = rows
+    .map((row) => ({
+      place: String(row.get("Площадка")).trim().toLowerCase(),
+      cabinet: String(row.get("Кабинет")).trim().toLowerCase(),
+      product: {
+        name: String(row.get("Название")).trim(),
+        type: String(row.get("Тип")).trim().toLowerCase(),
+        desk: String(row.get("Описание")).trim(),
+        inv1: String(row.get("Инвентарный № 1")).trim(),
+        inv2: String(row.get("Инвентарный № 2")).trim(),
+        inv3: String(row.get("Инвентарный № 3")).trim(),
+        ser: String(row.get("Серийный №")).trim(),
+        count: row.get("Количество"),
+      },
+    }))
+    .filter((d) => d.place !== "undefined");
 
   for (let i = 0; i < productsData.length; i++) {
     const place = await db.place.findFirst({
