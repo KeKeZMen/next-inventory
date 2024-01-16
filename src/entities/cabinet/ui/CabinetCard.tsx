@@ -35,7 +35,7 @@ export const CabinetCard = async ({
         {cabinet.name}
       </Link>
       {right?.cabinetActions && (
-        <div className="absolute hidden bg-white shadow-md group-hover:flex justify-between items-center p-1 z-10 rounded-md">
+        <div className="fixed hidden bg-white shadow-md group-hover:flex justify-between items-center p-1 z-10 rounded-md">
           {deleteButton}
           {editButton}
           {passportButton}

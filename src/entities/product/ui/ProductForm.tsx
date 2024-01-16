@@ -104,7 +104,7 @@ export const ProductForm: FC<PropsType> = ({
         onUtil: data.onUtil,
         serialNumber: data.serialNumber,
         typeId: parseInt(typeId),
-        productId: product?.id
+        productId: product?.id,
       });
 
       setIsLoading(false);
@@ -120,79 +120,79 @@ export const ProductForm: FC<PropsType> = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex justify-center items-center flex-col w-[321px] gap-3"
+      className="flex justify-center items-center flex-col md:w-[721px] gap-3"
     >
       <h5 className="md:self-start self-center text-base uppercase">
         {formTitle}
       </h5>
 
-      <Input
-        type="text"
-        disabled={isLoading}
-        errors={errors}
-        id="name"
-        placeholder="Название*"
-        required
-        fullWidth
-        register={register}
-      />
+      <div className="flex flex-col md:flex-row gap-3 w-full justify-around">
+        <div className="flex flex-col gap-2 md:w-[50%]">
+          <Input
+            type="text"
+            disabled={isLoading}
+            errors={errors}
+            id="name"
+            placeholder="Название*"
+            required
+            fullWidth
+            register={register}
+          />
 
-      <Input
-        type="text"
-        disabled={isLoading}
-        errors={errors}
-        id="description"
-        placeholder="Описание"
-        fullWidth
-        register={register}
-      />
+          <Input
+            type="text"
+            disabled={isLoading}
+            errors={errors}
+            id="description"
+            placeholder="Описание"
+            fullWidth
+            register={register}
+          />
 
-      <Input
-        type="text"
-        disabled={isLoading}
-        errors={errors}
-        id="inventoryNumber"
-        placeholder="Инвентарный номер*"
-        required
-        fullWidth
-        register={register}
-      />
-      <Input
-        type="text"
-        disabled={isLoading}
-        errors={errors}
-        id="inventoryNumber2"
-        placeholder="Инвентарный номер 2"
-        fullWidth
-        register={register}
-      />
-      <Input
-        type="text"
-        disabled={isLoading}
-        errors={errors}
-        id="inventoryNumber3"
-        placeholder="Инвентарный номер 3"
-        fullWidth
-        register={register}
-      />
+          <Input
+            type="text"
+            disabled={isLoading}
+            errors={errors}
+            id="inventoryNumber"
+            placeholder="Инвентарный номер*"
+            required
+            fullWidth
+            register={register}
+          />
+        </div>
 
-      <Input
-        type="text"
-        disabled={isLoading}
-        errors={errors}
-        id="serialNumber"
-        placeholder="Серийный номер*"
-        required
-        fullWidth
-        register={register}
-      />
+        <div className="flex flex-col gap-2 md:w-[50%]">
+          <Input
+            type="text"
+            disabled={isLoading}
+            errors={errors}
+            id="inventoryNumber2"
+            placeholder="Инвентарный номер 2"
+            fullWidth
+            register={register}
+          />
+          <Input
+            type="text"
+            disabled={isLoading}
+            errors={errors}
+            id="inventoryNumber3"
+            placeholder="Инвентарный номер 3"
+            fullWidth
+            register={register}
+          />
 
-      <Checkbox
-        id="onUtil"
-        register={register}
-        defaultChecked={product?.onUtil}
-        label="На утилизацию"
-      />
+          <Input
+            type="text"
+            disabled={isLoading}
+            errors={errors}
+            id="serialNumber"
+            placeholder="Серийный номер*"
+            required
+            fullWidth
+            register={register}
+          />
+        </div>
+      </div>
 
       <Input
         type="number"
@@ -203,6 +203,13 @@ export const ProductForm: FC<PropsType> = ({
         required
         fullWidth
         register={register}
+      />
+
+      <Checkbox
+        id="onUtil"
+        register={register}
+        defaultChecked={product?.onUtil}
+        label="На утилизацию"
       />
 
       {types && (

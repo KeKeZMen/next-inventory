@@ -65,10 +65,10 @@ export const Select: FC<PropsType> = ({
     >
       <div className="grid grid-cols-[3fr,_1fr] " onClick={handleSelect}>
         <p className="select-none border-r-[1px]" style={{ padding }}>
-          {chekboxed ?
-            selected :
-            options.find((opt) => opt.value == selected)?.label || placeholder        
-          }
+          {chekboxed
+            ? selected
+            : options.find((opt) => opt.value == selected)?.label ||
+              placeholder}
         </p>
         <img
           src="/arrow.svg"
@@ -80,7 +80,7 @@ export const Select: FC<PropsType> = ({
         />
       </div>
       {isOpen && (
-        <ul className="mt-[1px] fixed w-[250px] list-none bg-white max-h-[150px] overflow-y-auto shadow-md z-50 rounded-md">
+        <ul className="mt-[1px] absolute w-full list-none bg-white max-h-[150px] overflow-y-auto shadow-md z-[1000] rounded-md">
           {options.map((option) =>
             !chekboxed ? (
               <li
