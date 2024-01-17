@@ -3,7 +3,7 @@
 import { useState, FormEvent } from "react";
 import { toast } from "react-hot-toast";
 
-export const UploadInput = () => {
+export const ImportInput = () => {
   const [file, setFile] = useState<File>();
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {

@@ -74,7 +74,7 @@ export async function POST(req: Request) {
               (row.get("Площадка") as string).trim().toLowerCase()
             )
           )
-        ).map((place) => ({ name: place })),
+        ).map((place) => ({ name: place[0].toUpperCase() + place.slice(1).toLowerCase() })),
       ],
     }),
     db.type.createMany({
@@ -83,18 +83,24 @@ export async function POST(req: Request) {
           new Set(
             rows.map((row) => (row.get("Тип") as string).trim().toLowerCase())
           )
-        ).map((type) => ({ name: type })),
+        ).map((type) => ({
+          name: type[0].toUpperCase() + type.slice(1).toLowerCase(),
+        })),
       ],
     }),
   ]);
 
   const productsData = rows
     .map((row) => ({
-      place: String(row.get("Площадка")).trim().toLowerCase(),
+      place:
+        String(row.get("Площадка"))[0].toUpperCase() +
+        String(row.get("Площадка")).slice(1).toLowerCase(),
       cabinet: String(row.get("Кабинет")).trim().toLowerCase(),
       product: {
         name: String(row.get("Название")).trim(),
-        type: String(row.get("Тип")).trim().toLowerCase(),
+        type:
+          String(row.get("Тип"))[0].trim().toUpperCase() +
+          String(row.get("Тип")).slice(1).trim().toLowerCase(),
         desk: String(row.get("Описание")).trim(),
         inv1: String(row.get("Инвентарный № 1")).trim(),
         inv2: String(row.get("Инвентарный № 2")).trim(),
@@ -103,12 +109,21 @@ export async function POST(req: Request) {
         count: row.get("Количество"),
       },
     }))
-    .filter((d) => d.place !== "undefined");
+    .filter((d) => {
+      if(d.cabinet == "undefined") return false
+      if(d.place == "undefined") return false
+      for (const key in d.product) {
+        if (key == "undefined") {
+          return false
+        }
+      }
+      return true
+    });
 
   for (let i = 0; i < productsData.length; i++) {
     const place = await db.place.findFirst({
       where: {
-        name: productsData[i].place,
+        name: productsData[i].place.toUpperCase(),
       },
     });
 
@@ -127,7 +142,7 @@ export async function POST(req: Request) {
       where: {
         AND: [
           { name: productsData[i].cabinet },
-          { place: { name: productsData[i].place } },
+          { place: { name: productsData[i].place.toUpperCase() } },
         ],
       },
     });
@@ -143,7 +158,7 @@ export async function POST(req: Request) {
 
     await db.product.create({
       data: {
-        count: Number(productsData[i].product.count),
+        count: 1,
         description: productsData[i].product.desk,
         inventoryNumber: productsData[i].product.inv1,
         inventoryNumber2: productsData[i].product.inv2,
