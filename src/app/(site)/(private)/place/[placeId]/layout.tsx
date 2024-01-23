@@ -15,7 +15,6 @@ export default async function PlaceLayout({
         <CabinetsGrid placeId={parseInt(params.placeId)} />
         <PlaceTypes placeId={parseInt(params.placeId)} />
       </div>
-
       {children}
     </div>
   );

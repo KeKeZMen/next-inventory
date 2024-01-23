@@ -2,8 +2,8 @@ const { createServer } = require("http");
 const next = require("next");
 const { parse } = require("url");
 
-const port = 5174;
-const hostname = "inv.energypk.ru";
+const port = 3000;
+const hostname = "localhost";
 const app = next({ hostname, port });
 const handle = app.getRequestHandler();
 app.prepare().then(() => {
