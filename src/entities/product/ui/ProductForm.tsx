@@ -81,10 +81,7 @@ export const ProductForm: FC<PropsType> = ({
       count: product ? product.count : 1,
       description: product ? product.description : "",
       inventoryNumber: product ? product.inventoryNumber : "",
-      inventoryNumber2: product ? product.inventoryNumber2 : "",
-      inventoryNumber3: product ? product.inventoryNumber3 : "",
       onUtil: product ? product.onUtil : false,
-      serialNumber: product ? product.serialNumber : "",
       typeId,
     },
   });
@@ -99,10 +96,7 @@ export const ProductForm: FC<PropsType> = ({
         count: parseInt(data.count),
         description: data.description,
         inventoryNumber: data.inventoryNumber,
-        inventoryNumber2: data.inventoryNumber2,
-        inventoryNumber3: data.inventoryNumber3,
         onUtil: data.onUtil,
-        serialNumber: data.serialNumber,
         typeId: parseInt(typeId),
         productId: product?.id,
       });
@@ -126,73 +120,37 @@ export const ProductForm: FC<PropsType> = ({
         {formTitle}
       </h5>
 
-      <div className="flex flex-col md:flex-row gap-3 w-full justify-around">
-        <div className="flex flex-col gap-2 md:w-[50%]">
-          <Input
-            type="text"
-            disabled={isLoading}
-            errors={errors}
-            id="name"
-            placeholder="Название*"
-            required
-            fullWidth
-            register={register}
-          />
+      <Input
+        type="text"
+        disabled={isLoading}
+        errors={errors}
+        id="name"
+        placeholder="Название*"
+        required
+        fullWidth
+        register={register}
+      />
 
-          <Input
-            type="text"
-            disabled={isLoading}
-            errors={errors}
-            id="description"
-            placeholder="Описание"
-            fullWidth
-            register={register}
-          />
+      <Input
+        type="text"
+        disabled={isLoading}
+        errors={errors}
+        id="description"
+        placeholder="Описание"
+        fullWidth
+        register={register}
+      />
 
-          <Input
-            type="text"
-            disabled={isLoading}
-            errors={errors}
-            id="inventoryNumber"
-            placeholder="Инвентарный номер*"
-            required
-            fullWidth
-            register={register}
-          />
-        </div>
-
-        <div className="flex flex-col gap-2 md:w-[50%]">
-          <Input
-            type="text"
-            disabled={isLoading}
-            errors={errors}
-            id="inventoryNumber2"
-            placeholder="Инвентарный номер 2"
-            fullWidth
-            register={register}
-          />
-          <Input
-            type="text"
-            disabled={isLoading}
-            errors={errors}
-            id="inventoryNumber3"
-            placeholder="Инвентарный номер 3"
-            fullWidth
-            register={register}
-          />
-
-          <Input
-            type="text"
-            disabled={isLoading}
-            errors={errors}
-            id="serialNumber"
-            placeholder="Серийный номер*"
-            required
-            fullWidth
-            register={register}
-          />
-        </div>
-      </div>
+      <Input
+        type="text"
+        disabled={isLoading}
+        errors={errors}
+        id="inventoryNumber"
+        placeholder="Инвентарный номер*"
+        required
+        fullWidth
+        register={register}
+      />
 
       <Input
         type="number"

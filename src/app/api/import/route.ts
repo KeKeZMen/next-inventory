@@ -102,10 +102,7 @@ export async function POST(req: Request) {
           String(row.get("Тип"))[0].trim().toUpperCase() +
           String(row.get("Тип")).slice(1).trim().toLowerCase(),
         desk: String(row.get("Описание")).trim(),
-        inv1: String(row.get("Инвентарный № 1")).trim(),
-        inv2: String(row.get("Инвентарный № 2")).trim(),
-        inv3: String(row.get("Инвентарный № 3")).trim(),
-        ser: String(row.get("Серийный №")).trim(),
+        inv: String(row.get("Инвентарный №")).trim(),
         count: row.get("Количество"),
       },
     }))
@@ -160,13 +157,10 @@ export async function POST(req: Request) {
       data: {
         count: 1,
         description: productsData[i].product.desk,
-        inventoryNumber: productsData[i].product.inv1,
-        inventoryNumber2: productsData[i].product.inv2,
-        inventoryNumber3: productsData[i].product.inv3,
+        inventoryNumber: productsData[i].product.inv,
         name: productsData[i].product.name,
         cabinetId: cabinet.id,
         userAdded: 1,
-        serialNumber: productsData[i].product.ser,
         typeId: type.id,
       },
     });

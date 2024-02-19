@@ -15,10 +15,7 @@ const tableHeadCells = [
   "ID",
   "Название",
   "Описание",
-  "Инв. № 1",
-  "Инв. № 2",
-  "Инв. № 3",
-  "Сер. номер",
+  "Инв. №",
   "Кол-во",
   "Ред.",
 ];
@@ -61,8 +58,8 @@ export const ProductsTable: FC<PropsType> = ({
         className={clsx(
           "overflow-y-auto rounded-md border-collapse grid",
           withoutEdit
-            ? "grid-cols-[minmax(74px,_1fr)_repeat(2,_minmax(299px,_4fr))_repeat(4,_minmax(149px,_2fr))_minmax(100px,_1.5fr)]"
-            : "grid-cols-[minmax(74px,_1fr)_repeat(2,_minmax(299px,_4fr))_repeat(4,_minmax(149px,_2fr))_minmax(100px,_1.5fr)_minmax(74px,_1fr)]"
+            ? "grid-cols-[minmax(74px,_1fr)_repeat(2,_minmax(299px,_4fr))_repeat(1,_minmax(149px,_2fr))_minmax(100px,_1.5fr)]"
+            : "grid-cols-[minmax(74px,_1fr)_repeat(2,_minmax(299px,_4fr))_repeat(1,_minmax(149px,_2fr))_minmax(100px,_1.5fr)_minmax(74px,_1fr)]"
         )}
       >
         <thead className="contents shadow-md bg-white mt-1">

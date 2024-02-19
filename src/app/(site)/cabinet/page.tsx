@@ -50,11 +50,8 @@ export default async function CabinetPage({
           description: true,
           id: true,
           inventoryNumber: true,
-          inventoryNumber2: true,
-          inventoryNumber3: true,
           name: true,
           onUtil: true,
-          serialNumber: true,
           typeId: true,
           userAdded: true,
           cabinet: {

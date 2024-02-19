@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body,
-:root {
-  height: 100vh;
-}
-
 .data-table tr:last-child td {
   @apply border-none;
 }
@@ -22,6 +16,10 @@ body,
 
 .data-table tr td:last-child {
   @apply text-end;
+}
+
+body{
+  height: 100vh;
 }
 
 thead,

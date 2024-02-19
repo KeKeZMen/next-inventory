@@ -3,9 +3,6 @@ export type ProductActionType = {
   name: string;
   description: string;
   inventoryNumber: string;
-  inventoryNumber2: string;
-  inventoryNumber3: string;
-  serialNumber: string;
   onUtil: boolean;
   cabinetId: number;
   typeId: number;
@@ -17,9 +14,6 @@ export interface IProduct {
   name: string;
   description: string;
   inventoryNumber: string;
-  inventoryNumber2: string;
-  inventoryNumber3: string;
-  serialNumber: string;
   onUtil: boolean;
   cabinet: {
     id: number;

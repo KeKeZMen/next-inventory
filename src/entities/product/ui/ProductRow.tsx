@@ -55,30 +55,6 @@ export const ProductRow: FC<PropsType> = ({
           "border-t-2 border-[#929292] text-center p-3"
         )}
       >
-        {product.inventoryNumber2}
-      </td>
-      <td
-        className={clsx(
-          product.onUtil && "bg-on-delete",
-          "border-t-2 border-[#929292] text-center p-3"
-        )}
-      >
-        {product.inventoryNumber3}
-      </td>
-      <td
-        className={clsx(
-          product.onUtil && "bg-on-delete",
-          "border-t-2 border-[#929292] text-center p-3"
-        )}
-      >
-        {product.serialNumber}
-      </td>
-      <td
-        className={clsx(
-          product.onUtil && "bg-on-delete",
-          "border-t-2 border-[#929292] text-center p-3"
-        )}
-      >
         {product.count}
       </td>
       {!withoutEdit && (

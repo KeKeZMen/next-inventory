@@ -6,7 +6,7 @@ import { db } from "@/shared";
 import RightsTable from "@/widgets/RightsTable";
 import { TypesTable } from "@/widgets/TypesTable";
 import { PlacesTable } from "@/widgets/PlacesTable";
-import { ImportInput } from "@/features/import/UploadInput";
+// import { ImportInput } from "@/features/import/UploadInput";
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
