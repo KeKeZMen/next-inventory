@@ -7,7 +7,7 @@ type PropsType = {
   addButton?: JSX.Element;
   selects?: JSX.Element;
   withoutEdit?: boolean;
-  fullHeight?: boolean;
+  height: string;
   margin?: string;
 };
 
@@ -23,20 +23,18 @@ const tableHeadCells = [
 export const ProductsTable: FC<PropsType> = ({
   children,
   title,
+  height,
   addButton,
   selects,
   withoutEdit,
-  fullHeight,
   margin,
 }) => {
   return (
     <div
-      className={clsx(
-        "px-5 pb-5 bg-white shadow-md rounded-md flex flex-col overflow-auto",
-        fullHeight ? "h-[74vh]" : "h-[52vh]"
-      )}
+      className="px-5 pb-5 bg-white shadow-md rounded-md flex flex-col overflow-auto"
       style={{
         margin,
+        height,
       }}
     >
       <div className="flex justify-between items-center my-4 w-full">

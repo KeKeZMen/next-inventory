@@ -76,6 +76,7 @@ export default async function CabinetPage({
             withoutEdit
             margin="0 0 15px 0"
             key={cabinet.id}
+            height="300px"
           >
             {cabinet.products.map((product) => (
               <ProductRow product={product} key={product.id} withoutEdit />

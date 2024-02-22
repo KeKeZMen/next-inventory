@@ -9,7 +9,7 @@ export const PlacesTable = async () => {
   const places = await db.place.findMany();
 
   return (
-    <DataTable title="Площадки" addAction={<AddPlaceButton />} maxHeight>
+    <DataTable title="Площадки" addAction={<AddPlaceButton />} height="400px">
       {places.map((place) => (
         <PlaceRow
           place={place}

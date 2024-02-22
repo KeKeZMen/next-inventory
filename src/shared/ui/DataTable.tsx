@@ -4,10 +4,9 @@ import { Children, FC, ReactNode } from "react";
 type PropsType = {
   title: string;
   children: ReactNode;
+  height: string;
   margin?: string;
   addAction?: JSX.Element;
-  maxHeight?: boolean;
-  cabinetPage?: boolean
 };
 
 export const DataTable: FC<PropsType> = ({
@@ -15,18 +14,14 @@ export const DataTable: FC<PropsType> = ({
   title,
   addAction,
   margin,
-  maxHeight,
-  cabinetPage
+  height,
 }) => {
   return (
     <div
-      className={clsx(
-        "p-3 flex items-start bg-white shadow-md rounded-md flex-col",
-        !maxHeight && "md:h-[200px]",
-        cabinetPage && "md:w-[24%]"
-      )}
+      className="p-3 flex items-start bg-white shadow-md rounded-md flex-col"
       style={{
         margin,
+        height,
       }}
     >
       <div className="flex justify-between items-center mb-[10px] w-full">

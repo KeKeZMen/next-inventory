@@ -4,7 +4,6 @@ import { MenuContext } from "@/app/Provider";
 import { IPlace } from "@/entities/place/lib/types";
 import { UserProfile } from "@/entities/user/ui/UserProfile";
 import { LogoutButton } from "@/features/auth/LogoutButton";
-import { ThemeSwitcher } from "@/features/themes/ThemeSwitcher";
 import { useWindowSize } from "@/shared/lib/hooks/useWindowSize";
 import { NavLink } from "@/shared/ui/NavLink";
 import { User } from "next-auth";
@@ -36,17 +35,23 @@ export const Menu: FC<PropsType> = ({ places, user }) => {
       >
         <div className="w-full flex justify-around items-center p-5 h-[88px] shadow-md">
           <h1 className="uppercase font-bold text-2xl">Inventory</h1>
-          {/* {width && width <= 640 && <ThemeSwitcher />} */}
         </div>
-        <ul className="px-1 flex flex-col items-center mt-2 w-full overflow-auto">
+        <ul className="px-1 flex flex-col items-center mt-2 w-full overflow-auto pb-20">
           <NavLink
             href={"/"}
-            margin="0 0 10px 0"
             onClick={() => {
               width && width <= 1400 && handleMenu();
             }}
           >
             Статистика
+          </NavLink>
+          <NavLink
+            href={"/consumable/1"}
+            onClick={() => {
+              width && width <= 1400 && handleMenu();
+            }}
+          >
+            Расходники
           </NavLink>
           {places.map((place) => (
             <NavLink

@@ -19,7 +19,7 @@ export const NavLink: FC<PropsType> = ({ children, margin, ...props }) => {
     <Link
       {...props}
       className={clsx(
-        "text-white p-7 rounded-md w-full uppercase",
+        "text-white p-4 rounded-md w-full uppercase pl-7",
         isActive ? "bg-light-primary" : "bg-primary"
       )}
       style={{

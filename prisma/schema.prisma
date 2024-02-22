@@ -13,9 +13,10 @@ model User {
   password String
   rightId  Int
 
-  products Product[]
-  right    Right     @relation(fields: [rightId], references: [id])
-  cabinets Cabinet[]
+  products  Product[]
+  right     Right       @relation(fields: [rightId], references: [id])
+  userPlace UserPlace[]
+  cabinets  Cabinet[]
 
   @@index([id])
   @@map("users")
@@ -37,11 +38,22 @@ model Right {
   @@map("rights")
 }
 
+model UserPlace {
+  id       Int @id @default(autoincrement())
+  place_id Int
+  user_id  Int
+
+  place Place @relation(fields: [place_id], references: [id])
+  user  User  @relation(fields: [user_id], references: [id])
+}
+
 model Place {
   id   Int    @id @default(autoincrement())
   name String
 
-  cabinets Cabinet[]
+  cabinets  Cabinet[]
+  orders    Order[]
+  userPlace UserPlace[]
 
   @@index([id])
   @@map("places")
@@ -62,15 +74,15 @@ model Cabinet {
 }
 
 model Product {
-  id               Int     @id @default(autoincrement())
-  name             String
-  description      String
-  inventoryNumber  String
-  onUtil           Boolean @default(false)
-  cabinetId        Int
-  typeId           Int
-  count            Int
-  userAdded        Int
+  id              Int     @id @default(autoincrement())
+  name            String
+  description     String
+  inventoryNumber String
+  onUtil          Boolean @default(false)
+  cabinetId       Int
+  typeId          Int
+  count           Int
+  userAdded       Int
 
   user    User    @relation(fields: [userAdded], references: [id])
   type    Type    @relation(fields: [typeId], references: [id])
@@ -80,11 +92,48 @@ model Product {
   @@map("products")
 }
 
+model Model {
+  id         Int    @id @default(autoincrement())
+  type_id    Int
+  model_name String
+
+  type        Type         @relation(fields: [type_id], references: [id])
+  consumables Consumable[]
+
+  @@index([id])
+  @@map("models")
+}
+
+model Consumable {
+  id             Int     @id @default(autoincrement())
+  cosumable_name String
+  model_id       Int
+  required       Boolean
+  count          Int
+
+  model Model   @relation(fields: [model_id], references: [id])
+  order Order[]
+
+  @@index([id])
+  @@map("consumables")
+}
+
+model Order {
+  id            Int @id @default(autoincrement())
+  place_id      Int
+  consumable_id Int
+  count         Int
+
+  consumable Consumable @relation(fields: [consumable_id], references: [id])
+  place      Place      @relation(fields: [place_id], references: [id])
+}
+
 model Type {
   id   Int    @id @default(autoincrement())
   name String
 
   products Product[]
+  models   Model[]
 
   @@index([id])
   @@map("types")

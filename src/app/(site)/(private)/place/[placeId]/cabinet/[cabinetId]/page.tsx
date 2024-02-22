@@ -2,7 +2,6 @@ import { ProductRow } from "@/entities/product/ui/ProductRow";
 import { AddProductButton } from "@/features/product/AddProductButton";
 import { DeleteProductButton } from "@/features/product/DeleteProductButton";
 import { EditProductButton } from "@/features/product/EditProductButton";
-import { SortSelect } from "@/features/sort/SortSelect";
 import { db } from "@/shared";
 import { ProductsTable } from "@/shared/ui/ProductsTable";
 import { ProductsSelects } from "@/widgets/ProductsSelects";
@@ -60,6 +59,7 @@ const CabinetPage = async ({
       title="Позиции"
       addButton={<AddProductButton />}
       selects={<ProductsSelects sortSelect />}
+      height="500px"
     >
       {products.map((product) => (
         <ProductRow
