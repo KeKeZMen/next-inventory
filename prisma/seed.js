@@ -11,6 +11,7 @@ async function main() {
       rightActions: true,
       userActions: true,
       typeActions: true,
+      consumablesActions: true,
     },
   });
 

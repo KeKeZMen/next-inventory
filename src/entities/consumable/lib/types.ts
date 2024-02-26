@@ -1,7 +1,7 @@
 export interface IConsumable {
-  id: number;
-  cosumable_name: string;
-  model_id: number;
+  id?: number;
+  name: string;
+  modelId: number;
   required: boolean;
   count: number;
 }

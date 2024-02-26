@@ -15,7 +15,7 @@ export const TypesCounts = async () => {
   });
 
   return (
-    <DataTable title="Типы оборудования">
+    <DataTable title="Типы оборудования" height="300px">
       {types.map(({ name, id, _count }) => (
         <TypeRow type={{ name, id }} productsCount={_count.products} key={id} />
       ))}

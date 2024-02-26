@@ -18,10 +18,9 @@ export const DataTable: FC<PropsType> = ({
 }) => {
   return (
     <div
-      className="p-3 flex items-start bg-white shadow-md rounded-md flex-col"
+      className={clsx("p-3 flex items-start bg-white shadow-md rounded-md flex-col", `md:w-[${height}]`)}
       style={{
         margin,
-        height,
       }}
     >
       <div className="flex justify-between items-center mb-[10px] w-full">

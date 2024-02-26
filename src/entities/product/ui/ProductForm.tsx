@@ -114,7 +114,7 @@ export const ProductForm: FC<PropsType> = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex justify-center items-center flex-col md:w-[721px] gap-3"
+      className="flex justify-center items-center flex-col md:w-[421px] gap-3 overflow-y-auto"
     >
       <h5 className="md:self-start self-center text-base uppercase">
         {formTitle}
@@ -131,37 +131,82 @@ export const ProductForm: FC<PropsType> = ({
         register={register}
       />
 
-      <Input
-        type="text"
-        disabled={isLoading}
-        errors={errors}
-        id="description"
-        placeholder="Описание"
-        fullWidth
-        register={register}
-      />
+      <div className="flex flex-col md:flex-row w-full justify-between gap-3">
+        <div className="flex flex-col gap-3 md:w-[50%]">
+          <Input
+            type="text"
+            disabled={isLoading}
+            errors={errors}
+            id="description"
+            placeholder="Описание"
+            fullWidth
+            register={register}
+          />
 
-      <Input
-        type="text"
-        disabled={isLoading}
-        errors={errors}
-        id="inventoryNumber"
-        placeholder="Инвентарный номер*"
-        required
-        fullWidth
-        register={register}
-      />
+          <Input
+            type="text"
+            disabled={isLoading}
+            errors={errors}
+            id="inventoryNumber"
+            placeholder="Инвентарный номер*"
+            required
+            fullWidth
+            register={register}
+          />
 
-      <Input
-        type="number"
-        disabled={isLoading}
-        errors={errors}
-        id="count"
-        placeholder="Количество*"
-        required
-        fullWidth
-        register={register}
-      />
+          <Input
+            type="number"
+            disabled={isLoading}
+            errors={errors}
+            id="count"
+            placeholder="Количество*"
+            required
+            fullWidth
+            register={register}
+          />
+        </div>
+
+        <div className="flex flex-col gap-3 md:w-[50%]">
+          {types && (
+            <Select
+              options={types.map((type) => ({
+                label: type.name,
+                value: String(type.id),
+              }))}
+              selected={typeId}
+              placeholder="Тип*"
+              fullwidth
+              onChange={handleSelectType}
+            />
+          )}
+
+          {places && (
+            <Select
+              options={places.map((place) => ({
+                label: place.name,
+                value: String(place.id),
+              }))}
+              selected={placeId}
+              placeholder="Площадка*"
+              fullwidth
+              onChange={handleSelectPlace}
+            />
+          )}
+
+          {cabinets && (
+            <Select
+              options={cabinets.map((type) => ({
+                label: type.name,
+                value: String(type.id),
+              }))}
+              selected={cabinetId}
+              placeholder="Кабинет*"
+              fullwidth
+              onChange={handleSelectCabinet}
+            />
+          )}
+        </div>
+      </div>
 
       <Checkbox
         id="onUtil"
@@ -169,45 +214,6 @@ export const ProductForm: FC<PropsType> = ({
         defaultChecked={product?.onUtil}
         label="На утилизацию"
       />
-
-      {types && (
-        <Select
-          options={types.map((type) => ({
-            label: type.name,
-            value: String(type.id),
-          }))}
-          selected={typeId}
-          placeholder="Тип*"
-          fullwidth
-          onChange={handleSelectType}
-        />
-      )}
-
-      {places && (
-        <Select
-          options={places.map((place) => ({
-            label: place.name,
-            value: String(place.id),
-          }))}
-          selected={placeId}
-          placeholder="Площадка*"
-          fullwidth
-          onChange={handleSelectPlace}
-        />
-      )}
-
-      {cabinets && (
-        <Select
-          options={cabinets.map((type) => ({
-            label: type.name,
-            value: String(type.id),
-          }))}
-          selected={cabinetId}
-          placeholder="Кабинет*"
-          fullwidth
-          onChange={handleSelectCabinet}
-        />
-      )}
 
       <div className="flex self-end justify-between items-center w-full">
         <Button onClick={onClose} danger disabled={isLoading}>

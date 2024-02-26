@@ -7,6 +7,7 @@ export type RightActionType = {
   userActions: boolean;
   rightActions: boolean;
   typeActions: boolean;
+  consumablesActions: boolean;
 };
 
 export interface IRight {
@@ -16,6 +17,7 @@ export interface IRight {
   cabinetActions: boolean;
   productActions: boolean;
   userActions: boolean;
+  consumablesActions: boolean;
   rightActions: boolean;
   typeActions: boolean;
 }

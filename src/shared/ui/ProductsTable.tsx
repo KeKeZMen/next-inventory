@@ -31,10 +31,9 @@ export const ProductsTable: FC<PropsType> = ({
 }) => {
   return (
     <div
-      className="px-5 pb-5 bg-white shadow-md rounded-md flex flex-col overflow-auto"
+      className={clsx("px-5 pb-5 bg-white shadow-md rounded-md flex flex-col overflow-auto", `md:h-[${height}]`)}
       style={{
         margin,
-        height,
       }}
     >
       <div className="flex justify-between items-center my-4 w-full">

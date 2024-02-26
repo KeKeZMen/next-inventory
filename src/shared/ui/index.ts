@@ -10,3 +10,4 @@ export * from "./Checkbox";
 export * from "./DeleteConfirm";
 export * from "./Select";
 export * from "./NavLink";
+export * from "./ConsumablesTable"

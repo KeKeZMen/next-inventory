@@ -11,18 +11,39 @@ export const UsersTable = async () => {
         id: 1,
       },
     },
+    select: {
+      id: true,
+      name: true,
+      rightId: true,
+      userPlace: {
+        select: {
+          placeId: true,
+        },
+      },
+    },
   });
 
   return (
-    <DataTable title="Пользователи" addAction={<AddUserButton />}>
-      {users.map((user) => (
-        <UserRow
-          user={user}
-          key={user.id}
-          deleteButton={<DeleteUserButton userId={user.id} />}
-          editButton={<EditUserButton user={user} />}
-        />
-      ))}
+    <DataTable
+      title="Пользователи"
+      addAction={<AddUserButton />}
+      height="300px"
+    >
+      {users
+        .map((user) => ({
+          name: user.name,
+          rightId: user.rightId,
+          id: user.id,
+          places: user.userPlace.map((p) => String(p.placeId)),
+        }))
+        .map((user) => (
+          <UserRow
+            user={user}
+            key={user.id}
+            deleteButton={<DeleteUserButton userId={user.id} />}
+            editButton={<EditUserButton user={user} />}
+          />
+        ))}
     </DataTable>
   );
 };

@@ -66,11 +66,18 @@ export async function POST(req: Request) {
   if (!rights?.placeActions)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
-  await db.place.create({
+  const place = await db.place.create({
     data: {
       name: body.name,
     },
   });
+
+  await db.userPlace.create({
+    data: {
+      placeId: place.id,
+      userId: 1
+    }
+  })
 
   return Response.json({ message: "Площадка создана!" });
 }

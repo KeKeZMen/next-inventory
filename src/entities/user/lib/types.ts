@@ -3,4 +3,5 @@ export type UserActionType = {
   name: string;
   password: string;
   rightId: number;
+  places: Array<string>;
 };

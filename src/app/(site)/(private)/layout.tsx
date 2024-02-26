@@ -8,7 +8,6 @@ import { redirect } from "next/navigation";
 
 export default async function layout({ children }: { children: ReactNode }) {
   const session = await getServerSession(authOptions);
-  const places = await db.place.findMany();
 
   if (!session?.user) return redirect("/login");
 
@@ -23,6 +22,16 @@ export default async function layout({ children }: { children: ReactNode }) {
   const { id, name, ...rest } = right;
 
   if (!Object.values(rest).find((r) => r)) redirect("/cabinet");
+
+  const places = await db.place.findMany({
+    where: {
+      userPlace: {
+        some: {
+          userId: session.user.id,
+        },
+      },
+    },
+  });
 
   return (
     <div className="flex h-full">

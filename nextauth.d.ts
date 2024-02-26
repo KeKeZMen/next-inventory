@@ -2,6 +2,7 @@ import { DefaultSession, DefaultUser } from "next-auth";
 
 interface IUser extends DefaultUser {
   rightId: number;
+  places: Array<string>
 }
 
 declare module "next-auth" {

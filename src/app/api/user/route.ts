@@ -45,12 +45,18 @@ export async function POST(req: Request) {
   if (!rights?.userActions)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
-  await db.user.create({
+  const user = await db.user.create({
     data: {
       name: body.name,
       password: createHash("sha256").update(body.password).digest("hex"),
       rightId: body.rightId,
     },
+  });
+
+  await db.userPlace.createMany({
+    data: [
+      ...body.places.map((p: string) => ({ placeId: Number(p), userId: user.id })),
+    ],
   });
 
   return Response.json({ message: "Пользователь создан!" });
@@ -72,7 +78,7 @@ export async function PATCH(req: Request) {
   if (!rights?.userActions)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
-  await db.user.update({
+  const user = await db.user.update({
     where: {
       id: body.userId,
     },
@@ -81,6 +87,18 @@ export async function PATCH(req: Request) {
       password: createHash("sha256").update(body.password).digest("hex"),
       rightId: body.rightId,
     },
+  });
+
+  await db.userPlace.deleteMany({
+    where: {
+      userId: body.userId,
+    },
+  });
+
+  await db.userPlace.createMany({
+    data: [
+      ...body.places.map((p: string) => ({ placeId: Number(p), userId: user.id })),
+    ],
   });
 
   return Response.json({ message: "Пользователь отредактирован!" });
@@ -103,13 +121,14 @@ export async function GET(req: Request) {
           { right: { productActions: true } },
           { right: { typeActions: true } },
           { right: { userActions: true } },
-        ]
+          { right: { consumablesActions: true } }
+        ],
       },
     },
     select: {
       id: true,
-      name: true
-    }
+      name: true,
+    },
   });
 
   return NextResponse.json(users);

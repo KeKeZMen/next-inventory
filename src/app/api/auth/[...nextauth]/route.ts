@@ -33,10 +33,17 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid Credentials");
         }
 
+        const userPlaces = await db.userPlace.findMany({
+          where: {
+            userId: user.id
+          }
+        })
+
         return {
           rightId: user.rightId,
           id: user.id,
           name: user.name,
+          places: userPlaces.map(p => String(p.placeId))
         };
       },
     }),

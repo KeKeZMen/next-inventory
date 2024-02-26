@@ -5,12 +5,16 @@ import { useState, FC } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { UserActionType } from "../lib/types";
-import { Button, Input, Select } from "@/shared";
+import { Button, Checkbox, Input, Select } from "@/shared";
 import { IRight } from "@/entities/right/lib/types";
 import useSWR, { Fetcher } from "swr";
 import { User } from "next-auth";
+import { IPlace } from "@/entities/place/lib/types";
 
-const fetcher: Fetcher<Array<IRight>, string> = (url) => fetch(url).then(res => res.json())
+const rightsFetcher: Fetcher<Array<IRight>, string> = (url) =>
+  fetch(url).then((res) => res.json());
+const placesFetcher: Fetcher<Array<IPlace>, string> = (url) =>
+  fetch(url).then((res) => res.json());
 
 type PropsType = {
   formTitle: string;
@@ -26,14 +30,18 @@ export const UserForm: FC<PropsType> = ({
   onSubmitAction,
   user,
   onClose,
-}) => {
+}) => {  
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedPlaces, setSelectedPlaces] = useState<Array<string>>(
+    user?.places ?? []
+  );
   const [selectedRightId, setSelectedRightId] = useState(
     user ? String(user.rightId) : ""
   );
   const router = useRouter();
 
-  const { data: rights } = useSWR("/api/right", fetcher);
+  const { data: rights } = useSWR("/api/right", rightsFetcher);
+  const { data: places } = useSWR("/api/place", placesFetcher);
 
   const {
     register,
@@ -57,6 +65,7 @@ export const UserForm: FC<PropsType> = ({
         password: data.password,
         rightId: parseInt(selectedRightId),
         userId: user?.id,
+        places: selectedPlaces,
       });
 
       setIsLoading(false);
@@ -71,6 +80,11 @@ export const UserForm: FC<PropsType> = ({
 
   const handleSelectRight = (value: string) => {
     setSelectedRightId(value);
+  };
+
+  const handleSelectPlace = (value: string) => {
+    if(selectedPlaces.includes(value)) setSelectedPlaces(prev => [...prev.filter(p => p !== value)])
+    else setSelectedPlaces(prev => [...prev, value])
   };
 
   return (
@@ -115,6 +129,22 @@ export const UserForm: FC<PropsType> = ({
           placeholder="Права*"
           fullwidth
         />
+      )}
+
+      {places && (
+        <div className="grid grid-cols-2 gap-3">
+          {places?.map((place) => (
+            <Checkbox
+              register={register}
+              key={place.id}
+              id={`${place.id}`}
+              defaultChecked={selectedPlaces?.includes(String(place.id))}
+              label={`${place.name}`}
+              value={place.id}
+              onChange={(e) => handleSelectPlace(e.target.value)}
+            />
+          ))}
+        </div>
       )}
 
       <div className="flex self-end justify-between items-center w-full">
