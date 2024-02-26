@@ -59,7 +59,7 @@ export default async function TypePage({
       title="Позиции"
       addButton={<AddProductButton />}
       selects={<ProductsSelects sortSelect typeSelect />}
-      fullHeight
+      height="500px"
     >
       {products.map((product) => (
         <ProductRow

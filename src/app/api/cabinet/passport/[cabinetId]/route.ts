@@ -37,7 +37,6 @@ export async function GET(
         select: {
           name: true,
           inventoryNumber: true,
-          serialNumber: true,
           type: {
             select: {
               name: true,
@@ -64,7 +63,6 @@ export async function GET(
     { width: 20 },
     { width: 20 },
     { width: 20 },
-    { width: 20 },
   ];
 
   const headerRow = worksheet.addRow([
@@ -82,7 +80,6 @@ export async function GET(
     "Наименование ТСО",
     "Марка",
     "Инвентарный №",
-    "Серийный №",
   ]);
   columsHeaderRow.border = borderStyle;
 
@@ -92,7 +89,6 @@ export async function GET(
       product.type.name,
       product.name,
       product.inventoryNumber,
-      product.serialNumber,
     ]);
     productRow.border = borderStyle;
   });
