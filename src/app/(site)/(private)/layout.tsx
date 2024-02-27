@@ -38,7 +38,7 @@ export default async function layout({ children }: { children: ReactNode }) {
       <Menu places={places} user={session.user} />
       <div className="flex flex-col w-full">
         <Header user={session.user} />
-        <main className="pt-[70px] md:bg-gray md:p-6 h-full">
+        <main className="pt-[80px] md:bg-gray md:p-6 h-full">
           <div className="md:bg-white md:rounded-md md:p-[50px] h-full">
             {children}
           </div>

@@ -1,57 +1,42 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState, FC } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { CabinetActionType, ICabinet } from "../lib/types";
-import { Button, Input, Select } from "@/shared";
+import { IOrder, OrderActionType } from "../lib/types";
+import { Button, Checkbox, Select } from "@/shared";
 import useSWR, { Fetcher } from "swr";
 import { IPlace } from "@/entities/place/lib/types";
-import { User } from "next-auth";
 
 const placesFetcher: Fetcher<Array<IPlace>, string> = (url) =>
-  fetch(url).then((res) => res.json());
-
-const usersFetcher: Fetcher<Array<User>, string> = (url) =>
   fetch(url).then((res) => res.json());
 
 type PropsType = {
   formTitle: string;
   submitTitle: string;
-  onSubmitAction: (args: CabinetActionType) => any;
-  cabinet?: ICabinet;
+  onSubmitAction: (args: OrderActionType) => any;
+  order?: IOrder;
   onClose?: () => void;
 };
 
-export const CabinetForm: FC<PropsType> = ({
+export const OrderForm: FC<PropsType> = ({
   formTitle,
   submitTitle,
   onSubmitAction,
-  cabinet,
+  order,
   onClose,
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const params = useParams();
   const [selectedPlaceId, setSelectedPlaceId] = useState(
-    cabinet ? String(cabinet.placeId) : params ? String(params.placeId) : ""
-  );
-  const [selectedResponsible, setSelectedResponsible] = useState(
-    cabinet ? String(cabinet.responsibleId) : ""
+    order ? String(order.placeId) : ""
   );
 
   const { data: places } = useSWR("/api/place", placesFetcher);
-  const { data: users } = useSWR("/api/user", usersFetcher);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FieldValues>({
+  const { register, handleSubmit } = useForm<FieldValues>({
     defaultValues: {
-      name: cabinet ? cabinet.name : "",
-      responsible: selectedResponsible,
       placeId: selectedPlaceId,
     },
   });
@@ -61,10 +46,9 @@ export const CabinetForm: FC<PropsType> = ({
 
     try {
       await onSubmitAction({
-        name: data.name,
-        responsibleId: parseInt(selectedResponsible),
-        placeId: parseInt(selectedPlaceId),
-        cabinetId: cabinet?.id,
+        id: order?.id,
+        isDone: data.isDone,
+        placeId: Number(selectedPlaceId),
       });
 
       setIsLoading(false);
@@ -81,10 +65,6 @@ export const CabinetForm: FC<PropsType> = ({
     setSelectedPlaceId(value);
   };
 
-  const handleSelectUsers = (value: string) => {
-    setSelectedResponsible(value);
-  };
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -93,30 +73,6 @@ export const CabinetForm: FC<PropsType> = ({
       <h5 className="md:self-start self-center text-base uppercase">
         {formTitle}
       </h5>
-
-      <Input
-        type="text"
-        disabled={isLoading}
-        errors={errors}
-        id="name"
-        placeholder="Название*"
-        required
-        fullWidth
-        register={register}
-      />
-
-      {users && (
-        <Select
-          options={users.map((user) => ({
-            label: user.name!,
-            value: String(user.id!),
-          }))}
-          selected={selectedResponsible}
-          onChange={handleSelectUsers}
-          placeholder="Ответственный"
-          fullwidth
-        />
-      )}
 
       {places && (
         <Select
@@ -130,6 +86,14 @@ export const CabinetForm: FC<PropsType> = ({
           fullwidth
         />
       )}
+
+      <Checkbox
+        id="isDone"
+        name="isDone"
+        register={register}
+        defaultChecked={order?.isDone}
+        label="Готов"
+      />
 
       <div className="flex self-end justify-between items-center w-full">
         <Button onClick={onClose} danger disabled={isLoading}>

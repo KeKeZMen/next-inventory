@@ -115,7 +115,8 @@ model Consumable {
   required Boolean
   count    Int
 
-  model Model @relation(fields: [modelId], references: [id])
+  model     Model       @relation(fields: [modelId], references: [id])
+  orderItem OrderItem[]
 
   @@index([id])
   @@map("consumables")
@@ -127,7 +128,8 @@ model OrderItem {
   orderId      Int
   count        Int @default(1)
 
-  order Order @relation(fields: [orderId], references: [id])
+  order      Order      @relation(fields: [orderId], references: [id])
+  consumable Consumable @relation(fields: [consumableId], references: [id])
 
   @@index([id])
   @@map("orderitems")
@@ -137,6 +139,7 @@ model Order {
   id      Int     @id @default(autoincrement())
   placeId Int
   isDone  Boolean
+  createdAt DateTime @default(now())
 
   orderItems OrderItem[]
   place      Place       @relation(fields: [placeId], references: [id])

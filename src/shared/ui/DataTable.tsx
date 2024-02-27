@@ -18,7 +18,10 @@ export const DataTable: FC<PropsType> = ({
 }) => {
   return (
     <div
-      className={clsx("p-3 flex items-start bg-white shadow-md rounded-md flex-col", `md:w-[${height}]`)}
+      className={clsx(
+        "p-3 flex items-start bg-white shadow-md rounded-md flex-col",
+        `h-[${height}]`
+      )}
       style={{
         margin,
       }}
@@ -29,7 +32,8 @@ export const DataTable: FC<PropsType> = ({
         </h3>
         {addAction}
       </div>
-      <table className="grid grid-cols-2 border-collapse rounded-md md:overflow-y-auto w-full md:max-h-[72vh]">
+
+      <table className={`grid grid-cols-2 border-collapse rounded-md overflow-y-auto w-full max-h-[${height}]`}>
         <tbody className="data-table">{children}</tbody>
       </table>
     </div>
