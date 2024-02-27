@@ -33,7 +33,7 @@ export const ModelSelect = () => {
         }))}
         selected={modelId}
         placeholder="Модель*"
-        minWidth="300px"
+        minWidth="100px"
         onChange={handleSelectModel}
         margin="0 15px 0 0"
         padding="3px"
