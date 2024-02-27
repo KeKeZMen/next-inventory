@@ -6,7 +6,7 @@ import { db } from "@/shared";
 import RightsTable from "@/widgets/RightsTable";
 import { TypesTable } from "@/widgets/TypesTable";
 import { PlacesTable } from "@/widgets/PlacesTable";
-// import { ImportInput } from "@/features/import/UploadInput";
+import { ModelsTable } from "@/widgets/ModelsTable";
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
@@ -19,15 +19,12 @@ const AdminPage = async () => {
   });
 
   return (
-    <div className="flex flex-col lg:grid lg:grid-cols-3 gap-3 md:h-full">
-      <div className="flex flex-col gap-2">
-        {right?.userActions && <UsersTable />}
-        {right?.rightActions && <RightsTable />}
-      </div>
-
+    <div className="flex flex-col lg:grid lg:grid-cols-5 gap-3 md:h-full">
+      {right?.userActions && <UsersTable />}
+      {right?.rightActions && <RightsTable />}
       {right?.typeActions && <TypesTable />}
       {right?.placeActions && <PlacesTable />}
-      {/* <ImportInput/> */}
+      {right?.consumablesActions && <ModelsTable />}
     </div>
   );
 };

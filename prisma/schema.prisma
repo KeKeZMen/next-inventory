@@ -46,6 +46,9 @@ model UserPlace {
 
   place Place @relation(fields: [placeId], references: [id])
   user  User  @relation(fields: [userId], references: [id])
+
+  @@index([id])
+  @@map("userplaces")
 }
 
 model Place {
@@ -107,26 +110,39 @@ model Model {
 
 model Consumable {
   id            Int     @id @default(autoincrement())
-  cosumableName String
+  name String
   modelId       Int
   required      Boolean
   count         Int
 
-  model Model   @relation(fields: [modelId], references: [id])
-  order Order[]
+  model Model @relation(fields: [modelId], references: [id])
 
   @@index([id])
   @@map("consumables")
 }
 
-model Order {
+model OrderItem {
   id           Int @id @default(autoincrement())
-  placeId      Int
   consumableId Int
+  orderId      Int
   count        Int
 
-  consumable Consumable @relation(fields: [consumableId], references: [id])
-  place      Place      @relation(fields: [placeId], references: [id])
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@index([id])
+  @@map("orderitems")
+}
+
+model Order {
+  id      Int     @id @default(autoincrement())
+  placeId Int
+  isDone  Boolean
+
+  orderItems OrderItem[]
+  place      Place       @relation(fields: [placeId], references: [id])
+
+  @@index([id])
+  @@map("orders")
 }
 
 model Type {

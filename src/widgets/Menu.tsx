@@ -53,6 +53,14 @@ export const Menu: FC<PropsType> = ({ places, user }) => {
           >
             Расходники
           </NavLink>
+          <NavLink
+            href={"/orders"}
+            onClick={() => {
+              width && width <= 1400 && handleMenu();
+            }}
+          >
+            Заказы
+          </NavLink>
           {places.map((place) => (
             <NavLink
               href={`/place/${place.id}`}

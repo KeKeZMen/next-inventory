@@ -11,7 +11,7 @@ type PropsType = {
   margin?: string;
 };
 
-const tableHeadCells = ["ID", "Название", "Кол-во"];
+const tableHeadCells = ["ID", "Название", "Кол-во", "Действия"];
 
 export const ConsumablesTable: FC<PropsType> = ({
   children,
@@ -38,7 +38,7 @@ export const ConsumablesTable: FC<PropsType> = ({
         </div>
       </div>
 
-      <table className="overflow-y-auto rounded-md border-collapse grid grid-cols-[minmax(74px,_1fr)_minmax(74px,_1fr)_minmax(149px,_2fr)]">
+      <table className="overflow-y-auto rounded-md border-collapse grid grid-cols-[minmax(74px,_1fr)_minmax(74px,_1fr)_minmax(74px,_1fr)_minmax(148px,_2fr)]">
         <thead className="contents shadow-md bg-white mt-1">
           <tr className="contents">
             {tableHeadCells.map((cell, index) => (

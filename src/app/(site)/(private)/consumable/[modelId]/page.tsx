@@ -1,5 +1,9 @@
+import { ConsumableRow } from "@/entities/consumable/ui/ConsumableRow";
+import { AddConsumableButton } from "@/features/consumable/AddConsumableButton";
+import { DeleteConsumableButton } from "@/features/consumable/DeleteConsumableButton";
+import { EditConsumableButton } from "@/features/consumable/EditConsumableButton";
+import { ModelSelect } from "@/features/model/ModelSelect";
 import { ConsumablesTable, db } from "@/shared";
-import { ProductsTable } from "@/shared/ui/ProductsTable";
 import React from "react";
 
 export default async function ConsumablePage({
@@ -14,9 +18,19 @@ export default async function ConsumablePage({
   });
 
   return (
-    <ConsumablesTable title="Позиции" height="300px">
+    <ConsumablesTable
+      title="Расходники"
+      height="300px"
+      addButton={<AddConsumableButton />}
+      selects={<ModelSelect />}
+    >
       {consumable.map((consumable) => (
-        <></>
+        <ConsumableRow
+          consumable={consumable}
+          deleteButton={<DeleteConsumableButton consumableId={consumable.id} />}
+          editButton={<EditConsumableButton consumable={consumable} />}
+          key={consumable.id}
+        />
       ))}
     </ConsumablesTable>
   );

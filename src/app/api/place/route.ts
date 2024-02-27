@@ -9,7 +9,15 @@ export async function GET() {
   if (!session?.user)
     return Response.json({ message: "Вы не авторизованы!" }, { status: 401 });
 
-  const places = await db.place.findMany();
+  const places = await db.place.findMany({
+    where: {
+      userPlace: {
+        some: {
+          userId: session.user.id
+        }
+      }
+    }
+  });
 
   return Response.json(places);
 }

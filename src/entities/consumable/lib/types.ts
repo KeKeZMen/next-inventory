@@ -5,3 +5,11 @@ export interface IConsumable {
   required: boolean;
   count: number;
 }
+
+export type ConsumableActionType = {
+  id?: number;
+  name: string;
+  modelId: number;
+  required: boolean;
+  count: number;
+};
