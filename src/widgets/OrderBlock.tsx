@@ -61,7 +61,7 @@ export const OrderBlock = async ({ order }: PropsType) => {
           </DataTable>
         </div>
         <div className="md:w-[50%]">
-          <DataTable title="Имеющиеся в наличии" height="300px">
+          <DataTable title="В наличии" height="300px">
             {consumables.map((consumable) => (
               <ConsumableRow
                 consumable={consumable}

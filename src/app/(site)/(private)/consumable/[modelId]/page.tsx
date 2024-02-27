@@ -20,7 +20,7 @@ export default async function ConsumablePage({
   return (
     <ConsumablesTable
       title="Расходники"
-      height="300px"
+      height="700px"
       addButton={<AddConsumableButton />}
       selects={<ModelSelect />}
     >

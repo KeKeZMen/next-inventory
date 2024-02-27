@@ -49,12 +49,12 @@ export const CountEdit: FC<PropsType> = ({ orderItem, maxCount }) => {
   };
 
   const handleCount = (e: React.MouseEvent) => {
-    if (e.currentTarget.id == "minus")
+    if (e.currentTarget.id == "minus" && count > 0)
       return setCount((prev) => prev - 1);
     if (e.currentTarget.id == "plus" && count < maxCount)
       return setCount((prev) => prev + 1);
 
-    toast.error(`Нельзя выбрать больше ${maxCount}`);
+    toast.error(`Нельзя выбрать больше ${maxCount} и меньше 0`);
   };
 
   const handleAddToOrder = () => {
