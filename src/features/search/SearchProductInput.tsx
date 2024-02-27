@@ -19,7 +19,7 @@ const getSearchedProducts = async (searchTerm?: string) => {
   }
 };
 
-export const SearchInput = () => {
+export const SearchProductInput = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const [searchedProducts, setSearchedProducts] = useState<

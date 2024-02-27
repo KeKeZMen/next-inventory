@@ -1,5 +1,5 @@
 export interface IConsumable {
-  id?: number;
+  id: number;
   name: string;
   modelId: number;
   required: boolean;

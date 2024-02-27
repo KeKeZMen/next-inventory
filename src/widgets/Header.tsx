@@ -3,7 +3,7 @@
 import { MenuContext } from "@/app/Provider";
 import { UserProfile } from "@/entities/user/ui/UserProfile";
 import { LogoutButton } from "@/features/auth/LogoutButton";
-import { SearchInput } from "@/features/search/SearchInput";
+import { SearchProductInput } from "@/features/search/SearchProductInput";
 import { useWindowSize } from "@/shared/lib/hooks/useWindowSize";
 import { BurgerButton } from "@/shared/ui/Burger";
 import clsx from "clsx";
@@ -30,7 +30,7 @@ export const Header: FC<PropsType> = ({ user, isNoAdmin }) => {
         {!isNoAdmin && (
           <div className="flex justify-between items-center w-full md:w-[40%]">
             <BurgerButton onClick={handleMenu} />
-            <SearchInput />
+            <SearchProductInput />
           </div>
         )}
 

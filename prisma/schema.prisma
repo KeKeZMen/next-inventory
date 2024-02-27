@@ -109,11 +109,11 @@ model Model {
 }
 
 model Consumable {
-  id            Int     @id @default(autoincrement())
-  name String
-  modelId       Int
-  required      Boolean
-  count         Int
+  id       Int     @id @default(autoincrement())
+  name     String
+  modelId  Int
+  required Boolean
+  count    Int
 
   model Model @relation(fields: [modelId], references: [id])
 
@@ -125,7 +125,7 @@ model OrderItem {
   id           Int @id @default(autoincrement())
   consumableId Int
   orderId      Int
-  count        Int
+  count        Int @default(1)
 
   order Order @relation(fields: [orderId], references: [id])
 
