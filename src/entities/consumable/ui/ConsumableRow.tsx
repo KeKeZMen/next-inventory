@@ -19,19 +19,19 @@ export const ConsumableRow: FC<PropsType> = ({
   return (
     <tr className="h-[43px]">
       {!isOrdering && (
-        <td className=" text-center p-3">
+        <td className="border-t-2 border-[#929292] text-center p-3">
           {consumable.id}
         </td>
       )}
-      <td className=" text-center p-3">
+      <td className="border-t-2 border-[#929292] text-center p-3">
         {consumable.name}
       </td>
       {!isOrdering && (
-        <td className="text-center p-3">
+        <td className="border-t-2 border-[#929292] text-center p-3">
           {consumable.count}
         </td>
       )}
-      <td className=" text-center p-3">
+      <td className="border-t-2 border-[#929292] text-center p-3">
         {editButton}
         {deleteButton}
         {addToOrderButton}

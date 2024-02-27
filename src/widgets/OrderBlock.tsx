@@ -53,6 +53,7 @@ export const OrderBlock = async ({ order }: PropsType) => {
                   <CountEdit
                     maxCount={orderItem.consumable.count}
                     orderItem={orderItem}
+                    key={orderItem.id}
                   />
                 }
               />
