@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { Children, FC, ReactNode } from "react";
 
 type PropsType = {
@@ -14,14 +13,10 @@ export const DataTable: FC<PropsType> = ({
   title,
   addAction,
   margin,
-  height,
 }) => {
   return (
     <div
-      className={clsx(
-        "p-3 flex items-start bg-white shadow-md rounded-md flex-col",
-        `h-[${height}]`
-      )}
+      className="p-3 flex items-start bg-white shadow-md rounded-md flex-col overflow-hidden h-[calc(100%-24px)]"
       style={{
         margin,
       }}
@@ -33,7 +28,9 @@ export const DataTable: FC<PropsType> = ({
         {addAction}
       </div>
 
-      <table className={`grid grid-cols-2 border-collapse rounded-md overflow-y-auto w-full max-h-[${height}]`}>
+      <table
+        className={`grid grid-cols-2 border-collapse rounded-md overflow-y-auto w-full h-[calc(100%-24px)]`}
+      >
         <tbody className="data-table">{children}</tbody>
       </table>
     </div>
