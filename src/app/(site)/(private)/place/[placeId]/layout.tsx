@@ -22,7 +22,7 @@ export default async function PlaceLayout({
         <CabinetsGrid placeId={parseInt(params.placeId)} />
         <PlaceTypes placeId={parseInt(params.placeId)} />
       </div>
-      <div className="md:h-[75%]">{children}</div>
+      <div className="h-[500px] md:h-[75%]">{children}</div>
     </div>
   );
 }

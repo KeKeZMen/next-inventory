@@ -50,7 +50,7 @@ export const ProductsTable: FC<PropsType> = ({
       </div>
 
       <div className="h-full w-full overflow-y-auto">
-        <table className="w-full">
+        <table className="w-full border-collapse">
           <thead>
             <tr>
               {tableHeadCells
