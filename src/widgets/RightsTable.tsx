@@ -15,7 +15,7 @@ export default async function RightsTable() {
   });
 
   return (
-    <DataTable title="Права" addAction={<AddRightButton />} height="300px">
+    <DataTable title="Права" addAction={<AddRightButton />}>
       {rights.map((right) => (
         <RightRow
           right={right}

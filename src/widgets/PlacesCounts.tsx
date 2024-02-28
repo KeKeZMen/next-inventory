@@ -16,7 +16,7 @@ export const PlacesCounts = async () => {
   });
 
   return (
-    <DataTable title="Кабинеты по площадкам" height="300px">
+    <DataTable title="Кабинеты по площадкам">
       {place.map(({ id, name, _count }) => (
         <PlaceRow
           place={{ id, name }}

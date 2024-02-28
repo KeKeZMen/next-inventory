@@ -9,7 +9,7 @@ export const TypesTable = async () => {
   const types = await db.type.findMany();
 
   return (
-    <DataTable title="Типы оборудования" addAction={<AddTypeButton />} height="400px">
+    <DataTable title="Типы оборудования" addAction={<AddTypeButton />}>
       {types.map((type) => (
         <TypeRow
           type={type}

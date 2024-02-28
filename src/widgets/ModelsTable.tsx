@@ -12,7 +12,6 @@ export const ModelsTable = async () => {
     <DataTable
       title="Модели"
       addAction={<AddModelButton />}
-      height="300px"
     >
       {models.map((model) => (
         <ModelRow

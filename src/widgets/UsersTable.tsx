@@ -24,11 +24,7 @@ export const UsersTable = async () => {
   });
 
   return (
-    <DataTable
-      title="Пользователи"
-      addAction={<AddUserButton />}
-      height="300px"
-    >
+    <DataTable title="Пользователи" addAction={<AddUserButton />}>
       {users
         .map((user) => ({
           name: user.name,
