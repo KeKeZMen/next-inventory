@@ -30,7 +30,7 @@ export const UserForm: FC<PropsType> = ({
   onSubmitAction,
   user,
   onClose,
-}) => {  
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPlaces, setSelectedPlaces] = useState<Array<string>>(
     user?.places ?? []
@@ -83,8 +83,9 @@ export const UserForm: FC<PropsType> = ({
   };
 
   const handleSelectPlace = (value: string) => {
-    if(selectedPlaces.includes(value)) setSelectedPlaces(prev => [...prev.filter(p => p !== value)])
-    else setSelectedPlaces(prev => [...prev, value])
+    if (selectedPlaces.includes(value))
+      setSelectedPlaces((prev) => [...prev.filter((p) => p !== value)]);
+    else setSelectedPlaces((prev) => [...prev, value]);
   };
 
   return (
@@ -131,21 +132,19 @@ export const UserForm: FC<PropsType> = ({
         />
       )}
 
-      {places && (
-        <div className="grid grid-cols-2 gap-3">
-          {places?.map((place) => (
-            <Checkbox
-              register={register}
-              key={place.id}
-              id={`${place.id}`}
-              defaultChecked={selectedPlaces?.includes(String(place.id))}
-              label={`${place.name}`}
-              value={place.id}
-              onChange={(e) => handleSelectPlace(e.target.value)}
-            />
-          ))}
-        </div>
-      )}
+      <div className="grid grid-cols-2 gap-3">
+        {places?.map((place) => (
+          <Checkbox
+            register={register}
+            key={place.id}
+            id={`${place.id}`}
+            defaultChecked={selectedPlaces?.includes(String(place.id))}
+            label={`${place.name}`}
+            value={place.id}
+            onChange={(e) => handleSelectPlace(e.target.value)}
+          />
+        ))}
+      </div>
 
       <div className="flex self-end justify-between items-center w-full">
         <Button onClick={onClose} danger disabled={isLoading}>

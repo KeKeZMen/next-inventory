@@ -5,7 +5,7 @@ import { useState, FC } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { IConsumable, ConsumableActionType } from "../lib/types";
-import { Button, Checkbox, Input, Select } from "@/shared";
+import { Button, Checkbox, Input } from "@/shared";
 import useSWR, { Fetcher } from "swr";
 import { IModel } from "@/entities/model/lib/types";
 
@@ -29,10 +29,10 @@ export const ConsumableForm: FC<PropsType> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { modelId } = useParams()
-  const { data: models } = useSWR("/api/model", modelsFetcher);
-  const [selectedModelId, setSelectedModelId] = useState(
-    consumable ? String(consumable.modelId) : modelId ? String(modelId) : ""
+  const { typeId } = useParams();
+  const { data: models } = useSWR(`/api/model/${typeId}`, modelsFetcher);
+  const [selectedModels, setSelectedModels] = useState<Array<string>>(
+    consumable?.models.map((model) => String(model.id)) ?? []
   );
 
   const {
@@ -42,7 +42,6 @@ export const ConsumableForm: FC<PropsType> = ({
   } = useForm<FieldValues>({
     defaultValues: {
       name: consumable?.name ?? "",
-      modelId: modelId,
       count: consumable?.count ?? 0,
       required: consumable?.required ?? false,
     },
@@ -55,7 +54,7 @@ export const ConsumableForm: FC<PropsType> = ({
       await onSubmitAction({
         id: consumable?.id,
         name: data.name,
-        modelId: Number(modelId),
+        models: selectedModels,
         count: Number(data.count),
         required: data.required,
       });
@@ -70,8 +69,10 @@ export const ConsumableForm: FC<PropsType> = ({
     }
   };
 
-  const handleSelectModel = (value: string) => {
-    setSelectedModelId(value);
+  const handleSelectPlace = (value: string) => {
+    if (selectedModels.includes(value))
+      setSelectedModels((prev) => [...prev.filter((p) => p !== value)]);
+    else setSelectedModels((prev) => [...prev, value]);
   };
 
   return (
@@ -105,18 +106,19 @@ export const ConsumableForm: FC<PropsType> = ({
         register={register}
       />
 
-      {models && (
-        <Select
-          options={models.map((type) => ({
-            label: type.name,
-            value: String(type.id),
-          }))}
-          selected={selectedModelId}
-          placeholder="Модель*"
-          fullwidth
-          onChange={handleSelectModel}
-        />
-      )}
+      <div className="w-full h-[200px] overflow-y-auto">
+        {models?.map((model) => (
+          <Checkbox
+            register={register}
+            key={model.id}
+            id={`${model.id}`}
+            defaultChecked={selectedModels?.includes(String(model.id))}
+            label={`${model.name}`}
+            value={model.id}
+            onChange={(e) => handleSelectPlace(e.target.value)}
+          />
+        ))}
+      </div>
 
       <Checkbox
         register={register}

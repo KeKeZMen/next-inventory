@@ -19,7 +19,7 @@ export const EditConsumableButton: FC<PropsType> = ({ consumable }) => {
   };
 
   const onSubmitActions = async (args: any) => {
-    await fetch("/api/model", {
+    await fetch("/api/consumable", {
       body: JSON.stringify(args),
       method: "PATCH",
       headers: {

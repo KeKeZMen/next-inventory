@@ -44,10 +44,21 @@ export async function POST(req: Request) {
   if (!right?.consumablesActions)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
-  await db.consumable.create({
+  const consumable = await db.consumable.create({
     data: {
-      ...body,
+      name: body.name,
+      count: body.count,
+      required: body.required,
     },
+  });
+
+  await db.consumableToModel.createMany({
+    data: [
+      ...body.models.map((model: string) => ({
+        consumableId: consumable.id,
+        modelId: Number(model),
+      })),
+    ],
   });
 
   return Response.json({ message: "Модель создана!" });
@@ -69,16 +80,30 @@ export async function PATCH(req: Request) {
   if (!right?.consumablesActions)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
-  await db.consumable.update({
+  await db.consumableToModel.deleteMany({
+    where: {
+      consumableId: body.id,
+    },
+  });
+
+  const consumable = await db.consumable.update({
     where: {
       id: body.id,
     },
     data: {
       name: body.name,
       count: body.count,
-      modelId: body.modelId,
       required: body.required,
     },
+  });
+
+  await db.consumableToModel.createMany({
+    data: [
+      ...body.models.map((model: string) => ({
+        consumableId: consumable.id,
+        modelId: Number(model),
+      })),
+    ],
   });
 
   return Response.json({ message: "Модель отредактирована!" });

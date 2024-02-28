@@ -101,21 +101,32 @@ model Model {
   typeId Int
   name   String
 
-  type        Type         @relation(fields: [typeId], references: [id], onDelete: Cascade)
-  consumables Consumable[]
+  type        Type                @relation(fields: [typeId], references: [id], onDelete: Cascade)
+  consumables ConsumableToModel[]
 
   @@index([id])
   @@map("models")
 }
 
+model ConsumableToModel {
+  id           Int @id @default(autoincrement())
+  modelId      Int
+  consumableId Int
+
+  model      Model      @relation(fields: [modelId], references: [id])
+  consumable Consumable @relation(fields: [consumableId], references: [id])
+
+  @@index([id])
+  @@map("consumablesToModels")
+}
+
 model Consumable {
   id       Int     @id @default(autoincrement())
   name     String
-  modelId  Int
   required Boolean
   count    Int
 
-  model     Model       @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  model     ConsumableToModel[]
   orderItem OrderItem[]
 
   @@index([id])
@@ -136,9 +147,9 @@ model OrderItem {
 }
 
 model Order {
-  id      Int     @id @default(autoincrement())
-  placeId Int
-  isDone  Boolean
+  id        Int      @id @default(autoincrement())
+  placeId   Int
+  isDone    Boolean
   createdAt DateTime @default(now())
 
   orderItems OrderItem[]
@@ -146,7 +157,6 @@ model Order {
 
   @@index([id])
   @@map("orders")
-  
 }
 
 model Type {

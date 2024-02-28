@@ -28,6 +28,13 @@ export const ConsumableRow: FC<PropsType> = ({
       </td>
       {!isOrdering && (
         <td className="border-t-2 border-[#929292] text-center p-3">
+          {consumable.models.map((model) => (
+            <p key={model.id}>{model.name}</p>
+          ))}
+        </td>
+      )}
+      {!isOrdering && (
+        <td className="border-t-2 border-[#929292] text-center p-3">
           {consumable.count}
         </td>
       )}

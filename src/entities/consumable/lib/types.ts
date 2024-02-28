@@ -1,7 +1,7 @@
 export interface IConsumable {
   id: number;
   name: string;
-  modelId: number;
+  models: Array<{ id: number; name: string }>;
   required: boolean;
   count: number;
 }
@@ -9,7 +9,7 @@ export interface IConsumable {
 export type ConsumableActionType = {
   id?: number;
   name: string;
-  modelId: number;
+  models: Array<string>;
   required: boolean;
   count: number;
 };

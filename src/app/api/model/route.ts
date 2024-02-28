@@ -82,23 +82,3 @@ export async function PATCH(req: Request) {
 
   return Response.json({ message: "Модель отредактирована!" });
 }
-
-export async function GET() {
-  const session = await getServerSession(authOptions);
-
-  if (!session?.user)
-    return Response.json({ message: "Недостаточно прав" }, { status: 401 });
-
-  const right = await db.right.findFirst({
-    where: {
-      id: session.user.rightId,
-    },
-  });
-
-  if (!right?.consumablesActions)
-    return Response.json({ message: "Недостаточно прав" }, { status: 401 });
-
-  const models = await db.model.findMany();
-
-  return NextResponse.json(models);
-}
