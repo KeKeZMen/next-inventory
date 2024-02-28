@@ -13,13 +13,12 @@ export const OrderItemRow: FC<PropsType> = ({
   deleteFormOrderButton,
 }) => {
   return (
-    <tr className="h-[43px]">
-      <td className="border-t-2 border-[#929292] text-center p-3">
-        {orderItem.consumable.name}
-      </td>
-      <td className="border-t-2 border-[#929292] text-center p-3">
+    <div className="flex justify-between items-center w-full border-b-2 border-[#a9a9a9] py-3">
+      <h5>{orderItem.consumable?.name}</h5>
+      <div className="flex justify-between gap-3 items-center">
         {itemsCountButton}
-      </td>
-    </tr>
+        {deleteFormOrderButton}
+      </div>
+    </div>
   );
 };

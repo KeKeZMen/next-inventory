@@ -8,9 +8,10 @@ import { IOrderItem } from "@/entities/orderItem/lib/types";
 type PropsType = {
   orderItem: IOrderItem;
   maxCount: number;
+  onSuccess?: () => void;
 };
 
-export const CountEdit: FC<PropsType> = ({ orderItem, maxCount }) => {
+export const CountEdit: FC<PropsType> = ({ orderItem, maxCount, onSuccess }) => {
   const router = useRouter();
   const [count, setCount] = useState(orderItem.count);
 
@@ -64,13 +65,13 @@ export const CountEdit: FC<PropsType> = ({ orderItem, maxCount }) => {
 
   return (
     <div className="grid grid-cols-[1fr,2fr,1fr] border-2 rounded-md">
-      <button id="minus" onClick={handleCount}>
+      <button id="minus" onClick={handleCount} type="button">
         -
       </button>
-      <button onClick={handleAddToOrder} className="border-l-2 border-r-2">
+      <button onClick={handleAddToOrder} className="border-l-2 border-r-2" type="button">
         {count}
       </button>
-      <button id="plus" onClick={handleCount}>
+      <button id="plus" onClick={handleCount} type="button">
         +
       </button>
     </div>

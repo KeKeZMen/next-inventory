@@ -32,7 +32,7 @@ export const ConsumableForm: FC<PropsType> = ({
   const { typeId } = useParams();
   const { data: models } = useSWR(`/api/model/${typeId}`, modelsFetcher);
   const [selectedModels, setSelectedModels] = useState<Array<string>>(
-    consumable?.models.map((model) => String(model.id)) ?? []
+    consumable?.models?.map((model) => String(model.id)) ?? []
   );
 
   const {

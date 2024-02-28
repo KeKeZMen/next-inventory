@@ -7,9 +7,10 @@ import { toast } from "react-hot-toast";
 
 type PropsType = {
   orderItemId: number;
+  onSuccess?: () => void;
 };
 
-export const DeleteFromOrderButton: FC<PropsType> = ({ orderItemId }) => {
+export const DeleteFromOrderButton: FC<PropsType> = ({ orderItemId, onSuccess }) => {
   const router = useRouter();
 
   const onDelete = async (orderItemId: number) => {
@@ -33,8 +34,9 @@ export const DeleteFromOrderButton: FC<PropsType> = ({ orderItemId }) => {
 
   const handleDeleteFromOrder = () => {
     onDelete(orderItemId);
+    onSuccess?.()
     router.refresh();
   };
 
-  return <DeleteButton onClick={handleDeleteFromOrder} />;
+  return <DeleteButton onClick={handleDeleteFromOrder} type="button"/>;
 };

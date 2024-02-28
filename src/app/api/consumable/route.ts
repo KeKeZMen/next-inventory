@@ -1,6 +1,7 @@
 import { db } from "@/shared";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
+import { NextResponse } from "next/server";
 
 export async function DELETE(req: Request) {
   const { consumableId } = await req.json();
@@ -107,4 +108,14 @@ export async function PATCH(req: Request) {
   });
 
   return Response.json({ message: "Модель отредактирована!" });
+}
+
+export async function GET() {
+  const session = await getServerSession(authOptions);
+  if (!session)
+    return NextResponse.json({ message: "Нет доступа" }, { status: 401 });
+
+  const consumables = await db.consumable.findMany();
+
+  return NextResponse.json(consumables);
 }

@@ -18,6 +18,8 @@ type PropsType = {
   onSubmitAction: (args: OrderActionType) => any;
   order?: IOrder;
   onClose?: () => void;
+  consumables?: JSX.Element;
+  orderItems?: JSX.Element;
 };
 
 export const OrderForm: FC<PropsType> = ({
@@ -26,6 +28,8 @@ export const OrderForm: FC<PropsType> = ({
   onSubmitAction,
   order,
   onClose,
+  consumables,
+  orderItems,
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -61,14 +65,14 @@ export const OrderForm: FC<PropsType> = ({
     }
   };
 
-  const handleSelectRight = (value: string) => {
+  const handleSelectPlace = (value: string) => {
     setSelectedPlaceId(value);
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex justify-center items-center flex-col w-[321px] gap-3"
+      className="flex justify-center items-center flex-col min-w-[521px] gap-3"
     >
       <h5 className="md:self-start self-center text-base uppercase">
         {formTitle}
@@ -80,11 +84,18 @@ export const OrderForm: FC<PropsType> = ({
             label: place.name,
             value: String(place.id),
           }))}
-          onChange={handleSelectRight}
+          onChange={handleSelectPlace}
           selected={selectedPlaceId}
           placeholder="Площадка*"
           fullwidth
         />
+      )}
+
+      {consumables && orderItems && (
+        <div className="flex gap-3 flex-col md:flex-row w-full">
+          {orderItems}
+          {consumables}
+        </div>
       )}
 
       <Checkbox

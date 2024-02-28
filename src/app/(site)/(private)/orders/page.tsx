@@ -1,7 +1,9 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { OrderCard } from "@/entities/order/ui/OrderCard";
 import { CreateOrderButton } from "@/features/order/CreateOrderButton";
+import { DeleteOrderButton } from "@/features/order/DeleteOrderButton";
+import { EditOrderButton } from "@/features/order/EditOrderButton";
 import { db } from "@/shared";
-import { OrderBlock } from "@/widgets/OrderBlock";
 import { getServerSession } from "next-auth";
 import React from "react";
 
@@ -19,34 +21,29 @@ export default async function OrdersPage() {
       },
     },
     select: {
-      placeId: true,
+      createdAt: true,
+      isDone: true,
       id: true,
+      placeId: true,
       place: {
         select: {
-          name: true,
-        },
-      },
-      isDone: true,
-      orderItems: {
-        select: {
           id: true,
-          count: true,
-          consumable: {
-            select: {
-              count: true,
-              name: true,
-            },
-          },
-        },
-      },
-    },
+          name: true
+        }
+      }
+    }
   });
 
   return (
     <main className="mt-1">
-      <div className="flex flex-col md:grid grid-cols-2 gap-3">
+      <div className="flex flex-wrap gap-3">
         {orders.map((order) => (
-          <OrderBlock order={order} key={order.id} />
+          <OrderCard
+            order={order}
+            deleteOrder={<DeleteOrderButton orderId={order.id} />}
+            editOrder={<EditOrderButton order={order} />}
+            key={order.id}
+          />
         ))}
         <CreateOrderButton />
       </div>

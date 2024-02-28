@@ -1,8 +1,6 @@
 export interface IOrderItem {
   id: number;
   count: number;
-  consumable: {
-    count: number;
-    name: string;
-  };
+  consumableId: number
+  consumable?: { name: string }
 }
