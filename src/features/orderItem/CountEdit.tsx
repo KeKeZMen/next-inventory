@@ -64,7 +64,7 @@ export const CountEdit: FC<PropsType> = ({ orderItem, maxCount, onSuccess }) => 
   };
 
   return (
-    <div className="grid grid-cols-[1fr,2fr,1fr] border-2 rounded-md">
+    <div className="grid grid-cols-[1fr,2fr,1fr] border-2 rounded-md w-[100px]">
       <button id="minus" onClick={handleCount} type="button">
         -
       </button>
