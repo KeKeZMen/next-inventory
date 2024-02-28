@@ -74,7 +74,9 @@ export async function POST(req: Request) {
               (row.get("Площадка") as string).trim().toLowerCase()
             )
           )
-        ).map((place) => ({ name: place[0].toUpperCase() + place.slice(1).toLowerCase() })),
+        ).map((place) => ({
+          name: place[0].toUpperCase() + place.slice(1).toLowerCase(),
+        })),
       ],
     }),
     db.type.createMany({
@@ -89,6 +91,11 @@ export async function POST(req: Request) {
       ],
     }),
   ]);
+
+  const places = await db.place.findMany();
+  await db.userPlace.createMany({
+    data: [...places.map((place) => ({ placeId: place.id, userId: 1 }))],
+  });
 
   const productsData = rows
     .map((row) => ({
@@ -107,14 +114,14 @@ export async function POST(req: Request) {
       },
     }))
     .filter((d) => {
-      if(d.cabinet == "undefined") return false
-      if(d.place == "undefined") return false
+      if (d.cabinet == "undefined") return false;
+      if (d.place == "undefined") return false;
       for (const key in d.product) {
         if (key == "undefined") {
-          return false
+          return false;
         }
       }
-      return true
+      return true;
     });
 
   for (let i = 0; i < productsData.length; i++) {
