@@ -8,7 +8,8 @@ export async function GET(
   { params }: { params?: { inventoryNumber?: string } }
 ) {
   const session = await getServerSession(authOptions);
-  if (!session)
+  
+  if (!session?.isAdmin)
     return NextResponse.json(
       { message: "Вы не авторизованы" },
       { status: 401 }

@@ -6,14 +6,14 @@ import { Prisma } from "@prisma/client";
 export async function GET() {
   const session = await getServerSession(authOptions);
 
-  if (!session?.user)
+  if (!session?.isAdmin)
     return Response.json({ message: "Вы не авторизованы!" }, { status: 401 });
 
   const places = await db.place.findMany({
     where: {
       userPlace: {
         some: {
-          userId: session.user.id
+          userId: session.user?.id
         }
       }
     }

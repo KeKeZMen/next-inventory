@@ -7,7 +7,6 @@ type PropsType = {
   addButton?: JSX.Element;
   selects?: JSX.Element;
   withoutEdit?: boolean;
-  height: string;
   margin?: string;
 };
 
@@ -23,7 +22,6 @@ const tableHeadCells = [
 export const ProductsTable: FC<PropsType> = ({
   children,
   title,
-  height,
   addButton,
   selects,
   withoutEdit,
@@ -31,7 +29,7 @@ export const ProductsTable: FC<PropsType> = ({
 }) => {
   return (
     <div
-      className={clsx("px-5 pb-5 bg-white shadow-md rounded-md flex flex-col overflow-auto", `md:h-[${height}]`)}
+      className={clsx("px-5 pb-5 bg-white shadow-md rounded-md flex flex-col h-full")}
       style={{
         margin,
       }}
@@ -51,27 +49,22 @@ export const ProductsTable: FC<PropsType> = ({
         </div>
       </div>
 
-      <table
-        className={clsx(
-          "overflow-y-auto rounded-md border-collapse grid",
-          withoutEdit
-            ? "grid-cols-[minmax(74px,_1fr)_repeat(2,_minmax(299px,_4fr))_repeat(1,_minmax(149px,_2fr))_minmax(100px,_1.5fr)]"
-            : "grid-cols-[minmax(74px,_1fr)_repeat(2,_minmax(299px,_4fr))_repeat(1,_minmax(149px,_2fr))_minmax(100px,_1.5fr)_minmax(74px,_1fr)]"
-        )}
-      >
-        <thead className="contents shadow-md bg-white mt-1">
-          <tr className="contents">
-            {tableHeadCells
-              .filter((cell) => (withoutEdit ? cell !== "Ред." : cell))
-              .map((cell, index) => (
-                <th key={index} className="top-0 sticky p-4 bg-white ">
-                  {cell}
-                </th>
-              ))}
-          </tr>
-        </thead>
-        <tbody>{children}</tbody>
-      </table>
+      <div className="h-full w-full overflow-y-auto">
+        <table className="w-full">
+          <thead>
+            <tr>
+              {tableHeadCells
+                .filter((cell) => (withoutEdit ? cell !== "Ред." : cell))
+                .map((cell, index) => (
+                  <th key={index} className="top-0 sticky p-4 bg-white ">
+                    {cell}
+                  </th>
+                ))}
+            </tr>
+          </thead>
+          <tbody>{children}</tbody>
+        </table>
+      </div>
     </div>
   );
 };

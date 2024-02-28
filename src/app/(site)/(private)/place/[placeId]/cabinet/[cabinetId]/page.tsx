@@ -1,3 +1,4 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { ProductRow } from "@/entities/product/ui/ProductRow";
 import { AddProductButton } from "@/features/product/AddProductButton";
 import { DeleteProductButton } from "@/features/product/DeleteProductButton";
@@ -5,6 +6,7 @@ import { EditProductButton } from "@/features/product/EditProductButton";
 import { db } from "@/shared";
 import { ProductsTable } from "@/shared/ui/ProductsTable";
 import { ProductsSelects } from "@/widgets/ProductsSelects";
+import { getServerSession } from "next-auth";
 import React from "react";
 
 type SearchParamsType = {
@@ -54,17 +56,26 @@ const CabinetPage = async ({
     orderBy,
   });
 
+  const session = await getServerSession(authOptions);
+
+  const right = await db.right.findFirst({
+    where: {
+      id: session?.user?.rightId,
+    },
+  });
+
   return (
     <ProductsTable
       title="Позиции"
-      addButton={<AddProductButton />}
+      addButton={right?.productActions ? <AddProductButton /> : <></>}
       selects={<ProductsSelects sortSelect />}
-      height="500px"
+      withoutEdit={!right?.productActions}
     >
       {products.map((product) => (
         <ProductRow
           product={product}
           deleteButton={<DeleteProductButton productId={product.id} />}
+          withoutEdit={!right?.productActions}
           editButton={<EditProductButton product={product} />}
           key={product.id}
         />

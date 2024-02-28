@@ -19,7 +19,7 @@ export async function GET(
     },
   });
 
-  if (!right?.cabinetActions || !right.productActions)
+  if (!right?.cabinetActions)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
   const cabinetData = await db.cabinet.findFirst({

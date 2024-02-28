@@ -9,7 +9,7 @@ export async function DELETE(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (!session?.user)
-    return Response.json({ message: "Недостаточно прав" }, { status: 401 });
+    return NextResponse.json({ message: "Недостаточно прав" }, { status: 401 });
 
   const right = await db.right.findFirst({
     where: {
@@ -18,7 +18,7 @@ export async function DELETE(req: Request) {
   });
 
   if (!right?.consumablesActions)
-    return Response.json({ message: "Недостаточно прав" }, { status: 401 });
+    return NextResponse.json({ message: "Недостаточно прав" }, { status: 401 });
 
   await db.orderItem.delete({
     where: {
@@ -26,7 +26,7 @@ export async function DELETE(req: Request) {
     },
   });
 
-  return Response.json({ message: "Удалено!" });
+  return NextResponse.json({ message: "Удалено!" });
 }
 
 export async function POST(req: Request) {
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
   });
 
   if (!right?.consumablesActions)
-    return Response.json({ message: "Недостаточно прав" }, { status: 401 });
+    return NextResponse.json({ message: "Недостаточно прав" }, { status: 401 });
 
   const isHaveItemInOrder = await db.order.findFirst({
     where: {
@@ -58,10 +58,10 @@ export async function POST(req: Request) {
     },
   });
 
-  // if (isHaveItemInOrder)
-  //   return NextResponse.json({
-  //     message: "Нельзя добавить в заказ существующую позицию",
-  //   });
+  if (isHaveItemInOrder)
+    return NextResponse.json({
+      message: "Нельзя добавить в заказ существующую позицию",
+    });
 
   await db.orderItem.create({
     data: {
@@ -69,7 +69,7 @@ export async function POST(req: Request) {
     },
   });
 
-  return Response.json({ message: "Добавлено!" });
+  return NextResponse.json({ message: "Добавлено!" });
 }
 
 export async function PATCH(req: Request) {
@@ -77,7 +77,7 @@ export async function PATCH(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (!session?.user)
-    return Response.json({ message: "Недостаточно прав" }, { status: 401 });
+    return NextResponse.json({ message: "Недостаточно прав" }, { status: 401 });
 
   const right = await db.right.findFirst({
     where: {
@@ -86,7 +86,7 @@ export async function PATCH(req: Request) {
   });
 
   if (!right?.consumablesActions)
-    return Response.json({ message: "Недостаточно прав" }, { status: 401 });
+    return NextResponse.json({ message: "Недостаточно прав" }, { status: 401 });
 
   await db.orderItem.update({
     where: {
@@ -97,5 +97,5 @@ export async function PATCH(req: Request) {
     },
   });
 
-  return Response.json({ message: "Количество изменено!" });
+  return NextResponse.json({ message: "Количество изменено!" });
 }

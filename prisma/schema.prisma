@@ -44,8 +44,8 @@ model UserPlace {
   placeId Int
   userId  Int
 
-  place Place @relation(fields: [placeId], references: [id])
-  user  User  @relation(fields: [userId], references: [id])
+  place Place @relation(fields: [placeId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([id])
   @@map("userplaces")
@@ -101,7 +101,7 @@ model Model {
   typeId Int
   name   String
 
-  type        Type         @relation(fields: [typeId], references: [id])
+  type        Type         @relation(fields: [typeId], references: [id], onDelete: Cascade)
   consumables Consumable[]
 
   @@index([id])
@@ -115,7 +115,7 @@ model Consumable {
   required Boolean
   count    Int
 
-  model     Model       @relation(fields: [modelId], references: [id])
+  model     Model       @relation(fields: [modelId], references: [id], onDelete: Cascade)
   orderItem OrderItem[]
 
   @@index([id])
@@ -128,8 +128,8 @@ model OrderItem {
   orderId      Int
   count        Int @default(1)
 
-  order      Order      @relation(fields: [orderId], references: [id])
-  consumable Consumable @relation(fields: [consumableId], references: [id])
+  order      Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  consumable Consumable @relation(fields: [consumableId], references: [id], onDelete: Cascade)
 
   @@index([id])
   @@map("orderitems")
@@ -142,10 +142,11 @@ model Order {
   createdAt DateTime @default(now())
 
   orderItems OrderItem[]
-  place      Place       @relation(fields: [placeId], references: [id])
+  place      Place       @relation(fields: [placeId], references: [id], onDelete: Cascade)
 
   @@index([id])
   @@map("orders")
+  
 }
 
 model Type {

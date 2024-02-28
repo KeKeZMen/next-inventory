@@ -17,12 +17,12 @@ export default async function PlaceLayout({
   if (!session?.user?.places.includes(params.placeId)) return redirect("/");
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex flex-col gap-2 md:flex-row">
+    <div className="flex flex-col gap-2 relative h-full">
+      <div className="flex flex-col gap-2 md:flex-row md:h-[25%]">
         <CabinetsGrid placeId={parseInt(params.placeId)} />
         <PlaceTypes placeId={parseInt(params.placeId)} />
       </div>
-      {children}
+      <div className="md:h-[75%]">{children}</div>
     </div>
   );
 }

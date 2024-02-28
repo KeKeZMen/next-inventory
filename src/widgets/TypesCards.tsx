@@ -6,10 +6,10 @@ export default async function TypesCards() {
   const types = await db.type.findMany({});
 
   return (
-    <div className="flex flex-col shadow-md p-4 w-full max-h-[70vh]">
+    <div className="flex flex-col shadow-md p-4 w-full">
       <h3 className="mb-3">Оборудование</h3>
 
-      <div className="flex flex-wrap gap-2 h-full overflow-y-auto">
+      <div className="flex flex-wrap gap-2 h-full overflow-y-auto justify-start items-start">
         {types.map((type) => (
           <TypeCard type={type} key={type.id} />
         ))}

@@ -8,14 +8,14 @@ export async function GET() {
   if (!session?.user)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
-  // const right = await db.right.findFirst({
-  //   where: {
-  //     id: session.user.rightId,
-  //   },
-  // });
+  const right = await db.right.findFirst({
+    where: {
+      id: session.user.rightId,
+    },
+  });
 
-  // if (!right?.rightActions)
-  //   return Response.json({ message: "Недостаточно прав" }, { status: 401 });
+  if (!right?.rightActions || !right.userActions)
+    return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
   const rights = await db.right.findMany({
     where: {
@@ -42,7 +42,7 @@ export async function DELETE(req: Request) {
     },
   });
 
-  if (!right?.rightActions)
+  if (!right?.rightActions && !right?.userActions)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
   await db.right.delete({
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
     },
   });
 
-  if (!right?.rightActions)
+  if (!right?.rightActions && !right?.userActions)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
   await db.right.create({
@@ -92,7 +92,7 @@ export async function PATCH(req: Request) {
     },
   });
 
-  if (!right?.rightActions)
+  if (!right?.rightActions && !right?.userActions)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
   await db.right.update({

@@ -34,11 +34,11 @@ export default async function layout({ children }: { children: ReactNode }) {
   });
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-[100dvh]">
       <Menu places={places} user={session.user} />
       <div className="flex flex-col w-full">
         <Header user={session.user} />
-        <main className="pt-[80px] md:bg-gray md:p-6 h-full">
+        <main className="pt-[80px] md:bg-gray md:p-6 h-[calc(100%-88px)]">
           <div className="md:bg-white md:rounded-md md:p-[50px] h-full">
             {children}
           </div>

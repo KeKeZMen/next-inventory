@@ -3,7 +3,6 @@ import { Children, FC, ReactNode } from "react";
 type PropsType = {
   title: string;
   children: ReactNode;
-  height: string;
   margin?: string;
   addAction?: JSX.Element;
 };
@@ -16,7 +15,7 @@ export const DataTable: FC<PropsType> = ({
 }) => {
   return (
     <div
-      className="p-3 flex items-start bg-white shadow-md rounded-md flex-col overflow-hidden h-[calc(100%-24px)]"
+      className="p-3 flex items-start bg-white shadow-md rounded-md flex-col h-full w-full overflow-y-auto"
       style={{
         margin,
       }}
@@ -28,11 +27,7 @@ export const DataTable: FC<PropsType> = ({
         {addAction}
       </div>
 
-      <table
-        className={`grid grid-cols-2 border-collapse rounded-md overflow-y-auto w-full h-[calc(100%-24px)]`}
-      >
-        <tbody className="data-table">{children}</tbody>
-      </table>
+      <div className="overflow-y-auto w-full flex flex-col">{children}</div>
     </div>
   );
 };

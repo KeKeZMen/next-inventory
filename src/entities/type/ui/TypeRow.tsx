@@ -15,15 +15,13 @@ export const TypeRow: FC<PropsType> = ({
   productsCount,
 }) => {
   return (
-    <tr>
-      <td>
-        <h5>{type.name}</h5>
-      </td>
-      <td>
+    <div className="flex justify-between items-center w-full border-b-2 border-[#a9a9a9] py-3">
+      <h5>{type.name}</h5>
+      <div className="flex justify-between gap-3 items-center">
         {editButton}
         {deleteButton}
         {productsCount}
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 };

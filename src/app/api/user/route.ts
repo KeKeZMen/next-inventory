@@ -55,7 +55,10 @@ export async function POST(req: Request) {
 
   await db.userPlace.createMany({
     data: [
-      ...body.places.map((p: string) => ({ placeId: Number(p), userId: user.id })),
+      ...body.places.map((p: string) => ({
+        placeId: Number(p),
+        userId: user.id,
+      })),
     ],
   });
 
@@ -97,7 +100,10 @@ export async function PATCH(req: Request) {
 
   await db.userPlace.createMany({
     data: [
-      ...body.places.map((p: string) => ({ placeId: Number(p), userId: user.id })),
+      ...body.places.map((p: string) => ({
+        placeId: Number(p),
+        userId: user.id,
+      })),
     ],
   });
 
@@ -110,6 +116,15 @@ export async function GET(req: Request) {
   if (!session?.user)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
+  const right = await db.right.findFirst({
+    where: {
+      id: session.user.id,
+    },
+  });
+
+  if (!right?.cabinetActions && !right?.userActions)
+    return NextResponse.json({ message: "Недостаточно прав" }, { status: 401 });
+
   const users = await db.user.findMany({
     where: {
       NOT: {
@@ -121,7 +136,7 @@ export async function GET(req: Request) {
           { right: { productActions: true } },
           { right: { typeActions: true } },
           { right: { userActions: true } },
-          { right: { consumablesActions: true } }
+          { right: { consumablesActions: true } },
         ],
       },
     },
