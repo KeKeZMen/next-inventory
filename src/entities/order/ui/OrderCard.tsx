@@ -20,7 +20,10 @@ export const OrderCard: FC<PropsType> = ({ order, editOrder, deleteOrder }) => {
     >
       <div className="flex flex-col gap-2">
         <p className="text-2xl uppercase">В {order.place?.name}</p>
-        <p>Создан {order.createdAt.getDate()}</p>
+        <p>
+          Создан {order.createdAt.getDate()}.{order.createdAt.getMonth()}.
+          {order.createdAt.getFullYear()}
+        </p>
       </div>
       <div className="flex justify-end items-center">
         {editOrder}

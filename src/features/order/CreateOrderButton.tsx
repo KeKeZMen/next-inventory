@@ -25,7 +25,7 @@ export const CreateOrderButton = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center rounded-md shadow-md w-[140px]">
+      <div className="flex items-center justify-center rounded-md shadow-md w-[200px] h-[112px]">
         <AddButton onClick={handleModal} />
       </div>
 
