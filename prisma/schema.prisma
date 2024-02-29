@@ -113,8 +113,8 @@ model ConsumableToModel {
   modelId      Int
   consumableId Int
 
-  model      Model      @relation(fields: [modelId], references: [id])
-  consumable Consumable @relation(fields: [consumableId], references: [id])
+  model      Model      @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  consumable Consumable @relation(fields: [consumableId], references: [id], onDelete: Cascade)
 
   @@index([id])
   @@map("consumablesToModels")

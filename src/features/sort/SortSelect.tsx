@@ -24,18 +24,6 @@ const sortOptions: Array<SortActionType> = [
     orderBy: "desc",
     label: "Инв. по убыванию",
   },
-  {
-    value: "2",
-    key: "serialNumber",
-    orderBy: "asc",
-    label: "Сер. по возрастанию",
-  },
-  {
-    value: "3",
-    key: "serialNumber",
-    orderBy: "desc",
-    label: "Сер. по убыванию",
-  },
 ];
 
 export const SortSelect = () => {
@@ -71,7 +59,7 @@ export const SortSelect = () => {
         value: sortOption.value,
       }))}
       onChange={handleSelectOrder}
-      // minWidth="300px"
+      minWidth="300px"
     />
   );
 };

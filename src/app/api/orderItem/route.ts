@@ -61,7 +61,7 @@ export async function POST(req: Request) {
   if (isHaveItemInOrder)
     return NextResponse.json({
       message: "Нельзя добавить в заказ существующую позицию",
-    });
+    }, { status: 400 });
 
   await db.orderItem.create({
     data: {

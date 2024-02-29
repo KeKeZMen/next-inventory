@@ -6,7 +6,7 @@ import { OrderForm } from "@/entities/order/ui/OrderForm";
 import { DataTable, EditButton, Modal } from "@/shared";
 import { useState, FC } from "react";
 import { createPortal } from "react-dom";
-import useSWR, { Fetcher } from "swr";
+import useSWR, { Fetcher, useSWRConfig } from "swr";
 import { AddToOrderButton } from "../orderItem/AddToOrderButton";
 import { IOrderItem } from "@/entities/orderItem/lib/types";
 import { OrderItemRow } from "@/entities/orderItem/ui/OrderItemRow";
@@ -32,6 +32,7 @@ export const EditOrderButton: FC<PropsType> = ({ order }) => {
     setIsOpenedModal(false);
   };
 
+  const { mutate } = useSWRConfig();
   const { data: consumables } = useSWR("/api/consumable", consumablesFetcher);
   const { data: orderItems } = useSWR(
     `/api/order/${order.id}`,
@@ -65,11 +66,13 @@ export const EditOrderButton: FC<PropsType> = ({ order }) => {
                 <DataTable title="В наличии">
                   {consumables?.map((consumable) => (
                     <OrderingConsumable
+                      key={consumable.id}
                       consumable={consumable}
                       addToOrderButton={
                         <AddToOrderButton
                           consumableId={consumable.id}
                           orderId={order.id}
+                          onSuccess={mutate(`/api/order/${order.id}`)}
                         />
                       }
                     />
@@ -82,6 +85,7 @@ export const EditOrderButton: FC<PropsType> = ({ order }) => {
                     consumables &&
                     orderItems.map((orderItem) => (
                       <OrderItemRow
+                        key={orderItem.id}
                         itemsCountButton={
                           <CountEdit
                             orderItem={orderItem}
@@ -95,7 +99,10 @@ export const EditOrderButton: FC<PropsType> = ({ order }) => {
                         }
                         orderItem={orderItem}
                         deleteFormOrderButton={
-                          <DeleteFromOrderButton orderItemId={orderItem.id} />
+                          <DeleteFromOrderButton
+                            orderItemId={orderItem.id}
+                            onSuccess={mutate(`/api/order/${order.id}`)}
+                          />
                         }
                       />
                     ))}

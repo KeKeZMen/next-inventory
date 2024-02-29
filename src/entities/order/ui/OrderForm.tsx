@@ -72,7 +72,7 @@ export const OrderForm: FC<PropsType> = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex justify-center items-center flex-col md:min-w-[521px] gap-3"
+      className="flex justify-center items-center flex-col md:min-w-[800px] gap-3"
     >
       <h5 className="md:self-start self-center text-base uppercase">
         {formTitle}

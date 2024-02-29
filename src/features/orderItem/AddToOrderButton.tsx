@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 type PropsType = {
   consumableId: number;
   orderId: number;
-  onSuccess?: () => void
+  onSuccess?: any
 };
 
 export const AddToOrderButton: FC<PropsType> = ({ consumableId, orderId, onSuccess }) => {
@@ -35,7 +35,7 @@ export const AddToOrderButton: FC<PropsType> = ({ consumableId, orderId, onSucce
 
   const handleAddToOrder = () => {
     onAdd(consumableId, orderId);
-    onSuccess?.();
+    onSuccess;
     router.refresh();
   };
 
