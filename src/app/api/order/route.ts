@@ -25,7 +25,7 @@ export async function DELETE(req: Request) {
     },
   });
 
-  return Response.json({ message: "Кабинет удален!" });
+  return Response.json({ message: "Заказ удален!" });
 }
 
 export async function POST(req: Request) {
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     },
   });
 
-  return Response.json({ message: "Кабинет создан!" });
+  return Response.json({ message: "Заказ создан!" });
 }
 
 export async function PATCH(req: Request) {
@@ -79,5 +79,5 @@ export async function PATCH(req: Request) {
     },
   });
 
-  return Response.json({ message: "Кабинет отредактирован!" });
+  return Response.json({ message: "Заказ отредактирован!" });
 }

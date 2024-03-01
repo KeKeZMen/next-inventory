@@ -107,7 +107,7 @@ export async function PATCH(req: Request) {
     ],
   });
 
-  return Response.json({ message: "Модель отредактирована!" });
+  return Response.json({ message: "Расходник отредактирован!" });
 }
 
 export async function GET() {
