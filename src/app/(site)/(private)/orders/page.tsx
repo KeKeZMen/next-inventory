@@ -4,6 +4,7 @@ import { CreateOrderButton } from "@/features/order/CreateOrderButton";
 import { DeleteOrderButton } from "@/features/order/DeleteOrderButton";
 import { EditOrderButton } from "@/features/order/EditOrderButton";
 import { db } from "@/shared";
+import { Order } from "@/widgets/Order/ui";
 import { getServerSession } from "next-auth";
 import React from "react";
 
@@ -28,22 +29,40 @@ export default async function OrdersPage() {
       place: {
         select: {
           id: true,
-          name: true
-        }
-      }
-    }
+          name: true,
+        },
+      },
+      orderItems: {
+        select: {
+          consumable: {
+            select: {
+              id: true,
+              name: true,
+              count: true,
+            },
+          },
+          count: true,
+          id: true,
+        },
+      },
+    },
   });
+
+  const consumables = await db.consumable.findMany();
 
   return (
     <main className="mt-1">
       <div className="flex flex-wrap gap-3">
-        {orders.map((order) => (
+        {/* {orders.map((order) => (
           <OrderCard
             order={order}
             deleteOrder={<DeleteOrderButton orderId={order.id} />}
             editOrder={<EditOrderButton order={order} />}
             key={order.id}
           />
+        ))} */}
+        {orders.map((order) => (
+          <Order order={order} consumables={consumables} key={order.id}/>
         ))}
         <CreateOrderButton />
       </div>
