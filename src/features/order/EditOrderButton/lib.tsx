@@ -12,9 +12,6 @@ export const editOrder = async (state: any, formData: FormData) => {
       where: {
         id: session?.user?.rightId,
       },
-      select: {
-        consumablesActions: true,
-      },
     });
     if (!session?.user && !right?.consumablesActions) {
       throw new Error("Нет доступа");
@@ -39,7 +36,7 @@ export const editOrder = async (state: any, formData: FormData) => {
       },
       data: {
         placeId,
-        isDone,
+        isDone: right?.orderSuccesing ? isDone : oldOrder?.isDone
       },
     });
 

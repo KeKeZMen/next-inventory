@@ -56,7 +56,8 @@ export const RightForm: FC<PropsType> = ({
         rightActions: data.rightActions,
         typeActions: data.typeActions,
         rightId: right?.id,
-        consumablesActions: data.consumablesActions
+        consumablesActions: data.consumablesActions,
+        orderSuccesing: data.orderSuccesing,
       });
 
       setIsLoading(false);
@@ -142,6 +143,14 @@ export const RightForm: FC<PropsType> = ({
         register={register}
         id="consumablesActions"
         label="Расходники"
+        margin="10px 0"
+      />
+
+      <Checkbox
+        defaultChecked={right?.orderSuccesing}
+        register={register}
+        id="orderSuccesing"
+        label="Подтверждение заказов"
         margin="10px 0"
       />
 

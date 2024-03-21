@@ -106,6 +106,7 @@ export async function PATCH(req: Request) {
       rightActions: body.rightActions,
       typeActions: body.typeActions,
       userActions: body.userActions,
+      consumablesActions: body.consumablesActions,
       name: body.name,
     },
   });

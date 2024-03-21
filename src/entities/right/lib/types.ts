@@ -8,6 +8,7 @@ export type RightActionType = {
   rightActions: boolean;
   typeActions: boolean;
   consumablesActions: boolean;
+  orderSuccesing: boolean;
 };
 
 export interface IRight {
@@ -20,4 +21,5 @@ export interface IRight {
   consumablesActions: boolean;
   rightActions: boolean;
   typeActions: boolean;
+  orderSuccesing: boolean;
 }

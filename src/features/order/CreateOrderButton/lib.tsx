@@ -12,9 +12,6 @@ export const createOrder = async (state: any, formData: FormData) => {
       where: {
         id: session?.user?.rightId,
       },
-      select: {
-        consumablesActions: true,
-      },
     });
     if (!session?.user && !right?.consumablesActions) {
       throw new Error("Нет доступа");
@@ -29,7 +26,7 @@ export const createOrder = async (state: any, formData: FormData) => {
     const order = await db.order.create({
       data: {
         placeId,
-        isDone,
+        isDone: right?.orderSuccesing ? isDone : false,
       },
     });
 
