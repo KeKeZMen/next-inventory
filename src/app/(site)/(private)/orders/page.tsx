@@ -1,10 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { OrderCard } from "@/entities/order/ui/OrderCard";
-import { CreateOrderButton } from "@/features/order/CreateOrderButton";
-import { DeleteOrderButton } from "@/features/order/DeleteOrderButton";
-import { EditOrderButton } from "@/features/order/EditOrderButton";
+import { CreateOrderButton } from "@/features/order/CreateOrderButton/ui";
 import { db } from "@/shared";
-import { Order } from "@/widgets/Order/ui";
+import { Order } from "@/widgets/Order";
 import { getServerSession } from "next-auth";
 import React from "react";
 
@@ -53,18 +50,10 @@ export default async function OrdersPage() {
   return (
     <main className="mt-1">
       <div className="flex flex-wrap gap-3">
-        {/* {orders.map((order) => (
-          <OrderCard
-            order={order}
-            deleteOrder={<DeleteOrderButton orderId={order.id} />}
-            editOrder={<EditOrderButton order={order} />}
-            key={order.id}
-          />
-        ))} */}
         {orders.map((order) => (
-          <Order order={order} consumables={consumables} key={order.id}/>
+          <Order order={order} consumables={consumables} key={order.id} />
         ))}
-        <CreateOrderButton />
+        <CreateOrderButton consumables={consumables} />
       </div>
     </main>
   );

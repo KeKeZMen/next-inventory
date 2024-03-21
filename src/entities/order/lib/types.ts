@@ -9,5 +9,4 @@ export interface IOrder {
 export type OrderActionType = {
   id?: number;
   placeId: number;
-  isDone: boolean;
 };

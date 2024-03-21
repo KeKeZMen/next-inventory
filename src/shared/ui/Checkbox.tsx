@@ -4,8 +4,8 @@ import { FieldValues, UseFormRegister } from "react-hook-form";
 interface PropsType extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   margin?: string;
-  id: string;
-  register: UseFormRegister<FieldValues>;
+  id?: string;
+  register?: UseFormRegister<FieldValues>;
 }
 
 export const Checkbox: FC<PropsType> = ({
@@ -26,7 +26,8 @@ export const Checkbox: FC<PropsType> = ({
       <input
         type="checkbox"
         className="absolute z-[-1] opacity-0 checkbox__input"
-        {...register(id)}
+        
+        {...register && id ? {...register(id)} : null}
         id={labelId}
         {...checkboxProps}
       />
