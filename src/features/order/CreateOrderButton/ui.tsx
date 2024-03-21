@@ -113,7 +113,7 @@ export const CreateOrderButton: FC<PropsType> = ({ consumables, isAdmin }) => {
                 />
               )}
 
-              <div className="flex justify-between gap-1 w-full">
+              <div className="flex flex-col justify-between gap-1 w-full md:flex-row">
                 <DataTable title="Выбранные">
                   {selectedConsumables.map((consumable) => (
                     <OrderingConsumable

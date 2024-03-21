@@ -30,7 +30,7 @@ export const Menu: FC<PropsType> = ({ places, user }) => {
       )}
 
       <aside
-        className="fixed overflow-auto m-0 w-[286px] text-white max-h-[100dvh] bg-primary flex items-center flex-col 2xl:static z-30"
+        className="fixed overflow-auto m-0 w-[286px] text-white h-[100dvh] bg-primary flex items-center flex-col 2xl:static z-30"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="w-full flex justify-around items-center p-5 h-[88px] shadow-md">

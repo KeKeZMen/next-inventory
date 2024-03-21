@@ -3,7 +3,7 @@ import { IConsumable } from "../lib/types";
 
 type PropsType = {
   consumable: IConsumable;
-  orderActions?: JSX.Element;
+  orderActions?: JSX.Element | null;
 };
 
 export const OrderingConsumable: FC<PropsType> = ({

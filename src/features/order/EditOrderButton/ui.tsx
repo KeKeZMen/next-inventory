@@ -122,24 +122,32 @@ export const EditOrderButton: FC<PropsType> = ({
               }}
               className="flex justify-center items-center flex-col md:min-w-[800px] gap-3"
             >
-              <h5 className="md:self-start self-center text-base uppercase">
-                Отредактировать заказ
-              </h5>
-
-              {places && (
-                <Select
-                  options={places.map((place) => ({
-                    label: place.name,
-                    value: String(place.id),
-                  }))}
-                  onChange={handleSelectPlace}
-                  selected={selectedPlaceId}
-                  placeholder="Площадка назначения*"
-                  fullwidth
-                />
+              {!order.isDone && (
+                <h5 className="md:self-start self-center text-base uppercase">
+                  Отредактировать заказ
+                </h5>
               )}
 
-              <div className="flex justify-between gap-1 w-full">
+              {!order.isDone ? (
+                places && (
+                  <Select
+                    options={places.map((place) => ({
+                      label: place.name,
+                      value: String(place.id),
+                    }))}
+                    onChange={handleSelectPlace}
+                    selected={selectedPlaceId}
+                    placeholder="Площадка назначения*"
+                    fullwidth
+                  />
+                )
+              ) : (
+                <h5 className="md:self-center self-center text-base uppercase">
+                  Отправлено в {order.place.name}
+                </h5>
+              )}
+
+              <div className="flex flex-col justify-between gap-1 w-full md:flex-row">
                 <DataTable title="Выбранные">
                   {selectedConsumables.map((consumable) => (
                     <OrderingConsumable
@@ -147,99 +155,106 @@ export const EditOrderButton: FC<PropsType> = ({
                       consumable={consumable}
                       orderActions={
                         <>
-                          <button
-                            onClick={() => {
-                              if (consumable.count <= 1) {
-                                setSelectedConsumables((prev) =>
-                                  [...prev].filter(
-                                    (selectedConsumable) =>
-                                      selectedConsumable.id !== consumable.id
-                                  )
+                          {!order.isDone && (
+                            <button
+                              onClick={() => {
+                                if (consumable.count <= 1) {
+                                  setSelectedConsumables((prev) =>
+                                    [...prev].filter(
+                                      (selectedConsumable) =>
+                                        selectedConsumable.id !== consumable.id
+                                    )
+                                  );
+                                } else {
+                                  setSelectedConsumables((prev) =>
+                                    [...prev].map((selectedConsumable) =>
+                                      selectedConsumable.id == consumable.id
+                                        ? {
+                                            count: consumable.count - 1,
+                                            id: consumable.id,
+                                            name: consumable.name,
+                                          }
+                                        : selectedConsumable
+                                    )
+                                  );
+                                }
+                              }}
+                              type="button"
+                            >
+                              -
+                            </button>
+                          )}
+                          {!order.isDone && (
+                            <button
+                              onClick={() => {
+                                const indexOfConsumable = consumables.findIndex(
+                                  (consumables) =>
+                                    consumables.id == consumable.id
                                 );
-                              } else {
-                                setSelectedConsumables((prev) =>
-                                  [...prev].map((selectedConsumable) =>
-                                    selectedConsumable.id == consumable.id
-                                      ? {
-                                          count: consumable.count - 1,
-                                          id: consumable.id,
-                                          name: consumable.name,
-                                        }
-                                      : selectedConsumable
-                                  )
-                                );
-                              }
-                            }}
-                            type="button"
-                          >
-                            -
-                          </button>
-                          <button
-                            onClick={() => {
-                              const indexOfConsumable = consumables.findIndex(
-                                (consumables) => consumables.id == consumable.id
-                              );
-                              if (indexOfConsumable == -1)
-                                return toast.error(`Элемент не найден`);
+                                if (indexOfConsumable == -1)
+                                  return toast.error(`Элемент не найден`);
 
-                              const maxCount =
-                                consumables[indexOfConsumable].count;
-                              if (consumable.count < maxCount) {
-                                setSelectedConsumables((prev) =>
-                                  [...prev].map((selectedConsumable) =>
-                                    selectedConsumable.id == consumable.id
-                                      ? {
-                                          count: consumable.count + 1,
-                                          id: consumable.id,
-                                          name: consumable.name,
-                                        }
-                                      : selectedConsumable
-                                  )
-                                );
-                              } else {
-                                toast.error(
-                                  `Невозможно выбрать больше чем ${maxCount}`
-                                );
-                              }
-                            }}
-                            type="button"
-                          >
-                            +
-                          </button>
+                                const maxCount =
+                                  consumables[indexOfConsumable].count;
+                                if (consumable.count < maxCount) {
+                                  setSelectedConsumables((prev) =>
+                                    [...prev].map((selectedConsumable) =>
+                                      selectedConsumable.id == consumable.id
+                                        ? {
+                                            count: consumable.count + 1,
+                                            id: consumable.id,
+                                            name: consumable.name,
+                                          }
+                                        : selectedConsumable
+                                    )
+                                  );
+                                } else {
+                                  toast.error(
+                                    `Невозможно выбрать больше чем ${maxCount}`
+                                  );
+                                }
+                              }}
+                              type="button"
+                            >
+                              +
+                            </button>
+                          )}
                         </>
                       }
                     />
                   ))}
                 </DataTable>
 
-                <DataTable title="В наличии">
-                  {notSelectedConsumables.map((consumable) => (
-                    <OrderingConsumable
-                      consumable={consumable}
-                      key={`noselected-${consumable.id}`}
-                      orderActions={
-                        <button
-                          onClick={() => {
-                            setSelectedConsumables((prev) => [
-                              ...prev,
-                              {
-                                count: 1,
-                                id: consumable.id,
-                                name: consumable.name,
-                              },
-                            ]);
-                          }}
-                          type="button"
-                        >
-                          +
-                        </button>
-                      }
-                    />
-                  ))}
-                </DataTable>
+                {!order.isDone && (
+                  <DataTable title="В наличии">
+                    {notSelectedConsumables.map((consumable) => (
+                      <OrderingConsumable
+                        consumable={consumable}
+                        key={`noselected-${consumable.id}`}
+                        orderActions={
+                          <button
+                            onClick={() => {
+                              setSelectedConsumables((prev) => [
+                                ...prev,
+                                {
+                                  count: 1,
+                                  id: consumable.id,
+                                  name: consumable.name,
+                                },
+                              ]);
+                            }}
+                            type="button"
+                          >
+                            +
+                          </button>
+                        }
+                      />
+                    ))}
+                  </DataTable>
+                )}
               </div>
 
-              {isAdmin && (
+              {isAdmin && !order.isDone && (
                 <Checkbox
                   name="isDone"
                   defaultChecked={order?.isDone}
@@ -249,12 +264,14 @@ export const EditOrderButton: FC<PropsType> = ({
 
               <div className="flex self-end justify-between items-center w-full">
                 <Button onClick={onClose} danger type="button">
-                  Отменить
+                  {!order.isDone ? "Отменить" : "Закрыть"}
                 </Button>
 
-                <Button type="submit" disabled={order.isDone}>
-                  Отредактировать
-                </Button>
+                {!order.isDone && (
+                  <Button type="submit" disabled={order.isDone}>
+                    Отредактировать
+                  </Button>
+                )}
               </div>
             </form>
           </Modal>,

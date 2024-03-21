@@ -28,7 +28,7 @@ export const Modal: FC<PropsType> = ({ children, onClose, minHeight }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-lg p-5 md:p-10 max-h-[500px] overflow-y-auto min-h-[200px] md:max-h-screen"
+        className="bg-white rounded-lg p-5 md:p-10 max-h-[500px] overflow-y-auto md:max-h-screen"
         style={{ minHeight }}
       >
         {children}
