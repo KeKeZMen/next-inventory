@@ -22,12 +22,13 @@ type PropsType = {
     name: string;
     count: number;
   }[];
+  isAdmin?: boolean;
 };
 
 const placesFetcher: Fetcher<Array<IPlace>, string> = (url) =>
   fetch(url).then((res) => res.json());
 
-export const CreateOrderButton: FC<PropsType> = ({ consumables }) => {
+export const CreateOrderButton: FC<PropsType> = ({ consumables, isAdmin }) => {
   const { data: places } = useSWR("/api/place", placesFetcher);
   const [state, formAction] = useFormState(createOrder, null);
   const [isOpenedModal, setIsOpenedModal] = useState(false);
@@ -44,7 +45,9 @@ export const CreateOrderButton: FC<PropsType> = ({ consumables }) => {
   const [selectedConsumables, setSelectedConsumables] = useState<
     typeof consumables
   >([]);
-  const [notSelectedConsumables, setNotSelectedConsumables] = useState<typeof consumables>([]);
+  const [notSelectedConsumables, setNotSelectedConsumables] = useState<
+    typeof consumables
+  >([]);
 
   useEffect(() => {
     if (state?.data?.message) {
@@ -87,8 +90,8 @@ export const CreateOrderButton: FC<PropsType> = ({ consumables }) => {
                   ])
                 );
                 formAction(formData);
-                setSelectedConsumables([])
-                setSelectedPlaceId("")
+                setSelectedConsumables([]);
+                setSelectedPlaceId("");
                 onClose?.();
               }}
               className="flex justify-center items-center flex-col md:min-w-[800px] gap-3"
@@ -210,7 +213,7 @@ export const CreateOrderButton: FC<PropsType> = ({ consumables }) => {
                 </DataTable>
               </div>
 
-              <Checkbox name="isDone" label="Готов" />
+              {isAdmin && <Checkbox name="isDone" label="Готов" />}
 
               <div className="flex self-end justify-between items-center w-full">
                 <Button onClick={onClose} danger type="button">

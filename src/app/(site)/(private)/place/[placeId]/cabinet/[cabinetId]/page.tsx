@@ -1,9 +1,9 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { ProductRow } from "@/entities/product/ui/ProductRow";
 import { AddProductButton } from "@/features/product/AddProductButton";
 import { DeleteProductButton } from "@/features/product/DeleteProductButton";
 import { EditProductButton } from "@/features/product/EditProductButton";
 import { db } from "@/shared";
+import { authOptions } from "@/shared/lib/authOptions";
 import { ProductsTable } from "@/shared/ui/ProductsTable";
 import { ProductsSelects } from "@/widgets/ProductsSelects";
 import { getServerSession } from "next-auth";

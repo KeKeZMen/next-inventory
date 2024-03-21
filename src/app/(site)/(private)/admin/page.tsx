@@ -1,12 +1,12 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { UsersTable } from "@/widgets/UsersTable";
 import { db } from "@/shared";
 import RightsTable from "@/widgets/RightsTable";
 import { TypesTable } from "@/widgets/TypesTable";
 import { PlacesTable } from "@/widgets/PlacesTable";
 import { ModelsTable } from "@/widgets/ModelsTable";
+import { authOptions } from "@/shared/lib/authOptions";
 // import { ImportInput } from "@/features/import/ImportInput";
 
 const AdminPage = async () => {

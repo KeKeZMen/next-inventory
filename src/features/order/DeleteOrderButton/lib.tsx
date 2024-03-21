@@ -1,7 +1,7 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { db } from "@/shared";
+import { authOptions } from "@/shared/lib/authOptions";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 

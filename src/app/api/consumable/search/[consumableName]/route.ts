@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
 import { db } from "@/shared";
+import { authOptions } from "@/shared/lib/authOptions";
 
 export async function GET(
   req: Request,

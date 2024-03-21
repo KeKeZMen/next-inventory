@@ -1,12 +1,25 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { OrderCard } from "@/entities/order/ui/OrderCard";
 import { CreateOrderButton } from "@/features/order/CreateOrderButton/ui";
+import { DeleteOrderButton } from "@/features/order/DeleteOrderButton/ui";
+import { EditOrderButton } from "@/features/order/EditOrderButton/ui";
 import { db } from "@/shared";
-import { Order } from "@/widgets/Order";
+import { authOptions } from "@/shared/lib/authOptions";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import React from "react";
 
 export default async function OrdersPage() {
   const session = await getServerSession(authOptions);
+
+  if (!session?.user) return redirect("/login");
+
+  const right = await db.right.findFirst({
+    where: {
+      id: session.user.rightId,
+    },
+  });
+
+  if (!right) return redirect("/login");
 
   const orders = await db.order.findMany({
     where: {
@@ -51,9 +64,27 @@ export default async function OrdersPage() {
     <main className="mt-1">
       <div className="flex flex-wrap gap-3">
         {orders.map((order) => (
-          <Order order={order} consumables={consumables} key={`order-${order.id}`} />
+          <OrderCard
+            isAdmin={right.orderSuccesing}
+            order={order}
+            key={`card-${order.id}`}
+            deleteOrder={
+              <DeleteOrderButton orderId={order.id} key={`del-${order.id}`} />
+            }
+            editOrder={
+              <EditOrderButton
+                isAdmin={right.orderSuccesing}
+                consumables={consumables}
+                order={order}
+                key={`edit-${order.id}`}
+              />
+            }
+          />
         ))}
-        <CreateOrderButton consumables={consumables} />
+        <CreateOrderButton
+          consumables={consumables}
+          isAdmin={right.orderSuccesing}
+        />
       </div>
     </main>
   );

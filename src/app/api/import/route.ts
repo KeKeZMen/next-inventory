@@ -5,7 +5,7 @@ import ExcelJs from "exceljs";
 import { db } from "@/shared";
 import { fileURLToPath } from "url";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/shared/lib/authOptions";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);

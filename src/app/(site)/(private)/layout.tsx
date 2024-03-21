@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { Menu } from "@/widgets/Menu";
 import { Header } from "@/widgets/Header";
 import { db } from "@/shared";
 import { redirect } from "next/navigation";
+import { authOptions } from "@/shared/lib/authOptions";
 
 export default async function layout({ children }: { children: ReactNode }) {
   const session = await getServerSession(authOptions);

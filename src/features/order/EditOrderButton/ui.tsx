@@ -40,12 +40,17 @@ type PropsType = {
     name: string;
     count: number;
   }[];
+  isAdmin?: boolean;
 };
 
 const placesFetcher: Fetcher<Array<IPlace>, string> = (url) =>
   fetch(url).then((res) => res.json());
 
-export const EditOrderButton: FC<PropsType> = ({ order, consumables }) => {
+export const EditOrderButton: FC<PropsType> = ({
+  order,
+  consumables,
+  isAdmin,
+}) => {
   const { data: places } = useSWR("/api/place", placesFetcher);
   const [state, formAction] = useFormState(editOrder, null);
   const [isOpenedModal, setIsOpenedModal] = useState(false);
@@ -234,18 +239,22 @@ export const EditOrderButton: FC<PropsType> = ({ order, consumables }) => {
                 </DataTable>
               </div>
 
-              <Checkbox
-                name="isDone"
-                defaultChecked={order?.isDone}
-                label="Готов"
-              />
+              {isAdmin && (
+                <Checkbox
+                  name="isDone"
+                  defaultChecked={order?.isDone}
+                  label="Готов"
+                />
+              )}
 
               <div className="flex self-end justify-between items-center w-full">
                 <Button onClick={onClose} danger type="button">
                   Отменить
                 </Button>
 
-                <Button type="submit" disabled={order.isDone}>Отредактировать</Button>
+                <Button type="submit" disabled={order.isDone}>
+                  Отредактировать
+                </Button>
               </div>
             </form>
           </Modal>,

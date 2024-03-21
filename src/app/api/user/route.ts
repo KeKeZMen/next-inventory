@@ -1,8 +1,8 @@
 import { db } from "@/shared";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
 import { createHash } from "crypto";
 import { NextResponse } from "next/server";
+import { authOptions } from "@/shared/lib/authOptions";
 
 export async function DELETE(req: Request) {
   const { userId } = await req.json();

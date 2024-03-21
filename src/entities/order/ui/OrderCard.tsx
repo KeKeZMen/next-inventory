@@ -8,9 +8,10 @@ type PropsType = {
   order: IOrder;
   editOrder?: JSX.Element;
   deleteOrder?: JSX.Element;
+  isAdmin?: boolean
 };
 
-export const OrderCard: FC<PropsType> = ({ order, editOrder, deleteOrder }) => {
+export const OrderCard: FC<PropsType> = ({ order, editOrder, deleteOrder, isAdmin }) => {
   return (
     <div
       className={clsx(
@@ -27,7 +28,7 @@ export const OrderCard: FC<PropsType> = ({ order, editOrder, deleteOrder }) => {
       </div>
       <div className="flex justify-end items-center">
         {editOrder}
-        {deleteOrder}
+        {isAdmin && deleteOrder}
       </div>
     </div>
   );

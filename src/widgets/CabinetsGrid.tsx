@@ -1,10 +1,10 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { CabinetCard } from "@/entities/cabinet/ui/CabinetCard";
 import { AddCabinetButton } from "@/features/cabinet/AddCabinetButton";
 import { DeleteCabinetButton } from "@/features/cabinet/DeleteCabinetButton";
 import { EditCabinetButton } from "@/features/cabinet/EditCabinetButton";
 import { CabinetPassportButton } from "@/features/passport/CabinetPassportButton";
 import { db } from "@/shared";
+import { authOptions } from "@/shared/lib/authOptions";
 import { getServerSession } from "next-auth";
 import React from "react";
 

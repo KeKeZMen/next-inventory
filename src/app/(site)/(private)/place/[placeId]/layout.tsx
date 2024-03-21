@@ -1,4 +1,4 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/shared/lib/authOptions";
 import { CabinetsGrid } from "@/widgets/CabinetsGrid";
 import { PlaceTypes } from "@/widgets/PlaceTypes";
 import { getServerSession } from "next-auth";

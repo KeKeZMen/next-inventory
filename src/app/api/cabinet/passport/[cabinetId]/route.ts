@@ -1,8 +1,8 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { db } from "@/shared";
 import { getServerSession } from "next-auth";
 import Exceljs from "exceljs";
 import { NextResponse } from "next/server";
+import { authOptions } from "@/shared/lib/authOptions";
 
 export async function GET(
   req: Request,

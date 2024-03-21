@@ -1,11 +1,10 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { db } from "@/shared";
 import { ProductRow } from "@/entities/product/ui/ProductRow";
 import { ProductsTable } from "@/shared/ui/ProductsTable";
-import { ProductsSelects } from "@/widgets/ProductsSelects";
 import { Header } from "@/widgets/Header";
+import { authOptions } from "@/shared/lib/authOptions";
 
 type SearchParamsType = {
   key: "inventoryNumber" | "serialNumber";

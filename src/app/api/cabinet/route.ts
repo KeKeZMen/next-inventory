@@ -1,6 +1,6 @@
 import { db } from "@/shared";
+import { authOptions } from "@/shared/lib/authOptions";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function DELETE(req: Request) {
   const { cabinetId } = await req.json();
