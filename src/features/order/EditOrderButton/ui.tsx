@@ -138,7 +138,7 @@ export const EditOrderButton: FC<PropsType> = ({ order, consumables }) => {
                 <DataTable title="Выбранные">
                   {selectedConsumables.map((consumable) => (
                     <OrderingConsumable
-                      key={consumable.id}
+                      key={`selected-${consumable.id}`}
                       consumable={consumable}
                       orderActions={
                         <>
@@ -211,6 +211,7 @@ export const EditOrderButton: FC<PropsType> = ({ order, consumables }) => {
                   {notSelectedConsumables.map((consumable) => (
                     <OrderingConsumable
                       consumable={consumable}
+                      key={`noselected-${consumable.id}`}
                       orderActions={
                         <button
                           onClick={() => {
@@ -244,7 +245,7 @@ export const EditOrderButton: FC<PropsType> = ({ order, consumables }) => {
                   Отменить
                 </Button>
 
-                <Button type="submit">Отредактировать</Button>
+                <Button type="submit" disabled={order.isDone}>Отредактировать</Button>
               </div>
             </form>
           </Modal>,

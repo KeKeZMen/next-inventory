@@ -32,6 +32,7 @@ model Right {
   rightActions       Boolean
   typeActions        Boolean
   consumablesActions Boolean
+  orderSuccesing     Boolean
 
   user User[]
 

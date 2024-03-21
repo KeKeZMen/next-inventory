@@ -35,8 +35,17 @@ export const Order: FC<PropsType> = ({ order, consumables }) => {
   return (
     <OrderCard
       order={order}
-      deleteOrder={<DeleteOrderButton orderId={order.id} />}
-      editOrder={<EditOrderButton consumables={consumables} order={order} />}
+      key={`card-${order.id}`}
+      deleteOrder={
+        <DeleteOrderButton orderId={order.id} key={`del-${order.id}`} />
+      }
+      editOrder={
+        <EditOrderButton
+          consumables={consumables}
+          order={order}
+          key={`edit-${order.id}`}
+        />
+      }
     />
   );
 };

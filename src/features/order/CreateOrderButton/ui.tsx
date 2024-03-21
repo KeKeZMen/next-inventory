@@ -67,7 +67,7 @@ export const CreateOrderButton: FC<PropsType> = ({ consumables }) => {
 
   return (
     <>
-      <div className="flex items-center justify-center rounded-md shadow-md w-[200px] h-[112px]">
+      <div className="flex items-center justify-center rounded-md shadow-md w-full md:w-[200px] h-[112px]">
         <AddButton onClick={handleModal} />
       </div>
 
@@ -87,6 +87,8 @@ export const CreateOrderButton: FC<PropsType> = ({ consumables }) => {
                   ])
                 );
                 formAction(formData);
+                setSelectedConsumables([])
+                setSelectedPlaceId("")
                 onClose?.();
               }}
               className="flex justify-center items-center flex-col md:min-w-[800px] gap-3"
@@ -112,7 +114,7 @@ export const CreateOrderButton: FC<PropsType> = ({ consumables }) => {
                 <DataTable title="Выбранные">
                   {selectedConsumables.map((consumable) => (
                     <OrderingConsumable
-                      key={consumable.id}
+                      key={`selected-${consumable.id}`}
                       consumable={consumable}
                       orderActions={
                         <>
@@ -185,6 +187,7 @@ export const CreateOrderButton: FC<PropsType> = ({ consumables }) => {
                   {notSelectedConsumables.map((consumable) => (
                     <OrderingConsumable
                       consumable={consumable}
+                      key={`cons-${consumable.id}`}
                       orderActions={
                         <button
                           onClick={() => {

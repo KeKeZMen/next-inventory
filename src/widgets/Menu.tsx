@@ -24,19 +24,19 @@ export const Menu: FC<PropsType> = ({ places, user }) => {
     <>
       {width && width <= 1400 && (
         <div
-          className="w-full h-[100vh] bg-black/20 fixed z-20"
+          className="w-full h-[100dvh] bg-black/20 fixed z-20"
           onClick={handleMenu}
         />
       )}
 
       <aside
-        className="fixed overflow-auto m-0 w-[286px] text-white min-h-full bg-primary flex items-center flex-col 2xl:static z-30"
+        className="fixed overflow-auto m-0 w-[286px] text-white max-h-[100dvh] bg-primary flex items-center flex-col 2xl:static z-30"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="w-full flex justify-around items-center p-5 h-[88px] shadow-md">
           <h1 className="uppercase font-bold text-2xl">Inventory</h1>
         </div>
-        <ul className="px-1 flex flex-col items-center mt-2 w-full overflow-auto pb-20">
+        <ul className="px-1 flex flex-col items-center mt-2 w-full overflow-y-auto pb-20">
           <NavLink
             href={"/"}
             onClick={() => {

@@ -14,7 +14,7 @@ export const OrderCard: FC<PropsType> = ({ order, editOrder, deleteOrder }) => {
   return (
     <div
       className={clsx(
-        "flex flex-col shadow-md rounded-md p-3 w-[200px]",
+        "flex flex-col shadow-md rounded-md p-3 w-full md:w-[200px]",
         order.isDone && "border-[#59CB4F] bg-[#DBFFD8]"
       )}
     >

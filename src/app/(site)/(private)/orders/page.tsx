@@ -51,7 +51,7 @@ export default async function OrdersPage() {
     <main className="mt-1">
       <div className="flex flex-wrap gap-3">
         {orders.map((order) => (
-          <Order order={order} consumables={consumables} key={order.id} />
+          <Order order={order} consumables={consumables} key={`order-${order.id}`} />
         ))}
         <CreateOrderButton consumables={consumables} />
       </div>

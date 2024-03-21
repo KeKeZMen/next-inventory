@@ -26,8 +26,7 @@ export const Checkbox: FC<PropsType> = ({
       <input
         type="checkbox"
         className="absolute z-[-1] opacity-0 checkbox__input"
-        
-        {...register && id ? {...register(id)} : null}
+        {...(register && id ? { ...register(id) } : null)}
         id={labelId}
         {...checkboxProps}
       />

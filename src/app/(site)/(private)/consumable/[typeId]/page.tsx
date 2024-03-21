@@ -4,6 +4,7 @@ import { DeleteConsumableButton } from "@/features/consumable/DeleteConsumableBu
 import { EditConsumableButton } from "@/features/consumable/EditConsumableButton";
 import { TypeSelect } from "@/features/type/TypeSelect";
 import { ConsumablesTable, db } from "@/shared";
+import { ProductsSelects } from "@/widgets/ProductsSelects";
 import React from "react";
 
 export default async function ConsumablePage({
@@ -43,7 +44,7 @@ export default async function ConsumablePage({
     <ConsumablesTable
       title="Расходники"
       addButton={<AddConsumableButton />}
-      selects={<TypeSelect />}
+      selects={<ProductsSelects typeSelect />}
     >
       {consumable
         .map((consumable) => ({

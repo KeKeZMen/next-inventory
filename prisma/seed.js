@@ -12,14 +12,15 @@ async function main() {
       userActions: true,
       typeActions: true,
       consumablesActions: true,
+      orderSuccesing: true
     },
   });
 
   const owner = await prisma.user.create({
     data: {
-      name: "root",
+      name: "adam",
       password:
-        "fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", // 123qwe
+        "7fb2476d3e4dc39e98039383059cf7599d94d9bc752059889c4aec348e0b276e",
       rightId: ownerRight.id,
     },
   });
