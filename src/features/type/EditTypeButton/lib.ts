@@ -20,6 +20,8 @@ export const editType = async (state: any, formData: FormData) => {
     const id = Number(formData.get("typeId") as string);
     const name = formData.get("name") as string;
 
+    if (!name) throw ApiError.badRequest("Вы ввели не все данные!");
+
     await db.type.update({
       where: {
         id,

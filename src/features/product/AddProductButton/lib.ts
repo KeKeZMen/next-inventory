@@ -17,13 +17,16 @@ export const addProduct = async (state: any, formData: FormData) => {
     });
     if (!right?.productActions) throw ApiError.noEnoughRights();
 
-    const name = formData.get("name") as string
+    const name = formData.get("name") as string;
     const description = formData.get("description") as string;
     const inventoryNumber = formData.get("inventoryNumber") as string;
-    const count = Number(formData.get("count") as string)
-    const typeId = Number(formData.get("typeId") as string)
-    const cabinetId = Number(formData.get("cabinetId") as string)
-    const onUtil = Boolean(formData.get("onUtil"))
+    const count = Number(formData.get("count") as string);
+    const typeId = Number(formData.get("typeId") as string);
+    const cabinetId = Number(formData.get("cabinetId") as string);
+    const onUtil = Boolean(formData.get("onUtil"));
+
+    if (!name || !inventoryNumber || !count || !typeId || !cabinetId)
+      throw ApiError.badRequest("Вы ввели не все данные!");
 
     await db.product.create({
       data: {
@@ -34,9 +37,9 @@ export const addProduct = async (state: any, formData: FormData) => {
         cabinetId,
         typeId,
         userAdded: session.user.id,
-        onUtil
-      }
-    })
+        onUtil,
+      },
+    });
 
     return {
       data: {

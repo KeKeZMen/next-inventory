@@ -19,6 +19,8 @@ export const addPlace = async (state: any, formData: FormData) => {
 
     const name = formData.get("name") as string;
 
+    if (!name) throw ApiError.badRequest("Вы ввели не все данные!");
+
     const place = await db.place.create({
       data: {
         name,

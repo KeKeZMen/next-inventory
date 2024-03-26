@@ -38,7 +38,7 @@ export const deleteCabinet = async (cabinetId: number) => {
 
     return {
       data: {
-        message: "Успешно удалено",
+        message: "Успешно удалено!",
       },
     };
   } catch (error) {

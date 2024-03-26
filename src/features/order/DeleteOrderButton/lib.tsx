@@ -1,24 +1,21 @@
 "use server";
 
 import { db } from "@/shared";
+import { ApiError } from "@/shared/api/ApiError";
 import { authOptions } from "@/shared/lib/authOptions";
 import { getServerSession } from "next-auth";
-import { revalidatePath } from "next/cache";
 
 export const deleteOrder = async (orderId: number) => {
   try {
     const session = await getServerSession(authOptions);
+    if (!session?.user) throw ApiError.unauthorized();
+
     const right = await db.right.findFirst({
       where: {
         id: session?.user?.rightId,
       },
-      select: {
-        consumablesActions: true,
-      },
     });
-    if (!session?.user && !right?.consumablesActions) {
-      throw new Error("Нет доступа");
-    }
+    if (!right?.consumablesActions) throw ApiError.noEnoughRights();
 
     await db.orderItem.deleteMany({
       where: {
@@ -32,10 +29,18 @@ export const deleteOrder = async (orderId: number) => {
       },
     });
 
-    revalidatePath("/orders", "page");
-
-    return { data: { message: "Успешно удалено!" } };
+    return {
+      data: {
+        message: "Успешно удалено!",
+      },
+    };
   } catch (error) {
-    return { error: { message: String(error) } };
+    return {
+      error: {
+        message: String(
+          error instanceof ApiError ? error.message : "Ошибка сервера"
+        ),
+      },
+    };
   }
 };

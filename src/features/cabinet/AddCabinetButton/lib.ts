@@ -20,6 +20,8 @@ export const addCabinet = async (state: any, formData: FormData) => {
     const name = formData.get("name") as string;
     const responsibleId = Number(formData.get("responsibleId") as string);
     const placeId = Number(formData.get("placeId") as string);
+
+    if (!name && !placeId) throw ApiError.badRequest("Вы ввели не все данные!");
     
     await db.cabinet.create({
       data: {

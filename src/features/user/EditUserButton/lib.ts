@@ -24,6 +24,9 @@ export const editUser = async (state: any, formData: FormData) => {
     const rightId = Number(formData.get("rightId") as string);
     const places = (formData.get("selectedPlaces") as string).split(",");
 
+    if (!name || !password || !rightId)
+      throw ApiError.badRequest("Вы ввели не все данные!");
+
     const user = await db.user.update({
       where: {
         id,

@@ -15,7 +15,11 @@ import toast from "react-hot-toast";
 import useSWR from "swr";
 import { OrderingConsumable } from "@/entities/consumable/ui/OrderingConsumable";
 import { placesFetcher } from "@/entities/place/api";
-import { IOrderWithOrderItemsAndPlace, OrderingConsumableType } from "@/shared/lib/typecode";
+import {
+  IOrderWithOrderItemsAndPlace,
+  OrderingConsumableType,
+} from "@/shared/lib/typecode";
+import { useRouter } from "next/navigation";
 
 type PropsType = {
   order: IOrderWithOrderItemsAndPlace;
@@ -23,16 +27,15 @@ type PropsType = {
   canSuccess?: boolean;
 };
 
-export const EditOrderButton: FC<PropsType> = ({ order, consumables, canSuccess }) => {
-  const { data: places } = useSWR("/api/place", placesFetcher);
+export const EditOrderButton: FC<PropsType> = ({
+  order,
+  consumables,
+  canSuccess,
+}) => {
+  const router = useRouter();
   const [state, formAction] = useFormState(editOrder, null);
-  const [isOpenedModal, setIsOpenedModal] = useState(false);
-  const handleModal = () => setIsOpenedModal((prev) => !prev);
 
-  const onClose = () => {
-    setIsOpenedModal(false);
-  };
-
+  const { data: places } = useSWR("/api/place", placesFetcher);
   const [selectedPlaceId, setSelectedPlaceId] = useState(
     order ? String(order.placeId) : ""
   );
@@ -51,12 +54,20 @@ export const EditOrderButton: FC<PropsType> = ({ order, consumables, canSuccess 
     typeof consumables
   >([]);
 
+  const [isOpenedModal, setIsOpenedModal] = useState(false);
+  const handleModal = () => setIsOpenedModal((prev) => !prev);
+  const onClose = () => {
+    setIsOpenedModal(false);
+  };
+
   useEffect(() => {
     if (state?.data?.message) {
       toast.success(state?.data?.message);
+      router.refresh();
     } else if (state?.error?.message) {
       toast.error(state?.error?.message);
     }
+    onClose();
   }, [state]);
 
   useEffect(() => {

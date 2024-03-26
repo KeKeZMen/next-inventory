@@ -1,17 +1,22 @@
 "use client";
 
 import { FC } from "react";
-import { IOrder } from "../lib/types";
+import { IOrderWithOrderItemsAndPlace } from "@/shared/lib/typecode";
 import clsx from "clsx";
 
 type PropsType = {
-  order: IOrder;
+  order: IOrderWithOrderItemsAndPlace;
   editOrder?: JSX.Element;
   deleteOrder?: JSX.Element;
-  isAdmin?: boolean
+  isAdmin?: boolean;
 };
 
-export const OrderCard: FC<PropsType> = ({ order, editOrder, deleteOrder, isAdmin }) => {
+export const OrderCard: FC<PropsType> = ({
+  order,
+  editOrder,
+  deleteOrder,
+  isAdmin,
+}) => {
   return (
     <div
       className={clsx(

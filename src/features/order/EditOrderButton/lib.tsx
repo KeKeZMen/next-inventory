@@ -1,21 +1,21 @@
 "use server";
 
 import { db } from "@/shared";
+import { ApiError } from "@/shared/api/ApiError";
 import { authOptions } from "@/shared/lib/authOptions";
 import { getServerSession } from "next-auth";
-import { revalidatePath } from "next/cache";
 
 export const editOrder = async (state: any, formData: FormData) => {
   try {
     const session = await getServerSession(authOptions);
+    if (!session?.user) throw ApiError.unauthorized();
+
     const right = await db.right.findFirst({
       where: {
         id: session?.user?.rightId,
       },
     });
-    if (!session?.user && !right?.consumablesActions) {
-      throw new Error("Нет доступа");
-    }
+    if (!right?.consumablesActions) throw ApiError.noEnoughRights();
 
     const orderId = Number(formData.get("orderId") as string);
     const placeId = Number(formData.get("placeId") as string);
@@ -23,6 +23,8 @@ export const editOrder = async (state: any, formData: FormData) => {
     const consumables = JSON.parse(
       formData.get("consumables")!.toString()
     ) as Array<{ id: number; count: number }>;
+
+    if (!placeId) throw ApiError.badRequest("Вы ввели не все данные!");
 
     const oldOrder = await db.order.findFirst({
       where: {
@@ -36,7 +38,7 @@ export const editOrder = async (state: any, formData: FormData) => {
       },
       data: {
         placeId,
-        isDone: right?.orderSuccesing ? isDone : oldOrder?.isDone
+        isDone: right?.orderSuccesing ? isDone : oldOrder?.isDone,
       },
     });
 
@@ -63,10 +65,11 @@ export const editOrder = async (state: any, formData: FormData) => {
             id: consumables[i].id,
           },
         });
-        if (!сonsumable) throw new Error("Такого картриджа не существует!");
+        if (!сonsumable)
+          throw ApiError.badRequest("Такого расходника не существует!");
         if (newOrder.isDone && сonsumable?.count - consumables[i].count < 0)
-          throw new Error(
-            "Невозможно подтвердить из-за нехватки количества позиций"
+          throw ApiError.badRequest(
+            "Невозможно подтвердить из-за нехватки количества расходника"
           );
 
         await db.consumable.update({
@@ -82,10 +85,18 @@ export const editOrder = async (state: any, formData: FormData) => {
       }
     }
 
-    revalidatePath("/orders", "page");
-
-    return { data: { message: "Успешно отредактировано!" } };
+    return {
+      data: {
+        message: "Успешно отредактировано!",
+      },
+    };
   } catch (error) {
-    return { error: { message: String(error) } };
+    return {
+      error: {
+        message: String(
+          error instanceof ApiError ? error.message : "Ошибка сервера"
+        ),
+      },
+    };
   }
 };

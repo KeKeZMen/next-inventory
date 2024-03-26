@@ -20,6 +20,8 @@ export const editPlace = async (state: any, formData: FormData) => {
     const id = Number(formData.get("placeId") as string)
     const name = formData.get("name") as string;
 
+    if (!name) throw ApiError.badRequest("Вы ввели не все данные!");
+
     await db.place.update({
       where: {
         id

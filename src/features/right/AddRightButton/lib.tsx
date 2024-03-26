@@ -29,6 +29,8 @@ export const addRight = async (state: any, formData: FormData) => {
     );
     const orderSuccesing = Boolean(formData.get("orderSuccesing") as string);
 
+    if (!name) throw ApiError.badRequest("Вы ввели не все данные!");
+
     await db.right.create({
       data: {
         cabinetActions,

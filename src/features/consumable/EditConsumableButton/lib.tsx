@@ -22,6 +22,9 @@ export const editConsumable = async (state: any, formData: FormData) => {
     const count = Number(formData.get("count") as string);
     const consumableId = Number(formData.get("consumableId") as string);
     const required = Boolean(formData.get("required") as string);
+    
+    if (!name && !count) throw ApiError.badRequest("Вы ввели не все данные!");
+
 
     if (models[0] == "")
       throw ApiError.badRequest("Расходник не может существовать без моделей!");
@@ -37,9 +40,9 @@ export const editConsumable = async (state: any, formData: FormData) => {
         id: consumableId,
       },
       data: {
-        name: name,
-        count: count,
-        required: required,
+        name,
+        count,
+        required,
       },
     });
 

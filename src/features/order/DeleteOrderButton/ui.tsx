@@ -4,18 +4,27 @@ import { FC, useState } from "react";
 import { DeleteButton, DeleteConfirm, Modal } from "@/shared";
 import { createPortal } from "react-dom";
 import { deleteOrder } from "./lib";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type PropsType = {
   orderId: number;
 };
 
 export const DeleteOrderButton: FC<PropsType> = ({ orderId }) => {
+  const router = useRouter();
   const [isOpenedModal, setIsOpenedModal] = useState(false);
   const handleModal = () => setIsOpenedModal((prev) => !prev);
 
-  const handleDeleteOrder = async () => {
-    await deleteOrder(orderId);
-    handleModal()
+  const handleDelete = async () => {
+    const res = await deleteOrder(orderId);
+    if (res.data?.message) {
+      toast.success(res.data.message);
+      router.refresh();
+    } else if (res.error?.message) {
+      toast.error(res.error.message);
+    }
+    handleModal();
   };
 
   return (
@@ -25,7 +34,7 @@ export const DeleteOrderButton: FC<PropsType> = ({ orderId }) => {
       {isOpenedModal &&
         createPortal(
           <Modal onClose={setIsOpenedModal}>
-            <DeleteConfirm onClose={handleModal} onDelete={handleDeleteOrder} />
+            <DeleteConfirm onClose={handleModal} onDelete={handleDelete} />
           </Modal>,
           document.body
         )}

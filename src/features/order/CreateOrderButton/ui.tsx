@@ -16,6 +16,7 @@ import useSWR from "swr";
 import { OrderingConsumable } from "@/entities/consumable/ui/OrderingConsumable";
 import { placesFetcher } from "@/entities/place/api";
 import { OrderingConsumableType } from "@/shared/lib/typecode";
+import { useRouter } from "next/navigation";
 
 type PropsType = {
   consumables: Array<OrderingConsumableType>
@@ -23,32 +24,36 @@ type PropsType = {
 };
 
 export const CreateOrderButton: FC<PropsType> = ({ consumables, isAdmin }) => {
-  const { data: places } = useSWR("/api/place", placesFetcher);
+  const router = useRouter();
   const [state, formAction] = useFormState(createOrder, null);
-  const [isOpenedModal, setIsOpenedModal] = useState(false);
-  const handleModal = () => setIsOpenedModal((prev) => !prev);
 
-  const onClose = () => {
-    setIsOpenedModal(false);
-  };
-
+  const { data: places } = useSWR("/api/place", placesFetcher);
   const [selectedPlaceId, setSelectedPlaceId] = useState("");
   const handleSelectPlace = (value: string) => {
     setSelectedPlaceId(value);
   };
+
   const [selectedConsumables, setSelectedConsumables] = useState<
-    typeof consumables
+  typeof consumables
   >([]);
   const [notSelectedConsumables, setNotSelectedConsumables] = useState<
-    typeof consumables
+  typeof consumables
   >([]);
+  
+  const [isOpenedModal, setIsOpenedModal] = useState(false);
+  const handleModal = () => setIsOpenedModal((prev) => !prev);
+  const onClose = () => {
+    setIsOpenedModal(false);
+  };
 
   useEffect(() => {
     if (state?.data?.message) {
       toast.success(state?.data?.message);
+      router.refresh()
     } else if (state?.error?.message) {
       toast.error(state?.error?.message);
     }
+    onClose()
   }, [state]);
 
   useEffect(() => {
