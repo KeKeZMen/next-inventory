@@ -59,6 +59,7 @@ export default async function CabinetPage({
               id: true,
             },
           },
+          cabinetId: true
         },
         orderBy,
       },

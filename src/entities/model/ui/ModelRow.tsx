@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { IModel } from "../lib/types";
+import type { Model } from "@prisma/client";
 
 type PropsType = {
-  model: IModel;
+  model: Model;
   deleteButton?: JSX.Element;
   editButton?: JSX.Element;
 };

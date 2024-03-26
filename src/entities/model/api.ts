@@ -1,5 +1,5 @@
 import { Fetcher } from "swr";
-import { IModel } from "./lib/types";
+import type { Model } from "@prisma/client";
 
-export const modelsFetcher: Fetcher<Array<IModel>, string> = (url) =>
+export const modelsFetcher: Fetcher<Array<Model>, string> = (url) =>
   fetch(url).then((res) => res.json());

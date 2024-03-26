@@ -1,7 +1,7 @@
 "use client";
 
 import { MenuContext } from "@/app/Provider";
-import { IPlace } from "@/entities/place/lib/types";
+import type { Place } from "@prisma/client";
 import { UserProfile } from "@/entities/user/ui/UserProfile";
 import { LogoutButton } from "@/features/auth/LogoutButton";
 import { useWindowSize } from "@/shared/lib/hooks/useWindowSize";
@@ -10,7 +10,7 @@ import { User } from "next-auth";
 import { FC, useContext } from "react";
 
 type PropsType = {
-  places: IPlace[];
+  places: Place[];
   user: User;
 };
 

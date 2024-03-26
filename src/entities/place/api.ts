@@ -1,5 +1,5 @@
 import { Fetcher } from "swr";
-import { IPlace } from "./lib/types";
+import type { Place } from "@prisma/client";
 
-export const placesFetcher: Fetcher<Array<IPlace>, string> = (url) =>
+export const placesFetcher: Fetcher<Array<Place>, string> = (url) =>
   fetch(url).then((res) => res.json());
