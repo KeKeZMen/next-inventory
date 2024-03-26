@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { ISearchedProduct } from "../lib/types";
 import Link from "next/link";
+import { ISearchedProduct } from "@/shared/lib/typecode";
 
 type PropsType = {
   searchedProduct: ISearchedProduct;

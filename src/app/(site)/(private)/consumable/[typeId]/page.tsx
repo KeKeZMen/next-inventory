@@ -1,8 +1,7 @@
 import { ConsumableRow } from "@/entities/consumable/ui/ConsumableRow";
-import { AddConsumableButton } from "@/features/consumable/AddConsumableButton";
-import { DeleteConsumableButton } from "@/features/consumable/DeleteConsumableButton";
-import { EditConsumableButton } from "@/features/consumable/EditConsumableButton";
-import { TypeSelect } from "@/features/type/TypeSelect";
+import { AddConsumableButton } from "@/features/consumable/AddConsumableButton/ui";
+import { DeleteConsumableButton } from "@/features/consumable/DeleteConsumableButton/ui";
+import { EditConsumableButton } from "@/features/consumable/EditConsumableButton/ui";
 import { ConsumablesTable, db } from "@/shared";
 import { ProductsSelects } from "@/widgets/ProductsSelects";
 import React from "react";

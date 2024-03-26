@@ -1,10 +1,10 @@
-import { IType } from "../lib/types";
+import type { Type } from "@prisma/client";
 import { FC } from "react";
 
 type PropsType = {
   deleteButton?: JSX.Element;
   editButton?: JSX.Element;
-  type: IType;
+  type: Type;
   productsCount?: number;
 };
 

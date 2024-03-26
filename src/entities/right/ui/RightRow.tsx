@@ -1,10 +1,10 @@
-import { IRight } from "../lib/types";
 import { FC } from "react";
+import type { Right } from "@prisma/client";
 
 type PropsType = {
   deleteButton: JSX.Element;
   editButton: JSX.Element;
-  right: IRight;
+  right: Right;
 };
 
 export const RightRow: FC<PropsType> = ({

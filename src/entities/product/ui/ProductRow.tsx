@@ -1,9 +1,9 @@
 import { FC } from "react";
 import clsx from "clsx";
-import { IProduct } from "../lib/types";
+import type { Product } from "@prisma/client"
 
 type PropsType = {
-  product: IProduct;
+  product: Product;
   editButton?: JSX.Element;
   deleteButton?: JSX.Element;
   withoutEdit?: boolean;

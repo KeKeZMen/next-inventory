@@ -1,7 +1,7 @@
 import { ModelRow } from "@/entities/model/ui/ModelRow";
-import { AddModelButton } from "@/features/model/AddModelButton";
-import { DeleteModelButton } from "@/features/model/DeleteModelButton";
-import { EditModelButton } from "@/features/model/EditModelButton";
+import { AddModelButton } from "@/features/model/AddModelButton/ui";
+import { DeleteModelButton } from "@/features/model/DeleteModelButton/ui";
+import { EditModelButton } from "@/features/model/EditModelButton/ui";
 import { DataTable, db } from "@/shared";
 import React from "react";
 

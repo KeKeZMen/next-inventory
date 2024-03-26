@@ -1,8 +1,8 @@
+import { IConsumableWithModels } from "@/shared/lib/typecode";
 import { FC } from "react";
-import { IConsumable } from "../lib/types";
 
 type PropsType = {
-  consumable: IConsumable;
+  consumable: IConsumableWithModels;
   editButton?: JSX.Element;
   deleteButton?: JSX.Element;
 };

@@ -1,7 +1,7 @@
 import { CabinetCard } from "@/entities/cabinet/ui/CabinetCard";
-import { AddCabinetButton } from "@/features/cabinet/AddCabinetButton";
-import { DeleteCabinetButton } from "@/features/cabinet/DeleteCabinetButton";
-import { EditCabinetButton } from "@/features/cabinet/EditCabinetButton";
+import { AddCabinetButton } from "@/features/cabinet/AddCabinetButton/ui";
+import { DeleteCabinetButton } from "@/features/cabinet/DeleteCabinetButton/ui";
+import { EditCabinetButton } from "@/features/cabinet/EditCabinetButton/ui";
 import { CabinetPassportButton } from "@/features/passport/CabinetPassportButton";
 import { db } from "@/shared";
 import { authOptions } from "@/shared/lib/authOptions";

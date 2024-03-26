@@ -12,45 +12,18 @@ import { FC, useEffect, useState } from "react";
 import { createPortal, useFormState } from "react-dom";
 import { editOrder } from "./lib";
 import toast from "react-hot-toast";
-import useSWR, { Fetcher } from "swr";
-import { IPlace } from "@/entities/place/lib/types";
+import useSWR from "swr";
 import { OrderingConsumable } from "@/entities/consumable/ui/OrderingConsumable";
+import { placesFetcher } from "@/entities/place/api";
+import { IOrderWithOrderItemsAndPlace, OrderingConsumableType } from "@/shared/lib/typecode";
 
 type PropsType = {
-  order: {
-    isDone: boolean;
-    place: {
-      name: string;
-      id: number;
-    };
-    id: number;
-    placeId: number;
-    createdAt: Date;
-    orderItems: {
-      count: number;
-      consumable: {
-        name: string;
-        count: number;
-        id: number;
-      };
-    }[];
-  };
-  consumables: {
-    id: number;
-    name: string;
-    count: number;
-  }[];
-  isAdmin?: boolean;
+  order: IOrderWithOrderItemsAndPlace;
+  consumables: Array<OrderingConsumableType>;
+  canSuccess?: boolean;
 };
 
-const placesFetcher: Fetcher<Array<IPlace>, string> = (url) =>
-  fetch(url).then((res) => res.json());
-
-export const EditOrderButton: FC<PropsType> = ({
-  order,
-  consumables,
-  isAdmin,
-}) => {
+export const EditOrderButton: FC<PropsType> = ({ order, consumables, canSuccess }) => {
   const { data: places } = useSWR("/api/place", placesFetcher);
   const [state, formAction] = useFormState(editOrder, null);
   const [isOpenedModal, setIsOpenedModal] = useState(false);
@@ -254,7 +227,7 @@ export const EditOrderButton: FC<PropsType> = ({
                 )}
               </div>
 
-              {isAdmin && !order.isDone && (
+              {canSuccess && !order.isDone && (
                 <Checkbox
                   name="isDone"
                   defaultChecked={order?.isDone}

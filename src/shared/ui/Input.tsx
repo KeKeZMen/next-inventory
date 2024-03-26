@@ -6,8 +6,8 @@ import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
+  register?: UseFormRegister<FieldValues>;
+  errors?: FieldErrors;
   label?: string;
   fullWidth?: boolean;
 }
@@ -18,9 +18,10 @@ export const Input: FC<InputProps> = ({
   errors,
   label,
   placeholder,
-  required,
   disabled,
   fullWidth,
+  defaultValue,
+  name,
   type = "text",
 }) => {
   return (
@@ -40,10 +41,12 @@ export const Input: FC<InputProps> = ({
           autoComplete={id}
           disabled={disabled}
           placeholder={placeholder}
-          {...register(id, { required })}
+          name={name}
+          defaultValue={defaultValue}
+          {...(register && id ? { ...register(id) } : null)}
           className={clsx(
             `block w-full rounded-md p-5 bg-gray sm:text-sm sm:leading-6 outline-none`,
-            errors[id] && "focus:ring-error",
+            errors && errors[id] && "focus:ring-error",
             disabled && "opacity-50 cursor-default"
           )}
         />

@@ -1,7 +1,7 @@
 import { UserRow } from "@/entities/user/ui/UserRow";
-import { AddUserButton } from "@/features/user/AddUserButton";
-import { DeleteUserButton } from "@/features/user/DeleteUserButton";
-import { EditUserButton } from "@/features/user/EditUserButton";
+import { AddUserButton } from "@/features/user/AddUserButton/ui";
+import { DeleteUserButton } from "@/features/user/DeleteUserButton/ui";
+import { EditUserButton } from "@/features/user/EditUserButton/ui";
 import { DataTable, db } from "@/shared";
 
 export const UsersTable = async () => {

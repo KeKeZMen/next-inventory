@@ -56,8 +56,6 @@ export const editOrder = async (state: any, formData: FormData) => {
       ],
     });
 
-    // if(oldOrder?.isDone) throw new Error("Вы не можете редактировать готовый заказ")
-
     if (oldOrder?.isDone !== newOrder.isDone) {
       for (let i = 0; i < consumables.length; i++) {
         const сonsumable = await db.consumable.findFirst({

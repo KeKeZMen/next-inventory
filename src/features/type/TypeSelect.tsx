@@ -1,13 +1,10 @@
 "use client";
 
-import { IType } from "@/entities/type/lib/types";
+import { typesFetcher } from "@/entities/type/api";
 import { Select } from "@/shared";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import useSWR, { Fetcher } from "swr";
-
-const typesFetcher: Fetcher<Array<IType>, string> = (url) =>
-  fetch(url).then((res) => res.json());
+import useSWR from "swr";
 
 export const TypeSelect = () => {
   const { typeId: currentTypeId } = useParams();

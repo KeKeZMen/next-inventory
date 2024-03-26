@@ -1,7 +1,7 @@
 import { RightRow } from "@/entities/right/ui/RightRow";
-import { AddRightButton } from "@/features/right/AddRightButton";
-import { DeleteRightButton } from "@/features/right/DeleteRightButton";
-import { EditRightButton } from "@/features/right/EditRightButton";
+import { AddRightButton } from "@/features/right/AddRightButton/ui";
+import { DeleteRightButton } from "@/features/right/DeleteRightButton/ui";
+import { EditRightButton } from "@/features/right/EditRightButton/ui";
 import { DataTable, db } from "@/shared";
 import React from "react";
 

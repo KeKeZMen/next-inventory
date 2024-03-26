@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { IType } from "../lib/types";
+import type { Type } from "@prisma/client";
 import Link from "next/link";
 
 type PropsType = {
-  type: IType;
+  type: Type;
 };
 
 export const TypeCard: FC<PropsType> = ({ type }) => {
@@ -16,7 +16,9 @@ export const TypeCard: FC<PropsType> = ({ type }) => {
         className="bg-no-repeat bg-center w-16 h-16 md:w-20 md:h-20"
         style={{ backgroundImage: "url('/cube.svg')" }}
       />
-      <p className="uppercase font-bold text-xs md:text-lg text-center">{type.name}</p>
+      <p className="uppercase font-bold text-xs md:text-lg text-center">
+        {type.name}
+      </p>
     </Link>
   );
 };

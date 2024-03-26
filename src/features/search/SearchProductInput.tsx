@@ -1,9 +1,9 @@
 "use client";
 
-import { ISearchedProduct } from "@/entities/product/lib/types";
 import { SearchedProducts } from "@/entities/product/ui/SearchedProducts";
 import { DeleteButton } from "@/shared";
 import { useDebounce } from "@/shared/lib/hooks/useDebounce";
+import { ISearchedProduct } from "@/shared/lib/typecode";
 import { ChangeEvent, useEffect, useState } from "react";
 
 const getSearchedProducts = async (searchTerm?: string) => {

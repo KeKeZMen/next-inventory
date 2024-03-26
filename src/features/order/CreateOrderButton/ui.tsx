@@ -12,21 +12,15 @@ import { FC, useEffect, useState } from "react";
 import { createPortal, useFormState } from "react-dom";
 import { createOrder } from "./lib";
 import toast from "react-hot-toast";
-import useSWR, { Fetcher } from "swr";
-import { IPlace } from "@/entities/place/lib/types";
+import useSWR from "swr";
 import { OrderingConsumable } from "@/entities/consumable/ui/OrderingConsumable";
+import { placesFetcher } from "@/entities/place/api";
+import { OrderingConsumableType } from "@/shared/lib/typecode";
 
 type PropsType = {
-  consumables: {
-    id: number;
-    name: string;
-    count: number;
-  }[];
+  consumables: Array<OrderingConsumableType>
   isAdmin?: boolean;
 };
-
-const placesFetcher: Fetcher<Array<IPlace>, string> = (url) =>
-  fetch(url).then((res) => res.json());
 
 export const CreateOrderButton: FC<PropsType> = ({ consumables, isAdmin }) => {
   const { data: places } = useSWR("/api/place", placesFetcher);

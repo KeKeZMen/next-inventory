@@ -73,7 +73,7 @@ export default async function OrdersPage() {
             }
             editOrder={
               <EditOrderButton
-                isAdmin={right.orderSuccesing}
+                canSuccess={right.orderSuccesing}
                 consumables={consumables}
                 order={order}
                 key={`edit-${order.id}`}

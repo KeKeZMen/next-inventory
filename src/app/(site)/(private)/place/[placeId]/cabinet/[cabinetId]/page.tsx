@@ -1,7 +1,7 @@
 import { ProductRow } from "@/entities/product/ui/ProductRow";
-import { AddProductButton } from "@/features/product/AddProductButton";
-import { DeleteProductButton } from "@/features/product/DeleteProductButton";
-import { EditProductButton } from "@/features/product/EditProductButton";
+import { AddProductButton } from "@/features/product/AddProductButton/ui";
+import { DeleteProductButton } from "@/features/product/DeleteProductButton/ui";
+import { EditProductButton } from "@/features/product/EditProductButton/ui";
 import { db } from "@/shared";
 import { authOptions } from "@/shared/lib/authOptions";
 import { ProductsTable } from "@/shared/ui/ProductsTable";
@@ -52,6 +52,7 @@ const CabinetPage = async ({
       onUtil: true,
       typeId: true,
       userAdded: true,
+      cabinetId: true
     },
     orderBy,
   });

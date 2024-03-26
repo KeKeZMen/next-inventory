@@ -1,12 +1,18 @@
 export interface IOrder {
-  id: number;
-  placeId: number;
-  place?: { name: string; id: number };
   isDone: boolean;
-  createdAt: Date
-}
-
-export type OrderActionType = {
+  place: {
+    name: string;
+    id: number;
+  };
   id?: number;
   placeId: number;
-};
+  createdAt: Date;
+  orderItems: Array<{
+    count: number;
+    consumable: {
+      name: string;
+      count: number;
+      id: number;
+    };
+  }>;
+}

@@ -1,8 +1,8 @@
+import { OrderingConsumableType } from "@/shared/lib/typecode";
 import React, { FC } from "react";
-import { IConsumable } from "../lib/types";
 
 type PropsType = {
-  consumable: IConsumable;
+  consumable: OrderingConsumableType;
   orderActions?: JSX.Element | null;
 };
 
