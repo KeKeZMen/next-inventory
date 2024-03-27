@@ -1,41 +1,31 @@
-import { db } from "@/shared";
-import { authOptions } from "@/shared/lib/authOptions";
 import { Cabinet } from "@prisma/client";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
 
 type PropsType = {
   cabinet: Cabinet;
+  isAdmin?: boolean;
   deleteButton?: JSX.Element;
   editButton?: JSX.Element;
   passportButton?: JSX.Element;
 };
 
-export const CabinetCard = async ({
+export const CabinetCard = ({
   cabinet,
+  isAdmin,
   deleteButton,
   editButton,
   passportButton,
 }: PropsType) => {
-  const session = await getServerSession(authOptions);
-  if (!session) return null;
-
-  const right = await db.right.findFirst({
-    where: {
-      id: session.user?.rightId,
-    },
-  });
-
   return (
-    <div className="group inline-block relative">
+    <div className="group relative w-28 h-9">
       <Link
         href={`/place/${cabinet.placeId}/cabinet/${cabinet.id}`}
-        className="bg-primary text-white rounded-md w-16 h-9 flex justify-center items-center"
+        className="bg-primary text-white rounded-md w-full h-full flex justify-center items-center"
       >
         {cabinet.name}
       </Link>
-      {right?.cabinetActions && (
-        <div className="absolute hidden bg-white shadow-md group-hover:flex justify-between items-center p-1 z-10 rounded-md">
+      {isAdmin && (
+        <div className="absolute hidden bg-white shadow-md group-hover:flex justify-between items-center p-1 z-[1000] rounded-md left-[50%] -translate-x-1/2">
           {deleteButton}
           {editButton}
           {passportButton}

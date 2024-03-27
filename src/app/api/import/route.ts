@@ -69,25 +69,15 @@ export async function POST(req: Request) {
     db.place.createMany({
       data: [
         ...Array.from(
-          new Set(
-            rows.map((row) =>
-              (row.get("Площадка") as string).trim().toLowerCase()
-            )
-          )
-        ).map((place) => ({
-          name: place[0].toUpperCase() + place.slice(1).toLowerCase(),
-        })),
+          new Set(rows.map((row) => row.get("Площадка") as string))
+        ).map((p) => ({ name: p })),
       ],
     }),
     db.type.createMany({
       data: [
-        ...Array.from(
-          new Set(
-            rows.map((row) => (row.get("Тип") as string).trim().toLowerCase())
-          )
-        ).map((type) => ({
-          name: type[0].toUpperCase() + type.slice(1).toLowerCase(),
-        })),
+        ...Array.from(new Set(rows.map((row) => row.get("Тип") as string))).map(
+          (t) => ({ name: t })
+        ),
       ],
     }),
   ]);
@@ -99,17 +89,13 @@ export async function POST(req: Request) {
 
   const productsData = rows
     .map((row) => ({
-      place:
-        String(row.get("Площадка"))[0].toUpperCase() +
-        String(row.get("Площадка")).slice(1).toLowerCase(),
+      place: String(row.get("Площадка")),
       cabinet: String(row.get("Кабинет")).trim().toLowerCase(),
       product: {
         name: String(row.get("Название")).trim(),
-        type:
-          String(row.get("Тип"))[0].trim().toUpperCase() +
-          String(row.get("Тип")).slice(1).trim().toLowerCase(),
+        type: String(row.get("Тип")),
         desk: String(row.get("Описание")).trim(),
-        inv: String(row.get("Инвентарный №")).trim(),
+        inv: String(row.get("Инвентарный номер")).trim(),
         count: row.get("Количество"),
       },
     }))

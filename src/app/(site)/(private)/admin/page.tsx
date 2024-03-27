@@ -7,7 +7,7 @@ import { TypesTable } from "@/widgets/TypesTable";
 import { PlacesTable } from "@/widgets/PlacesTable";
 import { ModelsTable } from "@/widgets/ModelsTable";
 import { authOptions } from "@/shared/lib/authOptions";
-// import { ImportInput } from "@/features/import/ImportInput";
+import { ImportInput } from "@/features/import/ImportInput";
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
@@ -26,7 +26,7 @@ const AdminPage = async () => {
       {right?.typeActions && <TypesTable />}
       {right?.placeActions && <PlacesTable />}
       {right?.consumablesActions && <ModelsTable />}
-      {/* <ImportInput /> */}
+      <ImportInput />
     </div>
   );
 };

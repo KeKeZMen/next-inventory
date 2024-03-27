@@ -41,6 +41,7 @@ export const CabinetsGrid = async ({ placeId }: PropsType) => {
           <CabinetCard
             cabinet={cabinet}
             key={cabinet.id}
+            isAdmin={right?.cabinetActions}
             deleteButton={<DeleteCabinetButton cabinetId={cabinet.id} />}
             editButton={<EditCabinetButton cabinet={cabinet} />}
             passportButton={<CabinetPassportButton cabinetId={cabinet.id} />}
