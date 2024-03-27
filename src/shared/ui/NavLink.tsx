@@ -12,8 +12,9 @@ interface PropsType extends LinkProps {
 
 export const NavLink: FC<PropsType> = ({ children, margin, ...props }) => {
   const { href } = props;
-  const pathName = usePathname();
-  const isActive = pathName === href;
+  const pathName = usePathname();  
+  const isActive = pathName.includes(String(href))
+  
 
   return (
     <Link

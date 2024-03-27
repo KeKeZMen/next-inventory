@@ -11,7 +11,6 @@ type PropsType = {
 };
 
 const tableHeadCells = [
-  "ID",
   "Название",
   "Описание",
   "Инв. №",
@@ -37,7 +36,7 @@ export const ProductsTable: FC<PropsType> = ({
       <div className="flex justify-between items-center my-4 w-full">
         <h4 className="uppercase">{title}</h4>
 
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center gap-3">
           <div className="flex">
             <div className="h-6 w-6 rounded-md bg-[#ffd8d8] mr-3 hidden md:block" />
             <p className="mr-3 hidden md:inline">
@@ -56,7 +55,7 @@ export const ProductsTable: FC<PropsType> = ({
               {tableHeadCells
                 .filter((cell) => (withoutEdit ? cell !== "Ред." : cell))
                 .map((cell, index) => (
-                  <th key={index} className="top-0 sticky p-4 bg-white ">
+                  <th key={index} className="top-0 sticky p-4 bg-white min-w-[100px]">
                     {cell}
                   </th>
                 ))}

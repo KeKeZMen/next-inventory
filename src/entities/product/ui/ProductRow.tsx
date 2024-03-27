@@ -23,14 +23,6 @@ export const ProductRow: FC<PropsType> = ({
           "border-t-2 border-[#929292] text-center p-3"
         )}
       >
-        {product.id}
-      </td>
-      <td
-        className={clsx(
-          product.onUtil && "bg-on-delete",
-          "border-t-2 border-[#929292] text-center p-3"
-        )}
-      >
         {product.name}
       </td>
       <td

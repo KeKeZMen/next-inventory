@@ -97,6 +97,7 @@ export async function POST(req: Request) {
         desk: String(row.get("Описание")).trim(),
         inv: String(row.get("Инвентарный номер")).trim(),
         count: row.get("Количество"),
+        onUtil: row.get("На утилизацию ?") === "TRUE",
       },
     }))
     .filter((d) => {
@@ -155,6 +156,7 @@ export async function POST(req: Request) {
         cabinetId: cabinet.id,
         userAdded: 1,
         typeId: type.id,
+        onUtil: productsData[i].product.onUtil
       },
     });
   }

@@ -1,5 +1,10 @@
+"use client";
+
 import { Cabinet } from "@prisma/client";
+import clsx from "clsx";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { FC } from "react";
 
 type PropsType = {
   cabinet: Cabinet;
@@ -9,18 +14,25 @@ type PropsType = {
   passportButton?: JSX.Element;
 };
 
-export const CabinetCard = ({
+export const CabinetCard: FC<PropsType> = ({
   cabinet,
   isAdmin,
   deleteButton,
   editButton,
   passportButton,
-}: PropsType) => {
+}) => {
+  const pathName = usePathname();
+
   return (
-    <div className="group relative w-28 h-9">
+    <div className="group relative w-[109px] h-9">
       <Link
         href={`/place/${cabinet.placeId}/cabinet/${cabinet.id}`}
-        className="bg-primary text-white rounded-md w-full h-full flex justify-center items-center"
+        className={clsx(
+          "text-white rounded-md w-full h-full flex justify-center items-center",
+          pathName.includes(`/cabinet/${cabinet.id}`)
+            ? "bg-light-primary"
+            : "bg-primary"
+        )}
       >
         {cabinet.name}
       </Link>
