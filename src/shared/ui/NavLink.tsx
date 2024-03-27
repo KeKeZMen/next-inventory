@@ -10,11 +10,16 @@ interface PropsType extends LinkProps {
   margin?: string;
 }
 
+const productsRegexp = new RegExp(/\/(place)\/\d{1,}\/(cabinet)\/\d{1,}/)
+
 export const NavLink: FC<PropsType> = ({ children, margin, ...props }) => {
   const { href } = props;
   const pathName = usePathname();  
-  const isActive = pathName.includes(String(href))
-  
+
+  const isActive = productsRegexp.test(pathName)
+    ? !String(href).includes("/consumable") &&
+      pathName.split("/").filter((el) => el)[1] == String(href).split("/")[2]
+    : pathName == href;
 
   return (
     <Link

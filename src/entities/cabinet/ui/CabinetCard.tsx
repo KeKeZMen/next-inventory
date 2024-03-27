@@ -26,10 +26,10 @@ export const CabinetCard: FC<PropsType> = ({
   return (
     <div className="group relative w-[109px] h-9">
       <Link
-        href={`/place/${cabinet.placeId}/cabinet/${cabinet.id}`}
+        href={`/place/${cabinet.placeId}/cabinet/${cabinet.id}?key=inventoryNumber&orderBy=asc`}
         className={clsx(
           "text-white rounded-md w-full h-full flex justify-center items-center",
-          pathName.includes(`/cabinet/${cabinet.id}`)
+          pathName == `/place/${cabinet.placeId}/cabinet/${cabinet.id}`
             ? "bg-light-primary"
             : "bg-primary"
         )}

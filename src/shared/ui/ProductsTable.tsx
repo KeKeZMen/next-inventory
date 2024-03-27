@@ -40,7 +40,7 @@ export const ProductsTable: FC<PropsType> = ({
           <div className="flex">
             <div className="h-6 w-6 rounded-md bg-[#ffd8d8] mr-3 hidden md:block" />
             <p className="mr-3 hidden md:inline">
-              Позиции, помеченные на удаление
+              - Позиции, помеченные на утилизацию
             </p>
           </div>
           {selects}
