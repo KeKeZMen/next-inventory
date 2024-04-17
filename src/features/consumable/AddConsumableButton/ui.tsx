@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { createPortal, useFormState } from "react-dom";
 import toast from "react-hot-toast";
 import useSWR from "swr";
-import { addConsumable } from "./lib";
+import { addConsumable } from "./api";
 
 export const AddConsumableButton = () => {
   const [state, formAction] = useFormState(addConsumable, null);

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createPortal, useFormState } from "react-dom";
 import toast from "react-hot-toast";
-import { addPlace } from "./lib";
+import { addPlace } from "./api";
 
 export const AddPlaceButton = () => {
   const [state, formAction] = useFormState(addPlace, null);

@@ -3,7 +3,7 @@
 import { FC, useState } from "react";
 import { DeleteButton, DeleteConfirm, Modal } from "@/shared";
 import { createPortal } from "react-dom";
-import { deleteOrder } from "./lib";
+import { deleteOrder } from "./api";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 

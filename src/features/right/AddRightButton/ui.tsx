@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import { AddButton, Button, Input, Modal } from "@/shared";
 import { Checkbox } from "@/shared/ui/Checkbox";
 import { useFormState, createPortal } from "react-dom";
-import { addRight } from "./lib";
+import { addRight } from "./api";
 
 export const AddRightButton: FC = () => {
   const [state, formAction] = useFormState(addRight, null);

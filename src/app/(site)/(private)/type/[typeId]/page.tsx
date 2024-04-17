@@ -4,7 +4,7 @@ import { DeleteProductButton } from "@/features/product/DeleteProductButton/ui";
 import { EditProductButton } from "@/features/product/EditProductButton/ui";
 import { db } from "@/shared";
 import { ProductsTable } from "@/shared/ui/ProductsTable";
-import { ProductsSelects } from "@/widgets/ProductsSelects";
+import { ProductsSelects } from "@/features/product/ProductsSelects";
 import React from "react";
 
 type SearchParamsType = {

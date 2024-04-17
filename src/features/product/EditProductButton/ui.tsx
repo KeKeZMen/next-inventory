@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, FC, useEffect } from "react";
+import { useState, FC, useEffect, ChangeEvent } from "react";
 import { toast } from "react-hot-toast";
 import { Button, Checkbox, EditButton, Input, Modal, Select } from "@/shared";
 import useSWR from "swr";
@@ -9,37 +9,31 @@ import { typesFetcher } from "@/entities/type/api";
 import { placesFetcher } from "@/entities/place/api";
 import { cabinetsFetcher } from "@/entities/cabinet/api";
 import { useFormState, createPortal } from "react-dom";
-import { editProduct } from "./lib";
+import { editProduct } from "./api";
 import { IProductWithCabinet } from "@/shared/lib/typecode";
 
 type PropsType = {
-  product: IProductWithCabinet
-}
+  product: IProductWithCabinet;
+};
 
 export const EditProductButton: FC<PropsType> = ({ product }) => {
   const router = useRouter();
   const [state, formAction] = useFormState(editProduct, null);
 
   const { data: types } = useSWR("/api/type", typesFetcher);
-  const [selectedTypeId, setSelectedTypeId] = useState(String(product.typeId ?? ""));
-  const handleSelectType = (value: string) => {
-    setSelectedTypeId(value);
-  };
 
-  const [selectedPlaceId, setSelectedPlaceId] = useState(String(product.cabinet.placeId ?? ""));
+  const [selectedPlaceId, setSelectedPlaceId] = useState(
+    String(product.cabinet.placeId ?? "")
+  );
   const { data: places } = useSWR("/api/place", placesFetcher);
-  const handleSelectPlace = (value: string) => {
-    setSelectedPlaceId(value);
+  const handleSelectPlace = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPlaceId(String(e.target.value));
   };
 
-  const [selectedCabinetId, setSelectedCabinetId] = useState(String(product.cabinet.id ?? ""));
   const { data: cabinets } = useSWR(
     `/api/cabinet/${selectedPlaceId}`,
     cabinetsFetcher
   );
-  const handleSelectCabinet = (value: string) => {
-    setSelectedCabinetId(value);
-  };
 
   const [isOpenedModal, setIsOpenedModal] = useState(false);
   const handleModal = () => setIsOpenedModal((prev) => !prev);
@@ -68,8 +62,6 @@ export const EditProductButton: FC<PropsType> = ({ product }) => {
               className="flex justify-center items-center flex-col md:w-[421px] gap-3 overflow-y-auto"
               action={(formData) => {
                 formData.append("productId", String(product.id));
-                formData.append("typeId", selectedTypeId);
-                formData.append("cabinetId", selectedCabinetId);
                 formAction(formData);
               }}
             >
@@ -122,41 +114,43 @@ export const EditProductButton: FC<PropsType> = ({ product }) => {
                 <div className="flex flex-col gap-3 md:w-[50%]">
                   {types && (
                     <Select
-                      options={types.map((type) => ({
-                        label: type.name,
-                        value: String(type.id),
-                      }))}
-                      selected={selectedTypeId}
-                      placeholder="Тип*"
-                      fullwidth
-                      onChange={handleSelectType}
-                    />
+                      name="type"
+                      id="type"
+                      required
+                      defaultValue={String(product.typeId ?? "")}
+                    >
+                      {types.map((type) => (
+                        <option value={String(type.id)} key={type.id}>
+                          {type.name}
+                        </option>
+                      ))}
+                    </Select>
                   )}
 
                   {places && (
                     <Select
-                      options={places.map((place) => ({
-                        label: place.name,
-                        value: String(place.id),
-                      }))}
-                      selected={selectedPlaceId}
-                      placeholder="Площадка*"
-                      fullwidth
+                      value={selectedPlaceId}
                       onChange={handleSelectPlace}
-                    />
+                    >
+                      {places.map((place) => (
+                        <option value={String(place.id)}>{place.name}</option>
+                      ))}
+                    </Select>
                   )}
 
                   {cabinets && (
                     <Select
-                      options={cabinets.map((type) => ({
-                        label: type.name,
-                        value: String(type.id),
-                      }))}
-                      selected={selectedCabinetId}
-                      placeholder="Кабинет*"
-                      fullwidth
-                      onChange={handleSelectCabinet}
-                    />
+                      name="cabinet"
+                      id="cabinet"
+                      defaultValue={String(product.cabinetId ?? "")}
+                      required
+                    >
+                      {cabinets.map((cabinet) => (
+                        <option value={String(cabinet.id)}>
+                          {cabinet.name}
+                        </option>
+                      ))}
+                    </Select>
                   )}
                 </div>
               </div>

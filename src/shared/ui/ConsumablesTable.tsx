@@ -28,7 +28,7 @@ export const ConsumablesTable: FC<PropsType> = ({
       <div className="flex justify-between items-center my-4 w-full">
         <h4 className="uppercase">{title}</h4>
 
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center gap-3">
           {selects}
           {addButton}
         </div>

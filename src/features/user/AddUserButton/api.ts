@@ -3,9 +3,10 @@
 import { db } from "@/shared";
 import { ApiError } from "@/shared/api/ApiError";
 import { authOptions } from "@/shared/lib/authOptions";
+import { createHash } from "crypto";
 import { getServerSession } from "next-auth";
 
-export const addProduct = async (state: any, formData: FormData) => {
+export const addUser = async (state: any, formData: FormData) => {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user) throw ApiError.unauthorized();
@@ -15,30 +16,31 @@ export const addProduct = async (state: any, formData: FormData) => {
         id: session.user.rightId,
       },
     });
-    if (!right?.productActions) throw ApiError.noEnoughRights();
+    if (!right?.userActions) throw ApiError.noEnoughRights();
 
     const name = formData.get("name") as string;
-    const description = formData.get("description") as string;
-    const inventoryNumber = formData.get("inventoryNumber") as string;
-    const count = Number(formData.get("count") as string);
-    const typeId = Number(formData.get("typeId") as string);
-    const cabinetId = Number(formData.get("cabinetId") as string);
-    const onUtil = Boolean(formData.get("onUtil"));
+    const password = formData.get("password") as string;
+    const rightId = Number(formData.get("right") as string);
+    const places = (formData.get("selectedPlaces") as string).split(",");
 
-    if (!name || !inventoryNumber || !count || !typeId || !cabinetId)
+    if (!name || !password || !rightId)
       throw ApiError.badRequest("Вы ввели не все данные!");
 
-    await db.product.create({
+    const user = await db.user.create({
       data: {
         name,
-        description,
-        count,
-        inventoryNumber,
-        cabinetId,
-        typeId,
-        userAdded: session.user.id,
-        onUtil,
+        password: createHash("sha256").update(password).digest("hex"),
+        rightId,
       },
+    });
+
+    await db.userPlace.createMany({
+      data: [
+        ...places.map((p: string) => ({
+          placeId: Number(p),
+          userId: user.id,
+        })),
+      ],
     });
 
     return {

@@ -17,7 +17,7 @@ export const createOrder = async (state: any, formData: FormData) => {
     });
     if (!right?.consumablesActions) throw ApiError.noEnoughRights();
 
-    const placeId = Number(formData.get("placeId") as string);
+    const placeId = Number(formData.get("place") as string);
     const isDone = Boolean(formData.get("isDone"));
     const consumables = JSON.parse(
       formData.get("consumables")!.toString()

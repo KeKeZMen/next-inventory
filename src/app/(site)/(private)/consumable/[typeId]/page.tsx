@@ -3,7 +3,7 @@ import { AddConsumableButton } from "@/features/consumable/AddConsumableButton/u
 import { DeleteConsumableButton } from "@/features/consumable/DeleteConsumableButton/ui";
 import { EditConsumableButton } from "@/features/consumable/EditConsumableButton/ui";
 import { ConsumablesTable, db } from "@/shared";
-import { ProductsSelects } from "@/widgets/ProductsSelects";
+import { ProductsSelects } from "@/features/product/ProductsSelects";
 import React from "react";
 
 export default async function ConsumablePage({

@@ -7,7 +7,7 @@ import { Button, EditButton, Input, Modal, Select } from "@/shared";
 import useSWR from "swr";
 import { typesFetcher } from "@/entities/type/api";
 import { useFormState, createPortal } from "react-dom";
-import { editModel } from "./lib";
+import { editModel } from "./api";
 import type { Model } from "@prisma/client";
 
 type PropsType = {
@@ -17,14 +17,8 @@ type PropsType = {
 export const EditModelButton: FC<PropsType> = ({ model }) => {
   const router = useRouter();
   const [state, formAction] = useFormState(editModel, null);
-
+  
   const { data: types } = useSWR("/api/type", typesFetcher);
-  const [selectedTypeId, setSelectedTypeId] = useState(
-    model ? String(model.typeId) : ""
-  );
-  const handleSelectType = (value: string) => {
-    setSelectedTypeId(value);
-  };
 
   const [isOpenedModal, setIsOpenedModal] = useState(false);
   const handleModal = () => setIsOpenedModal((prev) => !prev);
@@ -52,7 +46,6 @@ export const EditModelButton: FC<PropsType> = ({ model }) => {
             <form
               action={(formData) => {
                 formData.append("modelId", String(model.id));
-                formData.append("typeId", String(selectedTypeId));
                 formAction(formData);
               }}
               className="flex justify-center items-center flex-col w-[321px] gap-3"
@@ -73,15 +66,16 @@ export const EditModelButton: FC<PropsType> = ({ model }) => {
 
               {types && (
                 <Select
-                  options={types.map((type) => ({
-                    label: type.name,
-                    value: String(type.id),
-                  }))}
-                  selected={selectedTypeId}
-                  placeholder="Тип*"
-                  fullwidth
-                  onChange={handleSelectType}
-                />
+                  name="type"
+                  id="type"
+                  defaultValue={String(model.typeId ?? "")}
+                  className="w-full"
+                  required
+                >
+                  {types.map((type) => (
+                    <option value={String(type.id)} key={type.id}>{type.name}</option>
+                  ))}
+                </Select>
               )}
 
               <div className="flex self-end justify-between items-center w-full">

@@ -10,7 +10,7 @@ import {
 } from "@/shared";
 import { FC, useEffect, useState } from "react";
 import { createPortal, useFormState } from "react-dom";
-import { editOrder } from "./lib";
+import { editOrder } from "./api";
 import toast from "react-hot-toast";
 import useSWR from "swr";
 import { OrderingConsumable } from "@/entities/consumable/ui/OrderingConsumable";
@@ -36,12 +36,6 @@ export const EditOrderButton: FC<PropsType> = ({
   const [state, formAction] = useFormState(editOrder, null);
 
   const { data: places } = useSWR("/api/place", placesFetcher);
-  const [selectedPlaceId, setSelectedPlaceId] = useState(
-    order ? String(order.placeId) : ""
-  );
-  const handleSelectPlace = (value: string) => {
-    setSelectedPlaceId(value);
-  };
 
   const [selectedConsumables, setSelectedConsumables] = useState(
     order.orderItems.map((orderItem) => ({
@@ -91,7 +85,6 @@ export const EditOrderButton: FC<PropsType> = ({
             <form
               action={(formData) => {
                 formData.append("orderId", String(order.id));
-                formData.append("placeId", selectedPlaceId);
                 formData.append(
                   "consumables",
                   JSON.stringify([
@@ -115,15 +108,18 @@ export const EditOrderButton: FC<PropsType> = ({
               {!order.isDone ? (
                 places && (
                   <Select
-                    options={places.map((place) => ({
-                      label: place.name,
-                      value: String(place.id),
-                    }))}
-                    onChange={handleSelectPlace}
-                    selected={selectedPlaceId}
-                    placeholder="Площадка назначения*"
-                    fullwidth
-                  />
+                    name="place"
+                    id="place"
+                    defaultValue={order.placeId ?? ""}
+                    className="w-full"
+                    required
+                  >
+                    {places.map((place) => (
+                      <option value={String(place.id)} key={place.id}>
+                        {place.name}
+                      </option>
+                    ))}
+                  </Select>
                 )
               ) : (
                 <h5 className="md:self-center self-center text-base uppercase">

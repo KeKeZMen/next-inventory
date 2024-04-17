@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import { Button, EditButton, Input, Modal } from "@/shared";
 import { Checkbox } from "@/shared/ui/Checkbox";
 import { useFormState, createPortal } from "react-dom";
-import { editRight } from "./lib";
+import { editRight } from "./api";
 import type { Right } from "@prisma/client";
 
 type PropsType = {

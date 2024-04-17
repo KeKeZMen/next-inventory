@@ -22,8 +22,8 @@ export const editProduct = async (state: any, formData: FormData) => {
     const description = formData.get("description") as string;
     const inventoryNumber = formData.get("inventoryNumber") as string;
     const count = Number(formData.get("count") as string);
-    const typeId = Number(formData.get("typeId") as string);
-    const cabinetId = Number(formData.get("cabinetId") as string);
+    const typeId = Number(formData.get("type") as string);
+    const cabinetId = Number(formData.get("cabinet") as string);
     const onUtil = Boolean(formData.get("onUtil"));
 
     if (!name || !inventoryNumber || !count || !typeId || !cabinetId)

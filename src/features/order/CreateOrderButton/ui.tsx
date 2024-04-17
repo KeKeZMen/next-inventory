@@ -10,7 +10,7 @@ import {
 } from "@/shared";
 import { FC, useEffect, useState } from "react";
 import { createPortal, useFormState } from "react-dom";
-import { createOrder } from "./lib";
+import { createOrder } from "./api";
 import toast from "react-hot-toast";
 import useSWR from "swr";
 import { OrderingConsumable } from "@/entities/consumable/ui/OrderingConsumable";
@@ -28,10 +28,6 @@ export const CreateOrderButton: FC<PropsType> = ({ consumables, isAdmin }) => {
   const [state, formAction] = useFormState(createOrder, null);
 
   const { data: places } = useSWR("/api/place", placesFetcher);
-  const [selectedPlaceId, setSelectedPlaceId] = useState("");
-  const handleSelectPlace = (value: string) => {
-    setSelectedPlaceId(value);
-  };
 
   const [selectedConsumables, setSelectedConsumables] = useState<
   typeof consumables
@@ -78,7 +74,6 @@ export const CreateOrderButton: FC<PropsType> = ({ consumables, isAdmin }) => {
           <Modal onClose={setIsOpenedModal}>
             <form
               action={(formData) => {
-                formData.append("placeId", selectedPlaceId);
                 formData.append(
                   "consumables",
                   JSON.stringify([
@@ -90,7 +85,6 @@ export const CreateOrderButton: FC<PropsType> = ({ consumables, isAdmin }) => {
                 );
                 formAction(formData);
                 setSelectedConsumables([]);
-                setSelectedPlaceId("");
                 onClose?.();
               }}
               className="flex justify-center items-center flex-col md:min-w-[800px] gap-3"
@@ -100,16 +94,13 @@ export const CreateOrderButton: FC<PropsType> = ({ consumables, isAdmin }) => {
               </h5>
 
               {places && (
-                <Select
-                  options={places.map((place) => ({
-                    label: place.name,
-                    value: String(place.id),
-                  }))}
-                  onChange={handleSelectPlace}
-                  selected={selectedPlaceId}
-                  placeholder="Площадка назначения*"
-                  fullwidth
-                />
+                <Select name="place" id="place" required className="w-full">
+                  {places.map((place) => (
+                    <option value={String(place.id)} key={place.id}>
+                      {place.name}
+                    </option>
+                  ))}
+                </Select>
               )}
 
               <div className="flex flex-col justify-between gap-1 w-full md:flex-row">

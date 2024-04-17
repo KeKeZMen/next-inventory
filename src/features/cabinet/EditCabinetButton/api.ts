@@ -1,11 +1,11 @@
-"use server";
+"use server"
 
 import { db } from "@/shared";
 import { ApiError } from "@/shared/api/ApiError";
 import { authOptions } from "@/shared/lib/authOptions";
 import { getServerSession } from "next-auth";
 
-export const addModel = async (state: any, formData: FormData) => {
+export const editCabinet = async (state: any, formData: FormData) => {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user) throw ApiError.unauthorized();
@@ -15,23 +15,29 @@ export const addModel = async (state: any, formData: FormData) => {
         id: session.user.rightId,
       },
     });
-    if (!right?.consumablesActions) throw ApiError.noEnoughRights();
+    if (!right?.cabinetActions) throw ApiError.noEnoughRights();
 
+    const id = Number(formData.get("cabinetId") as string)
     const name = formData.get("name") as string;
-    const typeId = Number(formData.get("typeId") as string);
-
-    if (!name && !typeId) throw ApiError.badRequest("Вы ввели не все данные!");
-
-    await db.model.create({
+    const responsibleId = Number(formData.get("responsible") as string);
+    const placeId = Number(formData.get("place") as string);    
+    
+    if(!name && !placeId) throw ApiError.badRequest("Вы ввели не все данные!")
+      
+    await db.cabinet.update({
+      where: {
+        id
+      },
       data: {
-        name: name,
-        typeId,
+        name,
+        placeId,
+        responsibleId: responsibleId !== 0 ? responsibleId : null,
       },
     });
 
     return {
       data: {
-        message: "Успешно добавлено!",
+        message: "Успешно отредактировано!",
       },
     };
   } catch (error) {

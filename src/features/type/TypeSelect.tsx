@@ -3,7 +3,7 @@
 import { typesFetcher } from "@/entities/type/api";
 import { Select } from "@/shared";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import useSWR from "swr";
 
 export const TypeSelect = () => {
@@ -13,8 +13,8 @@ export const TypeSelect = () => {
   const [typeId, setTypeId] = useState(currentTypeId.toString());
   const { data: types } = useSWR("/api/type", typesFetcher);
 
-  const handleSelectType = (value: string) => {
-    setTypeId(value);
+  const handleSelectType = (e: ChangeEvent<HTMLSelectElement>) => {
+    setTypeId(String(e.target.value));
   };
 
   useEffect(() => {
@@ -23,17 +23,10 @@ export const TypeSelect = () => {
 
   if (types)
     return (
-      <Select
-        options={types.map((type) => ({
-          label: type.name,
-          value: String(type.id),
-        }))}
-        selected={typeId}
-        placeholder="Тип*"
-        minWidth="300px"
-        onChange={handleSelectType}
-        margin="0 15px 0 0"
-        padding="3px"
-      />
+      <Select value={typeId} onChange={handleSelectType} className="w-[200px]" containerPadding="5px" selectPadding="5px">
+        {types.map((type) => (
+          <option value={String(type.id)} key={type.id}>{type.name}</option>
+        ))}
+      </Select>
     );
 };

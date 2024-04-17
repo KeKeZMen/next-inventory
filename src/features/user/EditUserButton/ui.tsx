@@ -7,7 +7,7 @@ import useSWR from "swr";
 import { rightsFetcher } from "@/entities/right/api";
 import { placesFetcher } from "@/entities/place/api";
 import { useFormState, createPortal } from "react-dom";
-import { editUser } from "./lib";
+import { editUser } from "./api";
 import toast from "react-hot-toast";
 import { User } from "next-auth";
 
@@ -20,12 +20,6 @@ export const EditUserButton: FC<PropsType> = ({ user }) => {
   const router = useRouter();
 
   const { data: rights } = useSWR("/api/right", rightsFetcher);
-  const [selectedRightId, setSelectedRightId] = useState(
-    String(user.rightId ?? "")
-  );
-  const handleSelectRight = (value: string) => {
-    setSelectedRightId(value);
-  };
 
   const { data: places } = useSWR("/api/place", placesFetcher);
   const [selectedPlaces, setSelectedPlaces] = useState<Array<string>>(
@@ -64,7 +58,6 @@ export const EditUserButton: FC<PropsType> = ({ user }) => {
               className="flex justify-center items-center flex-col w-[321px] gap-3"
               action={(formData) => {
                 formData.append("userId", String(user.id));
-                formData.append("rightId", selectedRightId);
                 formData.append("selectedPlaces", selectedPlaces.join(","));
                 formAction(formData);
               }}
@@ -96,16 +89,18 @@ export const EditUserButton: FC<PropsType> = ({ user }) => {
 
               {rights && (
                 <Select
-                  options={rights.map((right) => ({
-                    label: right.name,
-                    value: String(right.id),
-                  }))}
-                  onChange={handleSelectRight}
-                  selected={selectedRightId}
-                  placeholder="Права*"
-                  fullwidth
-                  key={`edit-${user.id}-rights`}
-                />
+                  name="right"
+                  id="right"
+                  defaultValue={String(user.rightId ?? "")}
+                  className="w-full"
+                  required
+                >
+                  {rights.map((right) => (
+                    <option value={String(right.id)} key={right.id}>
+                      {right.name}
+                    </option>
+                  ))}
+                </Select>
               )}
 
               <div className="grid grid-cols-2 gap-3">

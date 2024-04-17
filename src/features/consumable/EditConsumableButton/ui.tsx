@@ -7,7 +7,7 @@ import { useEffect, useState, FC } from "react";
 import { createPortal, useFormState } from "react-dom";
 import toast from "react-hot-toast";
 import useSWR from "swr";
-import { editConsumable } from "./lib";
+import { editConsumable } from "./api";
 import { IConsumableWithModels } from "@/shared/lib/typecode";
 
 type PropsType = {

@@ -6,35 +6,22 @@ import { Button, EditButton, Input, Modal, Select } from "@/shared";
 import useSWR from "swr";
 import { placesFetcher } from "@/entities/place/api";
 import { usersFetcher } from "@/entities/user/api";
-import { editCabinet } from "./lib";
+import { editCabinet } from "./api";
 import { useFormState, createPortal } from "react-dom";
 import toast from "react-hot-toast";
-import type { Cabinet } from "@prisma/client" 
+import type { Cabinet } from "@prisma/client";
 
 type PropsType = {
-  cabinet: Cabinet
-}
+  cabinet: Cabinet;
+};
 
 export const EditCabinetButton: FC<PropsType> = ({ cabinet }) => {
   const params = useParams();
-  const router = useRouter()
+  const router = useRouter();
   const [state, formAction] = useFormState(editCabinet, null);
 
   const { data: places } = useSWR("/api/place", placesFetcher);
-  const [selectedPlace, setSelectedPlace] = useState(
-    cabinet ? String(cabinet.placeId) : params ? String(params.placeId) : ""
-  );
-  const handleSelectPlace = (value: string) => {
-    setSelectedPlace(value);
-  };
-
   const { data: users } = useSWR("/api/user", usersFetcher);
-  const [selectedResponsible, setSelectedResponsible] = useState(
-    cabinet ? String(cabinet.responsibleId) : ""
-  );
-  const handleSelectResponsible = (value: string) => {
-    setSelectedResponsible(value);
-  };
 
   const [isOpenedModal, setIsOpenedModal] = useState(false);
   const handleModal = () => setIsOpenedModal((prev) => !prev);
@@ -45,7 +32,7 @@ export const EditCabinetButton: FC<PropsType> = ({ cabinet }) => {
   useEffect(() => {
     if (state?.data?.message) {
       toast.success(state.data.message);
-      router.refresh()
+      router.refresh();
     } else if (state?.error?.message) {
       toast.error(state.error.message);
     }
@@ -62,9 +49,7 @@ export const EditCabinetButton: FC<PropsType> = ({ cabinet }) => {
             <form
               className="flex justify-center items-center flex-col w-[321px] gap-3"
               action={(formData) => {
-                formData.append("cabinetId", String(cabinet.id))
-                formData.append("placeId", selectedPlace);
-                formData.append("responsibleId", selectedResponsible);
+                formData.append("cabinetId", String(cabinet.id));
                 formAction(formData);
               }}
             >
@@ -84,28 +69,32 @@ export const EditCabinetButton: FC<PropsType> = ({ cabinet }) => {
 
               {users && (
                 <Select
-                  options={users.map((user) => ({
-                    label: user.name!,
-                    value: String(user.id!),
-                  }))}
-                  selected={selectedResponsible}
-                  onChange={handleSelectResponsible}
-                  placeholder="Ответственный"
-                  fullwidth
-                />
+                  id="responsible"
+                  name="responsible"
+                  defaultValue={String(cabinet.responsibleId ?? "")}
+                  className="w-full"
+                >
+                  <option value={"0"}>Ответственный</option>
+                  {users.map((user) => (
+                    <option value={String(user.id)} key={user.id}>{user.name}</option>
+                  ))}
+                </Select>
               )}
 
               {places && (
                 <Select
-                  options={places.map((place) => ({
-                    label: place.name,
-                    value: String(place.id),
-                  }))}
-                  onChange={handleSelectPlace}
-                  selected={selectedPlace}
-                  placeholder="Площадка*"
-                  fullwidth
-                />
+                  id="place"
+                  name="place"
+                  defaultValue={String(
+                    cabinet.placeId ?? params ? params.placeId : ""
+                  )}
+                  className="w-full"
+                  required
+                >
+                  {places.map((place) => (
+                    <option value={String(place.id)} key={place.id}>{place.name}</option>
+                  ))}
+                </Select>
               )}
 
               <div className="flex self-end justify-between items-center w-full">

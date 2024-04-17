@@ -7,7 +7,7 @@ import useSWR from "swr";
 import { rightsFetcher } from "@/entities/right/api";
 import { placesFetcher } from "@/entities/place/api";
 import { useFormState, createPortal } from "react-dom";
-import { addUser } from "./lib";
+import { addUser } from "./api";
 import toast from "react-hot-toast";
 
 export const AddUserButton: FC = () => {
@@ -54,7 +54,6 @@ export const AddUserButton: FC = () => {
             <form
               className="flex justify-center items-center flex-col w-[321px] gap-3"
               action={(formData) => {
-                formData.append("rightId", selectedRightId);
                 formData.append("selectedPlaces", selectedPlaces.join(","));
                 formAction(formData);
               }}
@@ -82,16 +81,13 @@ export const AddUserButton: FC = () => {
               />
 
               {rights && (
-                <Select
-                  options={rights.map((right) => ({
-                    label: right.name,
-                    value: String(right.id),
-                  }))}
-                  onChange={handleSelectRight}
-                  selected={selectedRightId}
-                  placeholder="Права*"
-                  fullwidth
-                />
+                <Select name="right" id="right" className="w-full" required>
+                  {rights.map((right) => (
+                    <option value={String(right.id)} key={right.id}>
+                      {right.name}
+                    </option>
+                  ))}
+                </Select>
               )}
 
               <div className="grid grid-cols-2 gap-3">

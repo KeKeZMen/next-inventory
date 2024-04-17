@@ -6,14 +6,14 @@ import { AddButton, Button, Input, Modal, Select } from "@/shared";
 import useSWR from "swr";
 import { placesFetcher } from "@/entities/place/api";
 import { usersFetcher } from "@/entities/user/api";
-import { addCabinet } from "./lib";
+import { addCabinet } from "./api";
 import { useFormState, createPortal } from "react-dom";
 import toast from "react-hot-toast";
 
 export const AddCabinetButton: FC = () => {
   const [state, formAction] = useFormState(addCabinet, null);
   const params = useParams();
-  const router = useRouter()
+  const router = useRouter();
 
   const { data: places } = useSWR("/api/place", placesFetcher);
   const { data: users } = useSWR("/api/user", usersFetcher);
@@ -27,7 +27,7 @@ export const AddCabinetButton: FC = () => {
   useEffect(() => {
     if (state?.data?.message) {
       toast.success(state.data.message);
-      router.refresh()
+      router.refresh();
     } else if (state?.error?.message) {
       toast.error(state.error.message);
     }
@@ -59,17 +59,28 @@ export const AddCabinetButton: FC = () => {
               />
 
               {users && (
-                <Select id="responsible" name="responsible">
+                <Select id="responsible" name="responsible" className="w-full">
+                  <option value="0">Ответственный</option>
                   {users.map((user) => (
-                    <option value={String(user.id)}>{user.name}</option>
+                    <option value={String(user.id)} key={user.id}>
+                      {user.name}
+                    </option>
                   ))}
                 </Select>
               )}
 
               {places && (
-                <Select id="place" name="place" defaultValue={String(params.placeId ?? "")}>
+                <Select
+                  id="place"
+                  name="place"
+                  defaultValue={String(params.placeId ?? "")}
+                  className="w-full"
+                  required
+                >
                   {places.map((place) => (
-                    <option value={String(place.id)}>{place.name}</option>
+                    <option value={String(place.id)} key={place.id}>
+                      {place.name}
+                    </option>
                   ))}
                 </Select>
               )}

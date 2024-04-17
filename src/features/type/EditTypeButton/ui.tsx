@@ -5,7 +5,7 @@ import { useState, FC, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { Button, EditButton, Input, Modal } from "@/shared";
 import { useFormState, createPortal } from "react-dom";
-import { editType } from "./lib";
+import { editType } from "./api";
 import type { Type } from "@prisma/client";
 
 type PropsType = {

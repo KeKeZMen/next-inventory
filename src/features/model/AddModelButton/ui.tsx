@@ -7,17 +7,13 @@ import { AddButton, Button, Input, Modal, Select } from "@/shared";
 import useSWR from "swr";
 import { typesFetcher } from "@/entities/type/api";
 import { useFormState, createPortal } from "react-dom";
-import { addModel } from "./lib";
+import { addModel } from "./api";
 
 export const AddModelButton: FC = () => {
   const router = useRouter();
   const [state, formAction] = useFormState(addModel, null);
-
+  
   const { data: types } = useSWR("/api/type", typesFetcher);
-  const [selectedTypeId, setSelectedTypeId] = useState("");
-  const handleSelectType = (value: string) => {
-    setSelectedTypeId(value);
-  };
 
   const [isOpenedModal, setIsOpenedModal] = useState(false);
   const handleModal = () => setIsOpenedModal((prev) => !prev);
@@ -43,10 +39,7 @@ export const AddModelButton: FC = () => {
         createPortal(
           <Modal onClose={setIsOpenedModal}>
             <form
-              action={(formData) => {
-                formData.append("typeId", String(selectedTypeId));
-                formAction(formData);
-              }}
+              action={formAction}
               className="flex justify-center items-center flex-col w-[321px] gap-3"
             >
               <h5 className="md:self-start self-center text-base uppercase">
@@ -63,16 +56,11 @@ export const AddModelButton: FC = () => {
               />
 
               {types && (
-                <Select
-                  options={types.map((type) => ({
-                    label: type.name,
-                    value: String(type.id),
-                  }))}
-                  selected={selectedTypeId}
-                  placeholder="Тип*"
-                  fullwidth
-                  onChange={handleSelectType}
-                />
+                <Select name="type" id="type" className="w-full" required>
+                  {types.map((type) => (
+                    <option value={String(type.id)} key={type.id}>{type.name}</option>
+                  ))}
+                </Select>
               )}
 
               <div className="flex self-end justify-between items-center w-full">

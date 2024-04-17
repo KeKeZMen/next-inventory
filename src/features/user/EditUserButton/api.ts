@@ -21,7 +21,7 @@ export const editUser = async (state: any, formData: FormData) => {
     const id = Number(formData.get("userId") as string);
     const name = formData.get("name") as string;
     const password = formData.get("password") as string;
-    const rightId = Number(formData.get("rightId") as string);
+    const rightId = Number(formData.get("right") as string);
     const places = (formData.get("selectedPlaces") as string).split(",");
 
     if (!name || !password || !rightId)

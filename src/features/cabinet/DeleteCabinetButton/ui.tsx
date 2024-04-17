@@ -5,7 +5,7 @@ import { DeleteButton, DeleteConfirm, Modal } from "@/shared";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { createPortal } from "react-dom";
-import { deleteCabinet } from "./lib";
+import { deleteCabinet } from "./api";
 
 type PropsType = {
   cabinetId: number;
