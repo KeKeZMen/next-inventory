@@ -14,12 +14,12 @@ import { addProduct } from "./api";
 export const AddProductButton: FC = () => {
   const router = useRouter();
   const [state, formAction] = useFormState(addProduct, null);
-  const { cabinetId: currentCabinetId, placeId: currentPlaceId } = useParams();
+  const { cabinetId: currentCabinetId, placeId: currentPlaceId, typeId: currentTypeId } = useParams();
 
   const { data: types } = useSWR("/api/type", typesFetcher);
 
   const [selectedPlaceId, setSelectedPlaceId] = useState(
-    String(currentPlaceId ?? "")
+    String(currentTypeId ? "1" : currentPlaceId ?? "")
   );
   const { data: places } = useSWR("/api/place", placesFetcher);
   const handleSelectPlace = (e: ChangeEvent<HTMLSelectElement>) => {
