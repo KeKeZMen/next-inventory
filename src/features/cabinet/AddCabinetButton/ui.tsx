@@ -16,18 +16,7 @@ export const AddCabinetButton: FC = () => {
   const router = useRouter()
 
   const { data: places } = useSWR("/api/place", placesFetcher);
-  const [selectedPlace, setSelectedPlace] = useState(
-    params ? String(params.placeId) : ""
-  );
-  const handleSelectPlace = (value: string) => {
-    setSelectedPlace(value);
-  };
-
   const { data: users } = useSWR("/api/user", usersFetcher);
-  const [selectedResponsible, setSelectedResponsible] = useState("");
-  const handleSelectResponsible = (value: string) => {
-    setSelectedResponsible(value);
-  };
 
   const [isOpenedModal, setIsOpenedModal] = useState(false);
   const handleModal = () => setIsOpenedModal((prev) => !prev);
@@ -54,11 +43,7 @@ export const AddCabinetButton: FC = () => {
           <Modal onClose={setIsOpenedModal}>
             <form
               className="flex justify-center items-center flex-col w-[321px] gap-3"
-              action={(formData) => {
-                formData.append("placeId", selectedPlace);
-                formData.append("responsibleId", selectedResponsible);
-                formAction(formData);
-              }}
+              action={formAction}
             >
               <h5 className="md:self-start self-center text-base uppercase">
                 Добавить кабинет
@@ -74,29 +59,19 @@ export const AddCabinetButton: FC = () => {
               />
 
               {users && (
-                <Select
-                  options={users.map((user) => ({
-                    label: user.name!,
-                    value: String(user.id!),
-                  }))}
-                  selected={selectedResponsible}
-                  onChange={handleSelectResponsible}
-                  placeholder="Ответственный"
-                  fullwidth
-                />
+                <Select id="responsible" name="responsible">
+                  {users.map((user) => (
+                    <option value={String(user.id)}>{user.name}</option>
+                  ))}
+                </Select>
               )}
 
               {places && (
-                <Select
-                  options={places.map((place) => ({
-                    label: place.name,
-                    value: String(place.id),
-                  }))}
-                  onChange={handleSelectPlace}
-                  selected={selectedPlace}
-                  placeholder="Площадка*"
-                  fullwidth
-                />
+                <Select id="place" name="place" defaultValue={String(params.placeId ?? "")}>
+                  {places.map((place) => (
+                    <option value={String(place.id)}>{place.name}</option>
+                  ))}
+                </Select>
               )}
 
               <div className="flex self-end justify-between items-center w-full">
