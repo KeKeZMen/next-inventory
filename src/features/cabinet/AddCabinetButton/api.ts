@@ -18,8 +18,8 @@ export const addCabinet = async (state: any, formData: FormData) => {
     if (!right?.cabinetActions) throw ApiError.noEnoughRights();
 
     const name = formData.get("name") as string;
-    const responsibleId = Number(formData.get("responsibleId") as string);
-    const placeId = Number(formData.get("placeId") as string);
+    const responsibleId = Number(formData.get("responsible") as string);
+    const placeId = Number(formData.get("place") as string);
 
     if (!name && !placeId) throw ApiError.badRequest("Вы ввели не все данные!");
     
