@@ -25,7 +25,7 @@ export const addProduct = async (state: any, formData: FormData) => {
     const cabinetId = Number(formData.get("cabinet") as string);
     const onUtil = Boolean(formData.get("onUtil"));
 
-    if (!name || !inventoryNumber || !count || !typeId || !cabinetId)
+    if (!name || !inventoryNumber || !count || !typeId || !cabinetId || cabinetId == 0)
       throw ApiError.badRequest("Вы ввели не все данные!");
 
     await db.product.create({

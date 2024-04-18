@@ -133,7 +133,7 @@ export const EditProductButton: FC<PropsType> = ({ product }) => {
                       onChange={handleSelectPlace}
                     >
                       {places.map((place) => (
-                        <option value={String(place.id)}>{place.name}</option>
+                        <option value={String(place.id)} key={place.id}>{place.name}</option>
                       ))}
                     </Select>
                   )}
@@ -146,7 +146,7 @@ export const EditProductButton: FC<PropsType> = ({ product }) => {
                       required
                     >
                       {cabinets.map((cabinet) => (
-                        <option value={String(cabinet.id)}>
+                        <option value={String(cabinet.id)} key={cabinet.id}>
                           {cabinet.name}
                         </option>
                       ))}

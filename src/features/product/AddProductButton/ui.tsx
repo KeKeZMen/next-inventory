@@ -19,7 +19,7 @@ export const AddProductButton: FC = () => {
   const { data: types } = useSWR("/api/type", typesFetcher);
 
   const [selectedPlaceId, setSelectedPlaceId] = useState(
-    String(currentTypeId ? "1" : currentPlaceId ?? "")
+    String(currentPlaceId ? currentPlaceId : currentTypeId ?? "")
   );
   const { data: places } = useSWR("/api/place", placesFetcher);
   const handleSelectPlace = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -116,6 +116,7 @@ export const AddProductButton: FC = () => {
                       value={selectedPlaceId}
                       onChange={handleSelectPlace}
                     >
+                      <option value={"0"}>Площадка*</option>
                       {places.map((place) => (
                         <option value={String(place.id)} key={place.id}>
                           {place.name}
@@ -131,6 +132,7 @@ export const AddProductButton: FC = () => {
                       defaultValue={String(currentCabinetId ?? "")}
                       required
                     >
+                      <option value="0">Кабинет*</option>
                       {cabinets.map((cabinet) => (
                         <option value={String(cabinet.id)} key={cabinet.id}>
                           {cabinet.name}
