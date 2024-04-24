@@ -81,10 +81,12 @@ export default async function OrdersPage() {
             }
           />
         ))}
-        <CreateOrderButton
-          consumables={consumables}
-          isAdmin={right.orderSuccesing}
-        />
+        {right.creatingOrders && (
+          <CreateOrderButton
+            consumables={consumables}
+            isAdmin={right.orderSuccesing}
+          />
+        )}
       </div>
     </main>
   );

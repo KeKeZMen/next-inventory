@@ -24,6 +24,7 @@ export const addRight = async (state: any, formData: FormData) => {
     const typeActions = Boolean(formData.get("typeActions") as string);
     const userActions = Boolean(formData.get("userActions") as string);
     const cabinetActions = Boolean(formData.get("cabinetActions") as string);
+    const creatingOrders = Boolean(formData.get("creatingOrders") as string);
     const consumablesActions = Boolean(
       formData.get("consumablesActions") as string
     );
@@ -42,6 +43,7 @@ export const addRight = async (state: any, formData: FormData) => {
         rightActions,
         typeActions,
         userActions,
+        creatingOrders
       },
     });
 

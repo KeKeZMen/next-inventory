@@ -7,6 +7,7 @@ type PropsType = {
   selects?: JSX.Element;
   withoutEdit?: boolean;
   margin?: string;
+  isAdmin?: boolean;
 };
 
 const tableHeadCells = ["ID", "Название", "Подходит", "Кол-во", "Действия"];
@@ -17,6 +18,7 @@ export const ConsumablesTable: FC<PropsType> = ({
   addButton,
   selects,
   margin,
+  isAdmin,
 }) => {
   return (
     <div
@@ -30,7 +32,7 @@ export const ConsumablesTable: FC<PropsType> = ({
 
         <div className="flex justify-between items-center gap-3">
           {selects}
-          {addButton}
+          {isAdmin && addButton}
         </div>
       </div>
 

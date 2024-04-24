@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const session = await getServerSession(authOptions);
-  if (!session)
+  if (!session?.isAdmin)
     return NextResponse.json({ message: "Нет доступа" }, { status: 401 });
 
   const consumables = await db.consumable.findMany();

@@ -68,15 +68,15 @@ const CabinetPage = async ({
   return (
     <ProductsTable
       title="Позиции"
-      addButton={right?.productActions ? <AddProductButton /> : <></>}
+      addButton={<AddProductButton />}
       selects={<ProductsSelects sortSelect />}
-      withoutEdit={!right?.productActions}
+      isAdmin={right?.productActions}
     >
       {products.map((product) => (
         <ProductRow
           product={product}
           deleteButton={<DeleteProductButton productId={product.id} />}
-          withoutEdit={!right?.productActions}
+          isAdmin={right?.productActions}
           editButton={<EditProductButton product={product} />}
           key={product.id}
         />

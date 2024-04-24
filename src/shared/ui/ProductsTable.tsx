@@ -6,8 +6,8 @@ type PropsType = {
   title: string;
   addButton?: JSX.Element;
   selects?: JSX.Element;
-  withoutEdit?: boolean;
   margin?: string;
+  isAdmin?: boolean
 };
 
 const tableHeadCells = [
@@ -23,8 +23,8 @@ export const ProductsTable: FC<PropsType> = ({
   title,
   addButton,
   selects,
-  withoutEdit,
   margin,
+  isAdmin
 }) => {
   return (
     <div
@@ -44,7 +44,7 @@ export const ProductsTable: FC<PropsType> = ({
             </p>
           </div>
           {selects}
-          {addButton}
+          {isAdmin && addButton}
         </div>
       </div>
 
@@ -53,7 +53,7 @@ export const ProductsTable: FC<PropsType> = ({
           <thead>
             <tr>
               {tableHeadCells
-                .filter((cell) => (withoutEdit ? cell !== "Ред." : cell))
+                .filter((cell) => (isAdmin ? cell !== "Ред." : cell))
                 .map((cell, index) => (
                   <th key={index} className="top-0 sticky p-4 bg-white min-w-[100px]">
                     {cell}

@@ -108,6 +108,13 @@ export const AddRightButton: FC = () => {
                 name="orderSuccesing"
               />
 
+              <Checkbox
+                id="creatingOrders"
+                label="Подтверждение заказов"
+                margin="10px 0"
+                name="creatingOrders"
+              />
+
               <div className="flex self-end justify-between items-center w-full">
                 <Button onClick={onClose} danger type="button">
                   Отменить

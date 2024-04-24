@@ -13,15 +13,6 @@ export async function GET(
   if (!session?.user)
     return Response.json({ message: "Недостаточно прав" }, { status: 401 });
 
-  const right = await db.right.findFirst({
-    where: {
-      id: session.user.rightId,
-    },
-  });
-
-  if (!right?.cabinetActions)
-    return Response.json({ message: "Недостаточно прав" }, { status: 401 });
-
   const cabinetData = await db.cabinet.findFirst({
     where: {
       id: parseInt(params.cabinetId),
@@ -30,8 +21,8 @@ export async function GET(
       name: true,
       users: {
         select: {
-          name: true
-        }
+          name: true,
+        },
       },
       products: {
         select: {
@@ -95,7 +86,7 @@ export async function GET(
 
   worksheet.addRow("");
 
-  if(cabinetData.users?.name) {
+  if (cabinetData.users?.name) {
     const footerRow = worksheet.addRow([
       `Ответственный за ${cabinetData.name} кабинет: ${cabinetData.users.name} / ______________________`,
     ]);

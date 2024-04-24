@@ -36,13 +36,11 @@ export const CabinetCard: FC<PropsType> = ({
       >
         {cabinet.name}
       </Link>
-      {isAdmin && (
-        <div className="absolute hidden bg-white shadow-md group-hover:flex justify-between items-center p-1 z-[1000] rounded-md left-[50%] -translate-x-1/2">
-          {deleteButton}
-          {editButton}
-          {passportButton}
-        </div>
-      )}
+      <div className="absolute hidden bg-white shadow-md group-hover:flex justify-between items-center p-1 z-[1000] rounded-md left-[50%] -translate-x-1/2">
+        {isAdmin && deleteButton}
+        {isAdmin && editButton}
+        {passportButton}
+      </div>
     </div>
   );
 };

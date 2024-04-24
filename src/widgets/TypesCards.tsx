@@ -3,7 +3,7 @@ import { db } from "@/shared";
 import React from "react";
 
 export default async function TypesCards() {
-  const types = await db.type.findMany({});
+  const types = await db.type.findMany();
 
   return (
     <div className="flex flex-col shadow-md p-4 w-full">

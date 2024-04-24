@@ -64,13 +64,7 @@ export const authOptions: AuthOptions = {
         });
 
         if (right) {
-          const {
-            name,
-            id,
-            productActions,
-            cabinetActions,
-            ...enabledActions
-          } = right;
+          const { name, id, ...enabledActions } = right;
           session.isAdmin = Object.values(enabledActions).some((r) => r);
         }
 

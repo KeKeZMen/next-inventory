@@ -6,14 +6,14 @@ type PropsType = {
   product: Product;
   editButton?: JSX.Element;
   deleteButton?: JSX.Element;
-  withoutEdit?: boolean;
+  isAdmin?: boolean;
 };
 
 export const ProductRow: FC<PropsType> = ({
   product,
   deleteButton,
   editButton,
-  withoutEdit,
+  isAdmin,
 }) => {
   return (
     <tr className="h-full">
@@ -49,7 +49,7 @@ export const ProductRow: FC<PropsType> = ({
       >
         {product.count}
       </td>
-      {!withoutEdit && (
+      {!isAdmin && (
         <td
           className={clsx(
             product.onUtil && "bg-on-delete",

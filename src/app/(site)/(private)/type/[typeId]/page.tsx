@@ -6,6 +6,9 @@ import { db } from "@/shared";
 import { ProductsTable } from "@/shared/ui/ProductsTable";
 import { ProductsSelects } from "@/features/product/ProductsSelects";
 import React from "react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/shared/lib/authOptions";
+import { redirect } from "next/navigation";
 
 type SearchParamsType = {
   key: "inventoryNumber" | "serialNumber";
@@ -19,6 +22,15 @@ export default async function TypePage({
   params: { typeId: string };
   searchParams: SearchParamsType;
 }) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) return redirect("/login");
+
+  const right = await db.right.findFirst({
+    where: {
+      id: session.user.rightId,
+    },
+  });
+
   let orderBy = {};
 
   if (searchParams.key == "inventoryNumber") {
@@ -50,7 +62,7 @@ export default async function TypePage({
       onUtil: true,
       typeId: true,
       userAdded: true,
-      cabinetId: true
+      cabinetId: true,
     },
     orderBy,
   });
@@ -59,6 +71,7 @@ export default async function TypePage({
     <ProductsTable
       title="Позиции"
       addButton={<AddProductButton />}
+      isAdmin={right?.productActions}
       selects={<ProductsSelects sortSelect typeSelect />}
     >
       {products.map((product) => (
@@ -67,6 +80,7 @@ export default async function TypePage({
           deleteButton={<DeleteProductButton productId={product.id} />}
           editButton={<EditProductButton product={product} />}
           key={product.id}
+          isAdmin={right?.productActions}
         />
       ))}
     </ProductsTable>
