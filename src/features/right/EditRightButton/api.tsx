@@ -29,6 +29,7 @@ export const editRight = async (state: any, formData: FormData) => {
       formData.get("consumablesActions") as string
     );
     const orderSuccesing = Boolean(formData.get("orderSuccesing") as string);
+    const creatingOrders = Boolean(formData.get("creatingOrders") as string);
 
     if (!name) throw ApiError.badRequest("Вы ввели не все данные!");
 
@@ -46,6 +47,7 @@ export const editRight = async (state: any, formData: FormData) => {
         rightActions,
         typeActions,
         userActions,
+        creatingOrders
       },
     });
 

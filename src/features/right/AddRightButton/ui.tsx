@@ -110,7 +110,7 @@ export const AddRightButton: FC = () => {
 
               <Checkbox
                 id="creatingOrders"
-                label="Подтверждение заказов"
+                label="Создания заказов"
                 margin="10px 0"
                 name="creatingOrders"
               />

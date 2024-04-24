@@ -12,7 +12,8 @@ async function main() {
       userActions: true,
       typeActions: true,
       consumablesActions: true,
-      orderSuccesing: true
+      orderSuccesing: true,
+      creatingOrders: true
     },
   });
 

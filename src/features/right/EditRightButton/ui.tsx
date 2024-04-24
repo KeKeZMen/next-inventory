@@ -125,6 +125,14 @@ export const EditRightButton: FC<PropsType> = ({ right }) => {
                 defaultChecked={right.orderSuccesing}
               />
 
+              <Checkbox
+                id="creatingOrders"
+                label="Создание заказов"
+                margin="10px 0"
+                name="creatingOrders"
+                defaultChecked={right.creatingOrders}
+              />
+
               <div className="flex self-end justify-between items-center w-full">
                 <Button onClick={onClose} danger type="button">
                   Отменить
