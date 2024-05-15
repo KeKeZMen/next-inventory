@@ -43,7 +43,7 @@ export const addRight = async (state: any, formData: FormData) => {
         rightActions,
         typeActions,
         userActions,
-        creatingOrders
+        creatingOrders,
       },
     });
 

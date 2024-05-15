@@ -49,7 +49,7 @@ export const ProductRow: FC<PropsType> = ({
       >
         {product.count}
       </td>
-      {!isAdmin && (
+      {isAdmin && (
         <td
           className={clsx(
             product.onUtil && "bg-on-delete",

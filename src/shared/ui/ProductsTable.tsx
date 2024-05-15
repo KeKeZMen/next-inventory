@@ -53,7 +53,7 @@ export const ProductsTable: FC<PropsType> = ({
           <thead>
             <tr>
               {tableHeadCells
-                .filter((cell) => (isAdmin ? cell !== "Ред." : cell))
+                .filter((cell) => (isAdmin ? cell : cell !== "Ред."))
                 .map((cell, index) => (
                   <th key={index} className="top-0 sticky p-4 bg-white min-w-[100px]">
                     {cell}
