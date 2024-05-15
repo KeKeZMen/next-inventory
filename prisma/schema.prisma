@@ -125,7 +125,6 @@ model ConsumableToModel {
 model Consumable {
   id       Int     @id @default(autoincrement())
   name     String
-  required Boolean
   count    Int
 
   model     ConsumableToModel[]

@@ -20,7 +20,6 @@ export const addConsumable = async (state: any, formData: FormData) => {
     const name = formData.get("name") as string;
     const models = (formData.get("models") as string).split(",");
     const count = Number(formData.get("count") as string);
-    const required = Boolean(formData.get("required") as string);
 
     if (!name && !count) throw ApiError.badRequest("Вы ввели не все данные!");
 
@@ -31,7 +30,6 @@ export const addConsumable = async (state: any, formData: FormData) => {
       data: {
         name,
         count,
-        required,
       },
     });
 

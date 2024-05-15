@@ -86,8 +86,6 @@ export const AddConsumableButton = () => {
                 ))}
               </div>
 
-              <Checkbox id="required" name="required" label="Обязательный" />
-
               <div className="flex self-end justify-between items-center w-full type">
                 <Button onClick={onClose} danger>
                   Отменить
