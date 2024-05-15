@@ -78,6 +78,7 @@ export default async function ConsumablePage({
             }
             editButton={<EditConsumableButton consumable={consumable} />}
             key={consumable.id}
+            isAdmin={right?.consumablesActions}
           />
         ))}
     </ConsumablesTable>

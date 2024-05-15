@@ -40,11 +40,13 @@ export const ConsumablesTable: FC<PropsType> = ({
         <table className="w-full border-collapse">
           <thead>
             <tr>
-              {tableHeadCells.map((cell, index) => (
-                <th key={index} className="top-0 sticky p-4 bg-white ">
-                  {cell}
-                </th>
-              ))}
+              {tableHeadCells
+                .filter((cell) => (isAdmin ? cell : cell !== "Ред."))
+                .map((cell, index) => (
+                  <th key={index} className="top-0 sticky p-4 bg-white ">
+                    {cell}
+                  </th>
+                ))}
             </tr>
           </thead>
           <tbody>{children}</tbody>
