@@ -46,6 +46,11 @@ export default async function TypePage({
   const products = await db.product.findMany({
     where: {
       typeId: parseInt(params.typeId),
+      cabinet: {
+        placeId: {
+          in: session.user.places.map((place) => Number(place)),
+        },
+      },
     },
     select: {
       cabinet: {

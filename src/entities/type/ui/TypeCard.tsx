@@ -9,7 +9,7 @@ type PropsType = {
 export const TypeCard: FC<PropsType> = ({ type }) => {
   return (
     <Link
-      href={`/type/${type.id}`}
+      href={`/type/${type.id}?key=inventoryNumber&orderBy=asc`}
       className="flex items-center justify-center flex-col shadow-md bg-gray w-[150px] h-[150px] md:w-[200px] md:h-[200px]"
     >
       <div
