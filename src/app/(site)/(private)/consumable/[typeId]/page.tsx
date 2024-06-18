@@ -38,7 +38,6 @@ export default async function ConsumablePage({
       id: true,
       count: true,
       name: true,
-      required: true,
       model: {
         select: {
           model: {
@@ -67,7 +66,6 @@ export default async function ConsumablePage({
             id: model.model.id,
             name: model.model.name,
           })),
-          required: consumable.required,
           count: consumable.count,
         }))
         .map((consumable) => (
