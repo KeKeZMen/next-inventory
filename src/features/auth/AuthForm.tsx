@@ -6,20 +6,18 @@ import { Button, Input } from "@/shared";
 import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { User } from "@prisma/client";
 import clsx from "clsx";
+import useSWR from "swr";
+import { usersFetcher } from "@/entities/user/api";
 
-type PropsType = {
-  users: User[];
-};
-
-const AuthForm: FC<PropsType> = ({ users }) => {
+const AuthForm = () => {
   const router = useRouter();
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const [isLoading, setIsLoading] = useState(false);
+  const { data: users } = useSWR("/api/user", usersFetcher);
 
   const {
     register,
@@ -72,8 +70,8 @@ const AuthForm: FC<PropsType> = ({ users }) => {
           </div>
 
           <datalist id="users">
-            {users.map((user) => (
-              <option key={user.id} value={user.name}>
+            {users?.map((user) => (
+              <option key={user.id} value={user.name!}>
                 {user.name}
               </option>
             ))}
