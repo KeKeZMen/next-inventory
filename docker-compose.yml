@@ -8,17 +8,13 @@ services:
       - 3000:3000
     env_file:
       - ./inventory/.env
-    environment:
-      - DATABASE_URL="mysql://root@host.docker.internal:3306/next_inventory"
-      - NEXTAUTH_SECRET="NEXTAUTH_SECRET"
-      - NEXTAUTH_URL="http://localhost:3000"
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    container_name: nginx
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
     ports:
-      - 80:80
-      - 443:443
+      - '80:80'
+      - '81:81'
+      - '443:443'
     volumes:
-      - /etc/ssl:/etc/nginx/ssl:ro
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
